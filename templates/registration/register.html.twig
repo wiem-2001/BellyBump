@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block header %}  {% endblock %}
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <!-- Hero Section - Home Page -->
+    <section id="hero" class="hero">
+        <img src="frontOffice/assets/img/hero-bg.webp" alt="" >
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8"> 
+                    <div class="text-center">
+                        <strong style="font-size: 30px;">Sign Up Now <br>and <br>Embrace Motherhood with Us</strong>
+                    </div>
+                    {{ form_start(registrationForm) }}
+                    {{ form_errors(registrationForm) }}
+
+                    <div class="form-group" style="padding-top: 80px; ">
+                        {{ form_label(registrationForm.firstName) }}
+                        {{ form_widget(registrationForm.firstName, { 'attr': { 'class': 'form-control', 'placeholder': 'Enter your first name'} } )}}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(registrationForm.lastName) }}
+                        {{ form_widget(registrationForm.lastName, { 'attr': { 'class': 'form-control', 'placeholder': 'Enter your last name'} } )}}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(registrationForm.email) }}
+                        {{ form_widget(registrationForm.email, { 'attr': { 'class': 'form-control', 'placeholder': 'Enter email address' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(registrationForm.plainPassword.first) }}
+                        {{ form_widget(registrationForm.plainPassword.first, { 'attr': { 'class': 'form-control', 'placeholder': 'Enter password' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(registrationForm.plainPassword.second) }}
+                        {{ form_widget(registrationForm.plainPassword.second, { 'attr': { 'class': 'form-control', 'placeholder': 'Confirm password' } }) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(registrationForm.birthday) }}
+                        {{ form_widget(registrationForm.birthday) }}
+                        {{ form_errors(registrationForm.birthday) }}
+                    </div>
+
+                   <div class="form-group" style="margin-top: 10px;">
+                      {{ form_widget(registrationForm.save, {'label': 'Sign up', 'attr': {'class': 'btn btn-danger'}}) }}
+                    </div>
+
+
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+{% endblock %}

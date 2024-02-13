@@ -74,23 +74,42 @@
         {% block body %}
  <main id="main">
     <!-- Hero Section - Home Page -->
-    <section id="hero" class="hero">
-      <img src="frontOffice/assets/img/hero-bg.webp" alt="" data-aos="fade-in">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-10">
-            <h2 data-aos="fade-up" data-aos-delay="100">Embrace Motherhood: Welcome to BellyBump</h2>
-            <p data-aos="fade-up" data-aos-delay="200">Where Motherhood's Challenges Transform into Triumphs</p>
-          </div>
-          <div class="col-lg-5">
-            <form action="#" class="sign-up-form d-flex" data-aos="fade-up" data-aos-delay="300">
-              <input type="text" class="form-control" placeholder="Enter email address">
-              <input type="submit" class="btn btn-primary" value="Sign up">
-            </form>
-          </div>
-        </div>
-      </div>
-    </section><!-- End Hero Section -->
+   {% for flash_error in app.flashes('verify_email_error') %}
+     <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+   {% endfor %}
+
+
+
+   <!-- Hero Section - Home Page -->
+   <section id="hero" class="hero">
+     <img src="frontOffice/assets/img/hero-bg.webp" alt="" data-aos="fade-in">
+     <div class="container">
+       <div class="row">
+         <div class="col-lg-10">
+           <h2 data-aos="fade-up" data-aos-delay="100">Embrace Motherhood: Welcome to BellyBump</h2>
+           <p data-aos="fade-up" data-aos-delay="200">Where Motherhood's Challenges Transform into Triumphs</p>
+         </div>
+         <div class="col-lg-5">
+           {{ form_start(registrationForm) }}
+           {{ form_errors(registrationForm) }}
+
+           {{ form_row(registrationForm.firstName) }}
+           {{ form_row(registrationForm.lastName) }}
+           {{ form_row(registrationForm.email) }}
+
+           {{ form_row(registrationForm.plainPassword.first, { 'label': 'Password' }) }}
+           {{ form_row(registrationForm.plainPassword.second, { 'label': 'Confirm Password' }) }}
+
+
+           {{ form_row(registrationForm.birthday) }}
+           {{ form_row(registrationForm.save) }}
+
+           {{ form_end(registrationForm) }}
+         </div>
+       </div>
+     </div>
+   </section><!-- End Hero Section -->
+   <!-- End Hero Section -->
     <!-- Contact Section - Home Page -->
     <section id="contact" class="contact">
       <!--  Section Title -->
