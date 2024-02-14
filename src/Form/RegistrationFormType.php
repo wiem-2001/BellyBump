@@ -6,16 +6,14 @@ use App\Entity\User;
 use phpDocumentor\Reflection\Types\True_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
+
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 class RegistrationFormType extends AbstractType
@@ -26,7 +24,7 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'mapped' => True,
                 'constraints' => [
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please enter your first name.',
                     ]),
                 ],
@@ -34,7 +32,7 @@ class RegistrationFormType extends AbstractType
             ->add('lastName', TextType::class, [
                 'mapped' => True,
                 'constraints' => [
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please enter an last name.',
                     ]),
                 ],
@@ -44,7 +42,7 @@ class RegistrationFormType extends AbstractType
                     new Assert\Email([
                         'message' => 'The email "{{ value }}" is not a valid email.',
                     ]),
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please enter an email address.',
                     ]),
                 ],
@@ -59,7 +57,7 @@ class RegistrationFormType extends AbstractType
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Password Confirmation'],
                 'constraints' => [
-                    new NotBlank([
+                    new Assert\NotBlank([
                         'message' => 'Please enter a password',
                     ]),
                     new Length([

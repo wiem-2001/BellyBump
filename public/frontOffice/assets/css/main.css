@@ -2890,6 +2890,3 @@ section,
   color: var(--contrast-color);
   background-color: rgba(var(--accent-color-rgb), 0.8);
 }
-.rounded {
-  border-radius: 20px; /* Adjust the border-radius value as needed */
-}
