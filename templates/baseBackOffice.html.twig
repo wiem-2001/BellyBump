@@ -62,47 +62,33 @@
                 </a>
             </div>
             <hr class="horizontal light mt-0 mb-2">
-
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">    
-            
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
-                        
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
-                        
-                        <span class="nav-link-text ms-1">Check posts</span>
+                        <span class="nav-link-text ms-1" href='#'>Check posts</span>
                     </a>
                     </li>
-
-            
                     <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
+                    <a class="nav-link text-white " href="{{path('get_users')}}">
                         
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
-                        
                         <span class="nav-link-text ms-1">Manage Users</span>
                     </a>
                     </li>
-
-                    
-
-                    
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
-                        
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">view_in_ar</i>
                         </div>
-                        
                         <span class="nav-link-text ms-1">Manage Hospitals</span>
                     </a>
                     </li>
-
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
                         
@@ -172,11 +158,7 @@
   
         </aside>
     {% endblock %}
-    
-    
         {% block body %}
-         
-
       <main class="main-content border-radius-lg ">
         
         
@@ -227,10 +209,7 @@
 </footer>
 </main>
         {% endblock %}
-         
        </main>
-    
         {% endblock %}
-        
     </body>
 </html>
