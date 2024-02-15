@@ -83,28 +83,14 @@
    <!-- Hero Section - Home Page -->
    <section id="hero" class="hero">
      <img src="frontOffice/assets/img/hero-bg.webp" alt="" data-aos="fade-in">
-     <div class="container">
+     <div class="container">+
        <div class="row">
          <div class="col-lg-10">
            <h2 data-aos="fade-up" data-aos-delay="100">Embrace Motherhood: Welcome to BellyBump</h2>
            <p data-aos="fade-up" data-aos-delay="200">Where Motherhood's Challenges Transform into Triumphs</p>
          </div>
          <div class="col-lg-5">
-           {{ form_start(registrationForm) }}
-           {{ form_errors(registrationForm) }}
 
-           {{ form_row(registrationForm.firstName) }}
-           {{ form_row(registrationForm.lastName) }}
-           {{ form_row(registrationForm.email) }}
-
-           {{ form_row(registrationForm.plainPassword.first, { 'label': 'Password' }) }}
-           {{ form_row(registrationForm.plainPassword.second, { 'label': 'Confirm Password' }) }}
-
-
-           {{ form_row(registrationForm.birthday) }}
-           {{ form_row(registrationForm.save) }}
-
-           {{ form_end(registrationForm) }}
          </div>
        </div>
      </div>
