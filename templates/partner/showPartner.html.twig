@@ -1,0 +1,35 @@
+{% extends 'baseback.html.twig' %}
+{% block main %}
+    <br> <br> <br> <br> <br>
+    <table>
+        <thead>
+        <th>name</th>
+        <th>marque</th>
+        <th>email</th>
+        <th>description</th>
+        <th>delete</th>
+        <th>update</th>
+
+
+        </thead>
+        <tbody>
+        {% for partner in p %}
+            <tr>
+
+                <td>{{ partner.nom }}</td>
+                <td>{{ partner.marque }}</td>
+                <td>{{ partner.email }}</td>
+                <td>{{ partner.description }}</td>
+                <td><a href="{{  path('remove_partner',{'id':partner.id})}}"class="btn btn-primary"style="background-color: #bb2d3b">delete</a>
+                </td>
+                <td><a href="{{  path('update_partner',{'id':partner.id})}}"class="btn btn-primary" style="background-color: #0f5132">update</a>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+    <a href="{{path('add_partner') }}" class="btn btn-primary">become our partner</a>
+
+{% endblock %}
