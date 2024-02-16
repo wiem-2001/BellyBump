@@ -38,38 +38,48 @@
     </head>
     <body>
       {% block header %}
-    <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
-    <div class="container-fluid d-flex align-items-center justify-content-between">
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+    <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="frontOffice/assets/img/logo.jpg" alt="">
+      <h1>BellyBump</h1>
+      <span> </span>
+    </a>
+    <!-- Nav Menu -->
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="index.html#hero" class="active">Home</a></li>
+        <li><a href="index.html#about">Events</a></li>
+        <li><a href="index.html#services">Products</a></li>
+        <li><a href="index.html#services">Hospitals</a></li>
+        <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->
+        <li class="dropdown has-dropdown">
+          <a href="#"><span>Maternal & Infant Health</span> <i class="bi bi-chevron-down"></i></a>
+          <ul class="dd-box-shadow">
+            <li><a href="#">Maternal Health</a></li>
+            <li><a href="#">Infant Health</a></li>
+          </ul>
+        </li>
+      </ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav><!-- End Nav Menu -->
+    <!-- User Dropdown -->
+    <div class="dropdown">
+      <div class="dropdown">
+        <span>{{user.firstName}} {{user.lastName}} <i class="bi bi-chevron-down"></i></span>
+        <div class="dropdown-content">
+          <a href='{{path('detail_user',{'id': user.id})}}'>Profile Settings</a>
+          <a href="#">Change my password</a>
+           <a href="#">SignOut</a>
+        </div>
+      </div>
+    </div><!-- End User Dropdown -->
+  </div>
+</header><!-- End Header -->
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-         <img src="frontOffice/assets/img/logo.jpg" alt="">
-        <h1>BellyBump</h1>
-        <span> </span>
-      </a>
-      <!-- Nav Menu -->
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html#hero" class="active">Home</a></li>
-          <li><a href="index.html#about">Events</a></li>
-          <li><a href="index.html#services">Products</a></li>
-            <li><a href="index.html#services">Hospitals</a></li>
-         <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->
-          <li class="dropdown has-dropdown"><a href="#"><span>Maternal & Infant Health</span> <i class="bi bi-chevron-down"></i></a>
-            <ul class="dd-box-shadow">
-              <li><a href="#">Maternal Health</a></li>
-               <li><a href="#">Infant Health</a></li>
-              </li>
-            </ul>
-          </li>
-         
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav><!-- End Nav Menu -->
-      <a class="btn-getstarted" href="index.html#about">Get Started</a>
-    </div>
-  </header><!-- End Header -->
+
   {% endblock %}
         {% block body %}
  <main id="main">
@@ -199,6 +209,59 @@
   {% block scrollUp %}
    <!-- Scroll Top Button -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <style>
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #dc3545;
+  color:white;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+  color:#dc3545
+}
+</style>
+
  {% endblock %}
     </body>
 </html>
