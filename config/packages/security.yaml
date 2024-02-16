@@ -18,15 +18,17 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            entry_point: 'App\Security\AuthAuthenticator'
             form_login:
                 login_path: app_login
                 check_path: app_login
+                default_target_path: app_register
                 enable_csrf: true
             logout:
                 path: app_logout
-            custom_authenticator: App\Security\AuthAuthenticator
-
+                # where to redirect after logout
+                # target: app_any_route
+                # where to redirect after logout
+                # target: app_any_route
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800
