@@ -18,6 +18,7 @@ class TestController extends AbstractController
     #[Route('/testTemplate', name: 'app_testTemplate')]
     public function indexTest(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_MOTHER');
         return $this->render('test/index.html.twig');
     }
 }

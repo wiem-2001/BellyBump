@@ -1,6 +1,15 @@
 {% extends 'baseBackOffice.html.twig' %}
 
 {% block header %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+{% endblock %}
 {% block body %}
       <main class="main-content border-radius-lg ">
         

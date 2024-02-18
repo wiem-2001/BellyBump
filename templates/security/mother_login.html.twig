@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block header %} {% endblock %}
+{% block body %}
+    <!-- Hero Section - Home Page -->
+   <section id="hero" class="hero">
+     <img src="frontOffice/assets/img/hero-bg.webp" alt="">
+     <div class="container">
+       <div class="row">
+         <div class="col-lg-10">
+           <h2>Embrace Motherhood: Welcome to BellyBump</h2>
+           <p>Where Motherhood's Challenges Transform into Triumphs</p>
+         </div>
+            <div class="col-lg-5">
+                <form method="post" action="{{ path('admin_login') }}">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                    {% if app.user %}
+                        <div class="mb-3">
+                             You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %} 
+                    <label for="username">Email</label>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                    <label for="password">Password</label>
+                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                    <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+                    <div class="mt-3"> <button class="btn btn-lg btn-primary float-end is-invalid" type="submit" style="background-color: #AB3319;">Sign in</button></div>
+                </form>
+                <div class="mt-3">
+                    <a href="{{ path('app_register') }}" class="btn btn-lg btn-secondary float-end" style="margin-right: 10px;">Sign up</a>
+                </div>
+            </div>
+        </div>
+     </div>
+   </section><!-- End Hero Section -->
+{% endblock %}

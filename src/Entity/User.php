@@ -85,11 +85,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
 
-        // Filter the roles to only include ROLE_ADMIN or ROLE_MOTHER
         $filteredRoles = array_intersect($roles, ['ROLE_ADMIN', 'ROLE_MOTHER']);
 
-        // Ensure that every user has at least the ROLE_USER role
-        $filteredRoles[] = 'ROLE_USER';
 
         return array_unique($filteredRoles);
     }
@@ -136,11 +133,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function isVerified(): bool
+    public function getIsVerified(): bool
     {
         return $this->isVerified;
     }
-
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
