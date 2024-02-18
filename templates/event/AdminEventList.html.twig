@@ -1,0 +1,72 @@
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %} Event List {% endblock %}
+{% block main %}
+<div class="row">
+<div class="col-12">
+<div class="card my-4">
+<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+<h6 class="text-white text-capitalize ps-3">Events table</h6>
+</div>
+</div>
+<div class="card-body px-0 pb-2">
+<div class="table-responsive p-0">
+<table class="table align-items-center mb-0">
+<thead>
+<tr>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Day</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Time</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Time</th>
+<th class="text-secondary opacity-7"></th>
+<th class="text-secondary opacity-7"></th>
+</tr>
+</thead>
+<tbody>
+{% for  event in tabEvents %}
+<tr>
+<td>
+<div class="d-flex px-2 py-1">
+<div>
+<img src="{{ asset('uploads/EventImages/' ~ event.image) }}" width="100px" class="avatar  me-3 border-radius-lg" alt="event">
+</div>
+<div class="d-flex flex-column justify-content-center">
+<h6 class="mb-0 text-sm"> {{event.name}} </h6>
+</div>
+</div>
+</td>
+<td>
+<p class="text-xs font-weight-bold mb-0"> {{event.day  | date('j F, Y') }} </p>
+</td>
+<td class="align-middle text-center text-sm">
+<span class="text-secondary text-xs font-weight-bold">{{event.heureDebut | date('H:i')}}</span>
+</td>
+<td class="align-middle text-center">
+<span class="text-secondary text-xs font-weight-bold">{{event.heureFin | date('H:i')}}</span>
+</td>
+<td class="align-middle">
+<a href="{{ path('event_update',{id: event.id})}}" class="badge badge-sm bg-gradient-success " data-toggle="tooltip" data-original-title="Edit event">
+Edit
+</a>
+</td>
+<td class="align-middle">
+<a href="{{ path('event_delete',{id: event.id})}}" class="badge badge-sm bg-gradient-danger " data-toggle="tooltip" data-original-title="delete event">
+Delete
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<a href="{{ path('event_add') }}" class="btn btn-primary">Add Event</a>
+</div>
+</div>
+<style>
+    .bg-gradient-danger {
+        background-image: linear-gradient(195deg, rgb(181, 28, 28) 0%, rgb(181, 28, 28) 100%);
+    }
+</style>
+{% endblock %}
