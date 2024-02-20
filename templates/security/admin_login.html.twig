@@ -29,12 +29,16 @@
                 </div>
               </div>
               <div class="card-body">
-                <form method="post" action="{{ path('admin_login') }}">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans({}, 'security') }}</div>
-    {% endif %}
+                <form method="post" action="{{ path('admin_login') }}" novalidate>
+                         {% if error %}
+                            {% if app.request.get('_username') == '' or app.request.get('_password') == '' %}
+                                <div class="alert alert-light">Please fill in all fields</div>
+                            {% else %}
+                                <div class="alert alert-light">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                        {% endif %}
     <div class="input-group input-group-outline my-3">
-        <input type="email" class="form-control" name="_username" autocomplete="email" placeholder="Email" required autofocus>
+        <input type="email" class="form-control" name="_username" autocomplete="email" placeholder="Email" required autofocus >
     </div>
     <div class="input-group input-group-outline mb-3">
         <input type="password" class="form-control" name="_password" autocomplete="current-password" placeholder="Password" required>
@@ -53,5 +57,7 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
        </main>
         {% endblock %}

@@ -120,14 +120,13 @@
                         <span class="nav-link-text ms-1">Profile</span>
                     </a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
-                        
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">login</i>
-                        </div>
-                    <a href="{{ path('app_logout') }}" class="nav-link-text ms-1">Sign Out</a>
-                    </a>
+                        <li class="nav-item">
+                            <button class="nav-link text-white btn" onclick="location.href='{{ path('admin_logout') }}'">
+                                <div class="text-white text-center me-1 d-flex align-items-center  justify-content-center ">
+                                    <i class="material-icons ">logout</i>
+                                    <span class="nav-link-text ms-1 opacity-10">SignOut</span>
+                                </div>
+                            </button>
                     </li>
                 </ul>
             </div>
@@ -135,19 +134,10 @@
     {% endblock %}
         {% block body %}
       <main class="main-content border-radius-lg ">
-        
-        
-
-        
-
-
 <div class="container-fluid py-4">
-
 {% block main %}
     <h6>If you are not redirected automatically, follow <a href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard ">this link</a>.</h6>
-    
 {% endblock %}
-
 {% block footer %}
         <main class="main-content border-radius-lg ">
         <footer class="footer py-4  ">
@@ -184,6 +174,7 @@
 </footer>
 </main>
         {% endblock %}
+</div>
        </main>
         {% endblock %}
     </body>

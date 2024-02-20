@@ -27,7 +27,7 @@ class PasswordUpdateFormType extends AbstractType
             'second_options' => ['label' => 'Password Confirmation'],
             'constraints' => [
                 new Assert\NotBlank([
-                    'message' => 'Please enter a password',
+                    'message' => 'Please enter your new password',
                 ]),
                 new Length([
                     'min' =>  8,

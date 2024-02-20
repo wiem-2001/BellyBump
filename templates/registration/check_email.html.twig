@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block header %}  {% endblock %}
+{% block body %}
+    <!-- Hero Section - Home Page -->
+    <section id="hero" class="hero">
+
+        <img src="frontOffice/assets/img/hero-bg.webp" alt="" style="opacity: 0.5;" >
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>You're now registered</h2>
+                    <p>To access your account , please check your email for email verification.</p>
+                </div>
+            </div>
+        </div>
+
+    </section><!-- End Hero Section -->
+
+    <style>
+        .error-message {
+            color: #AB3319;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .is-invalid {
+            border-color: #AB3319;
+        }
+    </style>
+{% endblock %}

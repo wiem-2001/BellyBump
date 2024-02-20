@@ -48,6 +48,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
+
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
@@ -56,8 +57,7 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email for BellyBump')
                     ->htmlTemplate('registration/confirmation_email_template.html.twig')
             );
-            
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('askForConfirmation');
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
@@ -94,8 +94,13 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('confirmed_email');
     }
     #[Route('/confirmed_email', name: 'confirmed_email')]
-    public function indexTest(): Response
+    public function confirmedEmail(): Response
     {
         return $this->render('registration/confirmed_email.html.twig');
+    }
+    #[Route('/askConfirmation', name: 'askForConfirmation')]
+    public function askConfirmation(): Response
+    {
+        return $this->render('registration/check_email.html.twig');
     }
 }
