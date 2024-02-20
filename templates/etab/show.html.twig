@@ -1,0 +1,30 @@
+
+{% extends 'back.html.twig' %}
+{% block title %}Etab{% endblock %}
+
+{% block body %}
+    <h1>Establishment</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ etab.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ etab.type }}</td>
+            </tr>
+            <tr>
+                <th>NumberOfDoctors</th>
+                <td>{{ etab.nbrMedcin }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etab_index') }}">back to list</a>
+
+    <a href="{{ path('app_etab_edit', {'id': etab.id}) }}">edit</a>
+
+    {{ include('etab/_delete_form.html.twig') }}
+{% endblock %}
