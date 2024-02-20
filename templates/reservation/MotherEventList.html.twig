@@ -1,10 +1,27 @@
 {% extends 'base.html.twig' %}
+{% block styleSheet  %}
+{{ parent() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-0VUNsTfVDw2Av+OAFCpP6rCx45FVyJXBNzB4YtpqInQ2fjU8Vh59XCPkdpkLw7TqccTn9v/3MPu7F2G81zW7zw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+{% endblock %}
 {% block title %}Events List{% endblock %}
 {% block body %}
     <main>
     <div class="events-list">
-    <h3 class="event-title">Events </h3> <hr class="title-hr">
+    <div class="row">
+        <h3 class="event-title">Events </h3>
+         <i class="fas fa-search"></i>
+
+    </div>
+
+     <hr class="title-hr">
+    <div class="select-sort">
+        <select name="sort_by" id="sort_by">
+            <option value="" disabled selected style="display:none;">Sort by</option>
+            <option value="date">Date</option>
+            <option value="name">Name</option>
+        </select>
+    </div>
         {% for event in tabEvents %}
         <div class="row event-item" id="event">
             <div class="col-lg-4 event-image">
@@ -19,7 +36,7 @@
              <p><strong class="properties-title">Description </strong> {{ event.description }}</p>
              <p><strong class="properties-title">Date </strong> {{ event.day|date("d F, Y")  }}. From {{ event.heureDebut|date("H:i") }} To {{ event.heureFin|date("H:i")  }}</p>
              <p><strong class="properties-title">Number of participants: </strong> {{ event.reservation|length }}</p>
-             <a href="{{path('reserve_event',{id:event.id})}}"   class="btn participate-btn">Participate</a>
+             <a href="{{path('reserve_event',{id:event.id})}}"   class="btn participate-btn">Join Now</a>
              </div>
         </div>
         {% endfor %}
@@ -110,6 +127,11 @@
             color: #E84545;
         }
 
+        .select-sort{
+            float:right;
+            margin-bottom:3%;
+            padding:5px;
+        }
     </style>
     </main>
 {% endblock %}

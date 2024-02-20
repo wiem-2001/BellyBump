@@ -19,12 +19,13 @@ use Symfony\Component\Security\Core\Security;
 
 class EventController extends AbstractController
 {
-    #[Route('/eventsListAdmin', name: 'list_event')]
+    #[Route('/manageEvents', name: 'list_event')]
     public function EventsList(EventRepository $repository)
     {
+        $realizedEvents=$repository->findRealizedEvents();
+        $notrealizedEvents=$repository->findNotRealizedEvents();
         $Events = $repository->findAll();
-        
-        return $this->render("Event/AdminEventList.html.twig",array('tabEvents'=>$Events));
+        return $this->render("Event/AdminEventList.html.twig",array('notrealizedEvents'=>$notrealizedEvents,'realizedEvents'=>$realizedEvents,'tabEvents'=>$Events));
     }
 
     #[Route('/eventsList', name: 'list_event_mother')]

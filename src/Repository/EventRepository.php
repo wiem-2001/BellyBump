@@ -40,6 +40,22 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findRealizedEvents(){
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.day < :today')
+            ->setParameter('today', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+    public function findNotRealizedEvents(){
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.day > :today')
+            ->setParameter('today', new \DateTime())
+            ->getQuery()
+            ->getResult();
+    }
+
+
 //    /**
 //     * @return Event[] Returns an array of Event objects
 //     */
