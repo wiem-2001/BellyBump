@@ -52,7 +52,13 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html#hero" class="active">Home</a></li>
-          <li><a href="index.html#about">Events</a></li>
+          <li class="dropdown has-dropdown"><a href="#"><span>Events</span> <i class="bi bi-chevron-down"></i></a>
+            <ul class="dd-box-shadow">
+              <li><a href="{{path('list_event_mother')}}">List</a></li>
+               <li><a href="{{path('mother_calender')}}"> Calender </a></li>
+              </li>
+            </ul>
+          </li>
           <li><a href="index.html#services">Products</a></li>
             <li><a href="index.html#services">Hospitals</a></li>
          <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->

@@ -36,6 +36,15 @@
             
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="event-label">{{ form_label(form.MeetingCode) }}</div> 
+            {{ form_widget(form.MeetingCode, { 'attr': { 'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Set Meet code'} } )}}
+            <div class="text-danger">{{ form_errors(form.MeetingCode) }}</div>
+            
+        </div>
+    </div>
     
     
         <div class="col-md-12">

@@ -37,6 +37,9 @@ class Event
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
     private Collection $reservation;
 
+    #[ORM\Column(length: 10)]
+    private ?string $MeetingCode = null;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -139,6 +142,18 @@ class Event
     public function removeReservation(User $reservation): static
     {
         $this->reservation->removeElement($reservation);
+
+        return $this;
+    }
+
+    public function getMeetingCode(): ?string
+    {
+        return $this->MeetingCode;
+    }
+
+    public function setMeetingCode(string $MeetingCode): static
+    {
+        $this->MeetingCode = $MeetingCode;
 
         return $this;
     }

@@ -33,6 +33,9 @@ class EventType extends AbstractType
             'constraints'=> [new Assert\NotBlank(array("message" => "Please enter a description of the event")),]
 
             ])
+            ->add('MeetingCode', TextType::class,['label'=>'Meeting Code',
+            'constraints'=> [new Assert\NotBlank(array("message" => "Please enter a meeting code ")),]
+            ])
             ->add('day',DateType::class,['label'=>'Day','constraints'=>[ new Callback([$this,'validateDate'])]])
             ->add('heureDebut',TimeType::class,['label'=>'Start Time'])
             ->add('heureFin',TimeType::class,['label'=>'End Time', 'constraints'=>[ new Callback([$this,'validateHeureFin'])]])

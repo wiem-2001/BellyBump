@@ -19,7 +19,7 @@
              <p><strong class="properties-title">Description </strong> {{ event.description }}</p>
              <p><strong class="properties-title">Date </strong> {{ event.day|date("d F, Y")  }}. From {{ event.heureDebut|date("H:i") }} To {{ event.heureFin|date("H:i")  }}</p>
              <p><strong class="properties-title">Number of participants: </strong> {{ event.reservation|length }}</p>
-             <a href="#"   class="btn participate-btn">Participate</a>
+             <a href="{{path('reserve_event',{id:event.id})}}"   class="btn participate-btn">Participate</a>
              </div>
         </div>
         {% endfor %}

@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Form\EventType;
 use App\Form\UpdateEventType;
 use App\Repository\EventRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\File;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Core\Security;
 
 class EventController extends AbstractController
 {
@@ -26,9 +28,11 @@ class EventController extends AbstractController
     }
 
     #[Route('/eventsList', name: 'list_event_mother')]
-    public function EventsListMother(EventRepository $repository)
+    public function EventsListMother(Security $security,EventRepository $repository,UserRepository $userRepository)
     {
-        $Events = $repository->findAll();
+        $mother=$userRepository->find(2);
+        //$mother=$security->getUser();
+        $Events = $repository->MotherNotParticipatedEvents($mother);
         return $this->render("reservation/MotherEventList.html.twig",array('tabEvents'=>$Events));
     }
 
@@ -125,12 +129,18 @@ class EventController extends AbstractController
 
 
     #[Route('/deleteEvent/{id}', name:"event_delete")]
-    public function deleteBook($id,EventRepository $repository,ManagerRegistry $managerRegistry , Request $request)
+    public function deleteEvent($id,EventRepository $repository,ManagerRegistry $managerRegistry , Request $request)
     {
         $event= $repository->find($id);
 
         if(!$event){throw $this->createNotFoundException('Event not found');}
-        
+            $oldFileName = $event->getImage();
+            // Delete the old file if it exists
+                        
+            $oldFilePath = $this->getParameter('images_directory') . '/' . $oldFileName;
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
             $em=$managerRegistry->getManager();
             $em->remove($event);
             $em->flush();
@@ -139,11 +149,6 @@ class EventController extends AbstractController
 
 
 
-    #[Route('/calender', name: 'mother_calender')]
-    public function CalenderDisplay(EventRepository $repository)
-    {
-        $Events = $repository->findAll();
-        return $this->render("calender/calenderDisplay.html.twig",array('events'=>$Events));
-    }
+    
 
 }
