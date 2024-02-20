@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request,  UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -45,9 +45,23 @@ class RegistrationController extends AbstractController
             $user->setPassword($hashedPassword);
             $user->setRoles(['ROLE_MOTHER']);
 
+            $file = $form->get('image')->getData();
+            if ($file instanceof UploadedFile) {
+                $allowedExtensions = ['jpg', 'jpeg', 'png'];
+                $fileExtension = $file->guessExtension();
+
+                if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
+                    $this->addFlash('error', 'Only JPG, JPEG, and PNG files are allowed.');
+                    return $this->redirectToRoute('app_register');
+                }
+
+                $fileName = md5(uniqid()).'.'.$fileExtension;
+                $file->move($this->getParameter('images_directory'), $fileName);
+                $user->setImage($fileName);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
-
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -57,14 +71,17 @@ class RegistrationController extends AbstractController
                     ->subject('Please Confirm your Email for BellyBump')
                     ->htmlTemplate('registration/confirmation_email_template.html.twig')
             );
+
             return $this->redirectToRoute('askForConfirmation');
         }
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
 
-        #[Route('/verify/email', name: 'app_verify_email')]
+
+    #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
         $id = $request->query->get('id');

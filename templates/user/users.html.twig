@@ -43,6 +43,7 @@
                     <tr>
                       <td>
                         <div class="d-flex px-2 py-1">
+                        <img src="{{ asset('uploads/UserImages/' ~ user.image) }}" width="100px" class="avatar  me-3 border-radius-lg" alt="event">
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">{{user.firstName}} {{user.lastName}}</h6>
                           </div>
@@ -77,7 +78,6 @@
         </div>
       </div>
 <div class="container-fluid py-4">
-
 {% block main %}
 {% endblock %}
        </main>

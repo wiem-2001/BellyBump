@@ -9,74 +9,68 @@
     <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <div class="container rounded bg-white mt-5 mb-5">
-        <div class="row">
-            <div class="col-md-4 border-right">
-                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                    <img class="rounded-circle mt-5" width="150px" src="{{asset('frontOffice/assets/img/woman.png')}}">
-                    <span class="font-weight-bold">{{user.firstName}} {{user.lastName}}</span>
-                    <span class="text-black-50">{{user.email}}</span>
-                </div>
-            </div>
-            <div class="col-md-5 border-right">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="text-right">Profile Settings</h4>
+            <div class="container rounded bg-white">
+            <div></div>
+                <div class="row">
+                    <div class="col">
+                    <div >
+                            <h4 class="text-right">Update Profil</h4>
+                            </div>
+                            {{ form_start(form,{'attr': {'novalidate': 'novalidate','action': path('update_profil'),'method': 'POST'}} ) }}
+                            {{ form_errors(form) }}
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                 <img id="profileImage" class="rounded-circle mt-2"  width="150px" src="{{ asset('uploads/UserImages/' ~ user.image) }}">
+                                    {{ form_widget(form.image, { 'attr': { 'class': 'btn btn-primary mt-2', 'style': 'display: none;', 'onchange': 'displaySelectedImage(event)' } }) }}
+                                    <label for="{{ form.image.vars.id }}" class="btn btn-primary mt-2">Choose profile picture</label>
+                            </div>
                     </div>
-                    {{ form_start(form,{'attr': {'novalidate': 'novalidate','action': path('update_profil'),'method': 'POST'}} ) }}
-                    {{ form_errors(form) }}
+                </div>
+                <div class="row">
+<div class="col-md-4"></div>
+                    <div class="col-md-8">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Update Profil</h4>
+                            </div>
                     <div class="row mt-2">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             {{ form_label(form.firstName, 'First Name', {'label_attr': {'class': 'labels'}}) }}
                             {{ form_widget(form.firstName, { 'attr': { 'class': 'form-control', 'placeholder': 'enter your new first name', 'value':user.firstName} } )}}
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             {{ form_label(form.lastName, 'Last Name', {'label_attr': {'class': 'labels'}}) }}
                             {{ form_widget(form.lastName, { 'attr': { 'class': 'form-control', 'placeholder': 'enter your new last name','value':user.lastName} } )}}
                         </div>
                     </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12">
+                    <div class="row mt-4">
+                        <div class="col-md-8">
                              {{ form_label(form.phoneNumber) }}
                              {{ form_widget(form.phoneNumber,{ 'attr': { 'class': 'form-control', 'placeholder': 'enter your phone number','value':user.phoneNumber} }) }}
-
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                              {{ form_label(form.adress) }}
                              {{ form_widget(form.adress,{ 'attr': { 'class': 'form-control', 'placeholder': 'enter your adress','value':user.adress} }) }}
                         </div>
-                        <div class="col-md-12"> 
+                        <div class="col-md-8">
                             {{ form_label(form.birthday) }}
                             {{ form_widget(form.birthday, {'attr': {  'placeholder': 'user.birthday' }}) }}
                         </div>
-                    </div>
-                    <div class="mt-3">
-                        {{ form_widget(form.save, {'label': 'Save profile', 'attr': {'class': 'btn btn-danger float-end', 'onclick':"return confirm('Are you sure you want to update your profil ? ')"
-                        }}) }}
-                    </div>
-                </div>
-                {{ form_end(form) }}
+                        <div class="col-md-8" style="margin-bottom:10px">
+                            {{ form_widget(form.save, {'label': 'Save profile', 'attr': {'class': 'btn btn-danger float-end', 'onclick':"return confirm('Are you sure you want to update your profil ? ')"
+                            }}) }}
+                        </div>
 
-            </div>
-          <!--  <div class="col-md-4">
-                <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience">
-                        <span>Edit Password</span>
-                        <span class="border px-3 p-1 add-experience">
-                            <i class="fa fa-plus"></i>&nbsp;Experience
-                        </span>
-                    </div><br>
-                    <div class="col-md-12">
-                        <label class="labels">New Password</label>
-                        <input type="text" class="form-control" placeholder="enter your new password" value="">
                     </div>
-                    <br>
-                    <div class="col-md-12">
-                        <label class="labels">Confirm Password</label>
-                        <input type="text" class="form-control" placeholder="confirm your new password" value="">
-                    </div>
-                </div>
-            </div>-->
+                {{ form_end(form) }}
         </div>
+<div class="col-md-2"></div>
+
     </div>
+  </div>
+</div>
+    <script>
+        function displaySelectedImage(event) {
+            var profileImage = document.getElementById('profileImage');
+            profileImage.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 {% endblock %}

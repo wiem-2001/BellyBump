@@ -7,6 +7,7 @@ use phpDocumentor\Reflection\Types\True_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -90,6 +91,12 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Your password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
                     ]),
                 ],
+            ])
+            ->add('image',FileType::class,[
+                'label' => 'Choose Image',
+                'data_class'=> null ,
+                'constraints'=> [new Assert\NotBlank(array("message" => "Please choose an image")),]
+
             ])
             ->add('birthday', BirthdayType::class)
             ->add('save', SubmitType::class, [

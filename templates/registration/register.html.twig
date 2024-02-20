@@ -67,6 +67,12 @@
                         <div class="error-message"><Strong>{{ form_errors(registrationForm.plainPassword.second) }}</Strong></div>
                     </div>
                     <div>
+                        {{ form_label(registrationForm.image) }}
+                        {{ form_widget(registrationForm.image, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''),
+                            'accept': 'image/png, image/jpeg, image/jpg'} } )}}
+                        <div class="error-message"><Strong>{{ form_errors(registrationForm.image) }}</Strong></div>
+                    </div>
+                    <div>
                         {{ form_label(registrationForm.birthday) }}
                         {{ form_widget(registrationForm.birthday) }}
                         <div class="error-message"><Strong>{{ form_errors(registrationForm.birthday) }}</Strong></div>

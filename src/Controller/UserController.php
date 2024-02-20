@@ -7,6 +7,7 @@ use App\Form\PasswordUpdateFormType;
 use App\Form\UpdateProfilFormType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -109,7 +110,20 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Get the updated profile data from the form
             $user = $form->getData();
-    
+            $imageFile = $form->get('image')->getData();
+            if ($imageFile instanceof UploadedFile) {
+                // Generate a unique name for the file before saving it
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                // Move the file to the directory where images are stored
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+            }
+                // Update the 'image' property to store the image file name
+                $user->setImage($newFilename);
             // Persist the changes to the database
             $em = $managerRegistry->getManager();
             $em->persist($user);
