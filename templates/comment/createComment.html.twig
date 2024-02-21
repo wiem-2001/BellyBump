@@ -1,0 +1,50 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Comment{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <style>
+        /* Styles pour le formulaire */
+        .form-container {
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 204, 203, 0.5); /* Couleur semi-transparente liée à la maternité */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Effet d'ombre */
+        }
+        .form-input {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ajuster la largeur pour inclure le padding */
+        }
+        .form-button {
+            width: 100%;
+            background-color: #ff6666;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <div class="form-container">
+        {{ form_start(f) }}
+        {{ form_row(f.contenu, {'attr': {'class': 'form-input'}}) }}
+        {{ form_end(f) }}
+    </div>
+{% endblock %}
