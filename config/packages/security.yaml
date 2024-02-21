@@ -13,6 +13,7 @@ security:
             security: false
         admin:
             lazy: true
+            pattern: ^/admin
             provider: app_user_provider
             form_login:
                 login_path: admin_login
@@ -29,6 +30,7 @@ security:
                 always_remember_me: true
         mother: # Add a new firewall for makers
             lazy: true
+            pattern: ^/
             provider: app_user_provider
             form_login:
                 login_path: app_login # Different login path for makers

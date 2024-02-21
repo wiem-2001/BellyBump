@@ -27,7 +27,14 @@
                     <p>Where Motherhood's Challenges Transform into Triumphs</p>
                 </div>
                 <div class="col-lg-6">
-                    <form method="post" action="{{ path('admin_login') }}" novalidate>
+                    <form method="post" action="{{ path('app_login') }}" novalidate>
+                        {% if error %}
+                            {% if app.request.get('_username') == '' or app.request.get('_password') == '' %}
+                                <div class="alert alert-danger">Please fill in all fields</div>
+                            {% else %}
+                                <div class="alert alert-light">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                        {% endif %}
                         <label for="username">Email</label>
                         <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" placeholder="enter your email" required autofocus>
                         <label for="password">Password</label>

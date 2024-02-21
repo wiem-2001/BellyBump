@@ -21,58 +21,45 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Security;
 class AuthController extends AbstractController
 {
-    #[Route('/loginAdmin', name: 'admin_login')]
-    public function loginAdmin(AuthenticationUtils $authenticationUtils,Security $security): Response
+    #[Route('/admin/loginAdmin', name: 'admin_login')]
+    public function loginAdmin(AuthenticationUtils $authenticationUtils, Security $security): Response
     {
-
-        $user = $security->getUser();
-
-        if ($user) {
-            // Check the role of the user
-            if (in_array('ROLE_MOTHER', $user->getRoles())) {
-                // If the user is a mother, redirect to another route
-                return $this->redirectToRoute('app_testTemplate');
-            }
-           else{
-            return $this->redirectToRoute('app_user');
-           }
+        // Redirect authenticated users to their respective interfaces
+        if ($security->getUser()) {
+            return $this->redirectToRoute('app_user'); // Redirect to the admin interface
         }
-        // Get the login error if there is one
+
+        // Handle login form rendering
         $error = $authenticationUtils->getLastAuthenticationError();
-        // Last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('security/admin_login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
+
     #[Route('/', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils,Security $security): Response
+    public function login(AuthenticationUtils $authenticationUtils, Security $security): Response
     {
-        $user = $security->getUser();
-        if ($user) {
-            // Check the role of the user
-            if (in_array('ROLE_MOTHER', $user->getRoles())) {
-                $isVerified=$user->getIsVerified();
-                dump($isVerified);
-                if($isVerified==1){
-                    return $this->redirectToRoute('app_testTemplate');
-                }
+        // Redirect authenticated users to their respective interfaces
+        if ($security->getUser()) {
+            if (in_array('ROLE_MOTHER', $security->getUser()->getRoles())) {
+                return $this->redirectToRoute('app_testTemplate'); // Redirect to the mother interface
             }
-            else{
-                return $this->redirectToRoute('get_users');
-            }
+            return $this->redirectToRoute('get_users'); // Redirect to the admin interface
         }
-        // Get the login error if there is one
+
+        // Handle login form rendering
         $error = $authenticationUtils->getLastAuthenticationError();
-        // Last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('security/mother_login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
     }
-    #[Route('/logoutAdmin', name: 'admin_logout')]
+    #[Route('/admin/logoutAdmin', name: 'admin_logout')]
     public function logoutAdmin(): void
     {
 
