@@ -30,7 +30,6 @@ class UserController extends AbstractController
     #[Route('/getAll_users', name: 'get_users')]
     public function getUsers(UserRepository $repository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $users=$repository->findUsersWithMotherRole();
         return $this->render('user/users.html.twig',array('users'=>$users));
     }
@@ -71,13 +70,14 @@ class UserController extends AbstractController
 
         return $this->render('user/show_profil.html.twig', [
             'user' => $user,
-            'form' => $form->createView(),
+            'profilUpdateForm' => $form->createView(),
         ]);
     }
     #[Route('/update-password', name: 'update_password')]
-    public function updatePassword(Request $request,ManagerRegistry $managerRegistry,UserPasswordHasherInterface $userPasswordHasher): Response
+    public function updatePassword(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $this->denyAccessUnlessGranted('ROLE_MOTHER');
+
         // Get the current user
         $user = $this->getUser();
 
@@ -87,29 +87,35 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Get the new password from the form
+            $newPassword = $form->get('plainPassword')->getData();
+
             // Update the user's password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $newPassword
                 )
             );
+
             // Persist the changes to the database
-            $em= $managerRegistry->getManager();
+            $em = $managerRegistry->getManager();
             $em->flush();
+
+            // Add success flash message
+            $this->addFlash('success', 'Your password has been successfully updated.');
+
             // Redirect the user after successful password update
             return $this->redirectToRoute('update_password');
         }
-        $this->addFlash('success', 'Password updated successfully');
 
         // Render the password update form
         return $this->render('user/update_password.html.twig', [
             'passwordUpdateForm' => $form->createView(),
-            'user'=>$user
+            'user' => $user
         ]);
     }
    
-    #[Route('/update-profil', name: 'update_profil')]
+    #[Route('/updateProfil', name: 'update_profil')]
     public function updateProfil(Request $request, ManagerRegistry $managerRegistry): Response
     {
         $this->denyAccessUnlessGranted('ROLE_MOTHER');
@@ -148,7 +154,7 @@ class UserController extends AbstractController
         $this->addFlash('success', 'Profile updated successfully');
     
         // Render the profile update form
-        return $this->render('user/update_profil.html.twig', [
+        return $this->render('user/show_profil.html.twig', [
             'profilUpdateForm' => $form->createView(),
             'user' => $user
         ]);

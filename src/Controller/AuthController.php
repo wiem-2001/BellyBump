@@ -24,9 +24,16 @@ class AuthController extends AbstractController
     #[Route('/admin/loginAdmin', name: 'admin_login')]
     public function loginAdmin(AuthenticationUtils $authenticationUtils, Security $security): Response
     {
-        // Redirect authenticated users to their respective interfaces
-        if ($security->getUser()) {
-            return $this->redirectToRoute('app_user'); // Redirect to the admin interface
+        $user = $security->getUser();
+        if ($user) {
+            // Check the role of the user
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {
+                // If the user is a mother, redirect to another route
+                return $this->redirectToRoute('app_testTemplate');
+            }
+           else{
+            return $this->redirectToRoute('get_users');
+           }
         }
 
         // Handle login form rendering
@@ -42,12 +49,19 @@ class AuthController extends AbstractController
     #[Route('/', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils, Security $security): Response
     {
-        // Redirect authenticated users to their respective interfaces
-        if ($security->getUser()) {
-            if (in_array('ROLE_MOTHER', $security->getUser()->getRoles())) {
-                return $this->redirectToRoute('app_testTemplate'); // Redirect to the mother interface
+        $user = $security->getUser();
+        if ($user) {
+            // Check the role of the user
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {
+                $isVerified=$user->getIsVerified();
+                dump($isVerified);
+                if($isVerified==1){
+                    return $this->redirectToRoute('app_testTemplate');
+                }
             }
-            return $this->redirectToRoute('get_users'); // Redirect to the admin interface
+            else{
+                return $this->redirectToRoute('get_users');
+            }
         }
 
         // Handle login form rendering
