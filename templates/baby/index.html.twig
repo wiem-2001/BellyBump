@@ -1,0 +1,44 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Baby index{% endblock %}
+
+{% block body %}
+ <h1 >Baby index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>DateNaissance</th>
+                <th>Poids</th>
+                <th>Taille</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for baby in babies %}
+            <tr>
+                <td>{{ baby.id }}</td>
+                <td>{{ baby.nom }}</td>
+                <td>{{ baby.prenom }}</td>
+                <td>{{ baby.sexe }}</td>
+                <td>{{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ baby.poids }}</td>
+                <td>{{ baby.taille }}</td>
+                <td>
+                    <a href="{{ path('app_baby_show', {'id': baby.id}) }}"class="btn btn-warning">show</a>
+                    <a href="{{ path('app_baby_edit', {'id': baby.id}) }}"class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<a href="{{ path('app_baby_new') }}" class="btn btn-warning" style="background-color:pink;">Create new</a>
+{% endblock %}

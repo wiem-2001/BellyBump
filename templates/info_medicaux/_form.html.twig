@@ -1,0 +1,37 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Add New Baby{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.maladie, 'Maladie') }}
+                        {{ form_widget(form.maladie, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description, 'Write your description') }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.nbrVaccin, 'nbrVaccin') }}
+                        {{ form_widget(form.nbrVaccin, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                     <div class="form-group">
+                        {{ form_label(form.dateVaccin, 'nbrVaccin') }}
+                        {{ form_widget(form.dateVaccin, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-danger" style="margin-top: 20px;margin-left: 20px">{{ button_label|default('Save') }}</button>
+                     <a href="{{ path('app_info_medicaux_index') }}" class="btn btn-warning" style="margin-top: 20px;margin-left: 20px">back to list</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}InfoMedicaux index{% endblock %}
+
+{% block body %}
+    <h1>InfoMedicaux index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Maladie</th>
+                <th>Description</th>
+                <th>NbrVaccin</th>
+                 
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for info_medicaux in info_medicauxes %}
+            <tr>
+                <td>{{ info_medicaux.id }}</td>
+                <td>{{ info_medicaux.maladie }}</td>
+                <td>{{ info_medicaux.description }}</td>
+                <td>{{ info_medicaux.nbrVaccin }}</td>
+                <td>{{ info_medicaux.dateVaccin ? info_medicaux.dateVaccin|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_info_medicaux_show', {'id': info_medicaux.id}) }}"class="btn btn-warning">show</a>
+                    <a href="{{ path('app_info_medicaux_edit', {'id': info_medicaux.id}) }}"class="btn btn-danger">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_info_medicaux_new') }}"class="btn btn-warning" style="background-color:pink;">Create new</a>
+{% endblock %}

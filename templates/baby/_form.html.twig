@@ -1,0 +1,43 @@
+{# templates/baby/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Add New Baby{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.nom, 'Last Name') }}
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.prenom, 'First Name') }}
+                        {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.sexe, 'Gender') }}
+                        {{ form_widget(form.sexe, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.dateNaissance, 'Date of Birth') }}
+                        {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.poids, 'Weight') }}
+                        {{ form_widget(form.poids, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.taille, 'Height') }}
+                        {{ form_widget(form.taille, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <button type="submit" class="btn btn-danger">{{ button_label|default('Save') }}</button>
+                     <a href="{{ path('app_baby_index') }}" class="btn btn-primary">back to list</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
