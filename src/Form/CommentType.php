@@ -14,7 +14,6 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('contenu')
-            ->add('post')
             ->add('ajouter',SubmitType::class)
         ;
     }

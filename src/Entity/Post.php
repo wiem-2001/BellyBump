@@ -30,6 +30,9 @@ class Post
 
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
     private Collection $comment;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
     public function __construct()
     {
         $this->createdat = new \DateTimeImmutable();
@@ -121,5 +124,17 @@ class Post
     public function __toString()
     {
         return(string)$this->getTitle();
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }

@@ -43,11 +43,21 @@
     </style>
 
     <div class="form-container">
-        {{ form_start(f) }}
+        {{ form_start(f, { 'attr': {'novalidate': 'novalidate'} }) }}
         {{ form_row(f.title, {'attr': {'class': 'form-input'}}) }}
         {{ form_row(f.auteur, {'attr': {'class': 'form-input'}}) }}
         {{ form_row(f.content, {'attr': {'class': 'form-input'}}) }}
+        <div class="col-md-12">
+            <div class="event-label">{{ form_label(f.image) }}</div>
+            {{ form_widget(f.image, { 'attr': { 'class': 'form-control' ~ (not f.vars.valid ? ' is-invalid' : ''),
+                'accept': 'image/png, image/jpeg, image/jpg'} } )}}
+
+            <div class="text-danger">{{ form_errors(f.image) }}</div>
+
+        </div>
         {{ form_row(f.createdat, {'attr': {'class': 'form-input'}}) }}
+        {# Affichage des messages d'erreur #}
+        {{ form_errors(f) }}
         {{ form_row(f.ajouter, {'attr': {'class': 'form-button'}}) }}
         {{ form_end(f) }}
     </div>

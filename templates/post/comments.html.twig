@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PostController!{% endblock %}
+{% block title %}Hello CommentController!{% endblock %}
 
 {% block body %}
     <br>
@@ -58,7 +58,7 @@
 
         .post {
             width: 700px; /* Largeur fixe du post */
-            height: 500px; /* Hauteur fixe du post */
+            height: 300px; /* Hauteur fixe du post */
             margin: 0 auto; /* Centrage horizontal */
             background-color: #fff; /* Couleur de fond blanche */
             padding: 20px; /* Espace intérieur du post */
@@ -132,52 +132,33 @@
             border-top-left-radius: 8px; /* Arrondi pour le coin supérieur gauche */
             border-bottom-right-radius: 8px; /* Arrondi pour le coin inférieur droit */
         }
-        .image-container {
-            text-align: center; /* Pour centrer l'image horizontalement */
-        }
-
-        .image-container img {
-            border-radius: 10px; /* Pour ajouter des bordures arrondies */
-            width: 200px; /* Pour définir la largeur de l'image */
-            height: auto; /* Pour conserver les proportions de l'image */
-            display: block; /* Pour centrer l'image verticalement */
-            margin: 0 auto; /* Pour centrer l'image horizontalement */
-        }
     </style>
 
-    <h1 class="page-title">Découvrez nos derniers posts</h1>
+    <h1 class="page-title">Voir les commentaires</h1>
 
     <div class="add-post-container">
-        <a href="{{ path('addpost') }}" class="add-post-button">Ajouter un Post</a>
+        <a href="{{ path('addcomment') }}" class="add-post-button">Ajouter un Comment</a>
     </div>
     <div class="post-container">
-        {% if posts is not empty %}
-            {% for post in posts %}
+        {% if comments is not empty %}
+            {% for comment in comments %}
                 <div class="post">
-                    <h2 class="post-title">{{ post.title }}</h2>
-                    <h6 >{{ post.auteur }}</h6>
-                    <p class="post-date">Date de création : {{ post.createdAt|date('Y-m-d H:i:s') }}</p>
+
                     <div class="post-content">
-                        <p>{{ post.content }}</p>
+                        <p>{{ comment.contenu }}</p>
 
                     </div>
-                    <div class="image-container">
-                        <img src="{{ asset('uploads/imagesPost/' ~ post.image) }}" alt="post">
+                    <div class="post-actions">
+                        <a href="{{ path('updatecomment', {'id': comment.id}) }}" class="edit-post-button">Éditer</a>
                     </div>
                     <div class="post-actions">
-                        <a href="{{ path('updatepost', {'id': post.id}) }}" class="edit-post-button">Éditer</a>
-                    </div>
-                    <div class="post-actions">
-                        <a href="{{ path('deletepost', {'id': post.id}) }}" class="edit-post-button">Supprimer
+                        <a href="{{ path('deletecomment', {'id': comment.id}) }}" class="edit-post-button">Supprimer
                         </a>
-                    </div>
-                    <div class="post-actions">
-                        <a href="{{ path('display_comment', {'postId': post.id}) }}" class="btn">Voir les commentaires</a>
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p>Aucun post trouvé.</p>
+            <p>Aucun Commentaire trouvé.</p>
         {% endif %}
     </div>
 {% endblock %}
