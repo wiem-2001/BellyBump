@@ -6,9 +6,12 @@ use App\Entity\User;
 use App\Form\PasswordUpdateFormType;
 use App\Form\UpdateProfilFormType;
 use App\Repository\UserRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,18 +36,27 @@ class UserController extends AbstractController
     }
 
     #[Route('/user/delete/{id}', name: 'delete_user')]
-    public function delete(ManagerRegistry $managerRegistry,$id,UserRepository $repository): Response
+    public function delete(ManagerRegistry $managerRegistry, $id, UserRepository $repository, MailerInterface $mailer): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $user= $repository->find($id);
-        $em= $managerRegistry->getManager();
-        if(in_array('ROLE_MOTHER', $user->getRoles(), true)){
+        $user = $repository->find($id);
+        $em = $managerRegistry->getManager();
+
+        if ($user && in_array('ROLE_MOTHER', $user->getRoles(), true)) {
+            // Sending email to the mother
+            $email = (new TemplatedEmail())
+                ->from(new Address('bellybump4@gmail.com', 'BellyBump account Status'))
+                ->to($user->getEmail())
+                ->subject('Account Deletion Notification')
+                ->htmlTemplate('user/userDeletionEmailTemplate.php');
+            $mailer->send($email);
+            // Remove the user
             $em->remove($user);
             $em->flush();
-        }
-        else{
+        } else {
             return new Response("Error");
         }
+
         return $this->redirectToRoute('get_users');
     }
     #[Route('/user/details/{id}', name: 'detail_user')]

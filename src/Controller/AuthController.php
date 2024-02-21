@@ -24,7 +24,9 @@ class AuthController extends AbstractController
     #[Route('/loginAdmin', name: 'admin_login')]
     public function loginAdmin(AuthenticationUtils $authenticationUtils,Security $security): Response
     {
+
         $user = $security->getUser();
+
         if ($user) {
             // Check the role of the user
             if (in_array('ROLE_MOTHER', $user->getRoles())) {
@@ -51,8 +53,11 @@ class AuthController extends AbstractController
         if ($user) {
             // Check the role of the user
             if (in_array('ROLE_MOTHER', $user->getRoles())) {
-                // If the user is a mother, redirect to another route
-                return $this->redirectToRoute('app_testTemplate');
+                $isVerified=$user->getIsVerified();
+                dump($isVerified);
+                if($isVerified==1){
+                    return $this->redirectToRoute('app_testTemplate');
+                }
             }
             else{
                 return $this->redirectToRoute('get_users');

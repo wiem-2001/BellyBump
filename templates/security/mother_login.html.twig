@@ -12,6 +12,11 @@
   </header><!-- End Header -->
 {% endblock %}
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
     <!-- Hero Section - Home Page -->
     <section id="hero" class="hero">
         <img src="frontOffice/assets/img/hero-bg.webp" alt="">
