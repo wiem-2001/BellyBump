@@ -31,7 +31,7 @@ class EventController extends AbstractController
     #[Route('/eventsList', name: 'list_event_mother')]
     public function EventsListMother(Security $security,EventRepository $repository,UserRepository $userRepository)
     {
-        $mother=$userRepository->find(2);
+        $mother=$userRepository->find(1);
         //$mother=$security->getUser();
         $Events = $repository->MotherNotParticipatedEvents($mother);
         return $this->render("reservation/MotherEventList.html.twig",array('tabEvents'=>$Events));
@@ -77,56 +77,73 @@ class EventController extends AbstractController
 
 
 
-    //UPDATE  AN EXISTING EVENT
-    #[Route('/updateEvent/{id}', name: 'event_update')]
-    public function updateEvent(Request $request,  $id, ManagerRegistry $managerRegistry,EventRepository $repository): Response
-    {
-        $event = $repository->find($id);
-        $oldFileName = $event->getImage();
+   //UPDATE  AN EXISTING EVENT ***********************************************************************************
+   #[Route('/updateEvent/{id}', name: 'event_update')]
+public function updateEvent(Request $request, $id, ManagerRegistry $managerRegistry, EventRepository $repository): Response
+{
+    $event = $repository->find($id);
+    $oldFileName = $event->getImage();
 
-        $form = $this->createForm(EventType::class, $event);
-        //$form->get('image')->setData(new File($this->getParameter('images_directory').$oldFileName));
-        $form->handleRequest($request);
+    $form = $this->createForm(UpdateEventType::class, $event);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Validate the uploaded file
-                $file = $form->get('image')->getData();
-                if($file instanceof UploadedFile) {
-                    $allowedExtensions = ['jpg', 'jpeg', 'png'];
-                    $fileExtension = $file->guessExtension();
-    
-                    if (!in_array(strtolower($fileExtension), $allowedExtensions)) {
-                        $this->addFlash('error', 'Only JPG, JPEG, and PNG files are allowed.');
-                        return $this->redirectToRoute('event_update', ['id' => $id]);
-                    }
-    
-                    // Delete the old file if it exists
-                    
-                    $oldFilePath = $this->getParameter('images_directory') . '/' . $oldFileName;
-                    if (file_exists($oldFilePath)) {
-                        unlink($oldFilePath);
-                    }
-                    // Handle file upload and entity updating
-                    $fileName = md5(uniqid()) . '.' . $fileExtension;
-                    $file->move($this->getParameter('images_directory'), $fileName);
-                    $event->setImage($fileName);
-                }
-            
-            
+    if ($form->isSubmitted() && $form->isValid()) {
+        $event = $form->getData();
 
-            // Update the event entity in the database
-            $entityManager = $managerRegistry->getManager();
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Event updated successfully.');
-
-            return $this->redirectToRoute('list_event');
+        // Handle null values for optional fields
+        $eventName = $form->get('name')->getData();
+        if ($eventName !== null) {
+            $event->setName($eventName);
         }
 
-        return $this->render('event/updateEvent.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        $eventDescription = $form->get('description')->getData();
+        if ($eventDescription !== null) {
+            $event->setDescription($eventDescription);
+        }
+
+        $meetingCode = $form->get('MeetingCode')->getData();
+        if ($meetingCode !== null) {
+            $event->setMeetingCode($meetingCode);
+        }
+
+        // Validate the uploaded file
+        $file = $form->get('image')->getData();
+        if ($file instanceof UploadedFile) {
+            // Handle file upload and entity updating
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFilename = $originalFilename . '-' . uniqid() . '.' . $file->guessExtension();
+
+            // Move the file to the directory where images are stored
+            $file->move(
+                $this->getParameter('images_directory'),
+                $newFilename
+            );
+
+            // Delete the old file if it exists
+            $oldFilePath = $this->getParameter('images_directory') . '/' . $oldFileName;
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+
+            // Update the image property of the event
+            $event->setImage($newFilename);
+        }
+
+        // Update the event entity in the database
+        $entityManager = $managerRegistry->getManager();
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Event updated successfully.');
+
+        return $this->redirectToRoute('list_event');
     }
+
+    return $this->render('event/updateEvent.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+
+
 
 
     #[Route('/deleteEvent/{id}', name:"event_delete")]

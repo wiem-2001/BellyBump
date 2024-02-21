@@ -155,8 +155,8 @@ Launch
                         <thead>
                             <tr>
                                 <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Event Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Participant</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Participant Name</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> email</th>
                                 <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                                 
                             </tr>
@@ -166,7 +166,7 @@ Launch
                             {% set notEmptynbr = 0 %}
                             {% for event in tabEvents %}
                               {% if event.reservation is not empty%}
-                                {% set notEmptynbr = notEmpty + 1 %}
+                                {% set notEmptynbr = notEmptynbr + 1 %}
                                 {% if currentEventId != event.id %}
                                     {% set currentEventId = event.id %}
                                     <tr>
