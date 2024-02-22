@@ -40,6 +40,9 @@ class Event
     #[ORM\Column(length: 10, nullable: true)]
     private ?string $MeetingCode = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cochedEvents')]
+    private ?Coach $coach = null;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -154,6 +157,18 @@ class Event
     public function setMeetingCode(string $MeetingCode): static
     {
         $this->MeetingCode = $MeetingCode;
+
+        return $this;
+    }
+
+    public function getCoach(): ?Coach
+    {
+        return $this->coach;
+    }
+
+    public function setCoach(?Coach $coach): static
+    {
+        $this->coach = $coach;
 
         return $this;
     }

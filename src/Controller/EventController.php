@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Form\EventType;
 use App\Form\UpdateEventType;
+use App\Repository\CoachRepository;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,18 +21,19 @@ use Symfony\Component\Security\Core\Security;
 class EventController extends AbstractController
 {
     #[Route('/manageEvents', name: 'list_event')]
-    public function EventsList(EventRepository $repository)
+    public function EventsList(EventRepository $repository,CoachRepository $coachRepository)
     {
         $realizedEvents=$repository->findRealizedEvents();
         $notrealizedEvents=$repository->findNotRealizedEvents();
         $Events = $repository->findAll();
-        return $this->render("Event/AdminEventList.html.twig",array('notrealizedEvents'=>$notrealizedEvents,'realizedEvents'=>$realizedEvents,'tabEvents'=>$Events));
+        $Coachs= $coachRepository->findAll();
+        return $this->render("Event/AdminEventList.html.twig",array('notrealizedEvents'=>$notrealizedEvents,'realizedEvents'=>$realizedEvents,'tabEvents'=>$Events,'tabCoach'=>$Coachs));
     }
 
     #[Route('/eventsList', name: 'list_event_mother')]
     public function EventsListMother(Security $security,EventRepository $repository,UserRepository $userRepository)
     {
-        $mother=$userRepository->find(1);
+        $mother=$userRepository->find(2);
         //$mother=$security->getUser();
         $Events = $repository->MotherNotParticipatedEvents($mother);
         return $this->render("reservation/MotherEventList.html.twig",array('tabEvents'=>$Events));

@@ -36,7 +36,14 @@
             
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-12">
+            <div class="event-label">{{ form_label(form.coach) }}</div> 
+            {{ form_widget(form.coach, { 'attr': { 'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : '')} } )}}
+            <div class="text-danger">{{ form_errors(form.coach) }}</div>
+            
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="event-label">{{ form_label(form.MeetingCode) }}</div> 
@@ -111,7 +118,7 @@
                 color: black;
                 font-weight: bold ;
             }
-          input[type="text"].form-control , textarea.form-control,input[type="file"].form-control{
+          input[type="text"].form-control ,select.form-control, textarea.form-control,input[type="file"].form-control{
             border: 1px solid #000; /* Add stroke */
             }
             textarea.form-control.is-invalid{

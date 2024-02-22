@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Event;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,6 +39,10 @@ class UpdateEventType extends AbstractType
             ->add('MeetingCode', TextType::class, [
                 'label' => 'Meeting Code',
                 'required' => false, // Set the field as not required
+            ])
+            ->add('coach',EntityType::class,[
+                'class'=>'App\Entity\Coach',
+                'placeholder'=>'select coach',
             ])
             ->add('day', DateType::class, [
                 'label' => 'Day',

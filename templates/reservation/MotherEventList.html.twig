@@ -22,6 +22,9 @@
             <option value="name">Name</option>
         </select>
     </div>
+        {% if tabEvents is empty  %}
+        <p>No events to display.</p>
+        {% else %}
         {% for event in tabEvents %}
         <div class="row event-item" id="event">
             <div class="col-lg-4 event-image">
@@ -32,7 +35,9 @@
             </div>
 
             <div class="col-lg-8 event-details">
-             
+            {% if event.coach != null %}
+             <p><strong class="properties-title">Coached By </strong><b> {{ event.coach }}</b> ~ {{event.coach.job}} </p>
+             {% endif %}
              <p><strong class="properties-title">Description </strong> {{ event.description }}</p>
              <p><strong class="properties-title">Date </strong> {{ event.day|date("d F, Y")  }}. From {{ event.heureDebut|date("H:i") }} To {{ event.heureFin|date("H:i")  }}</p>
              <p><strong class="properties-title">Number of participants: </strong> {{ event.reservation|length }}</p>
@@ -40,6 +45,7 @@
              </div>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
     <style>
        body {

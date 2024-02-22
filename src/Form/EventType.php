@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Event;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -35,6 +36,10 @@ class EventType extends AbstractType
             ])
             ->add('MeetingCode', TextType::class,['label'=>'Meeting Code',
             'constraints'=> [new Assert\NotBlank(array("message" => "Please enter a meeting code ")),]
+            ])
+            ->add('coach',EntityType::class,[
+                'class'=>'App\Entity\Coach',
+                'placeholder'=>'select coach',
             ])
             ->add('day',DateType::class,['label'=>'Day','constraints'=>[ new Callback([$this,'validateDate'])]])
             ->add('heureDebut',TimeType::class,['label'=>'Start Time'])

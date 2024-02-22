@@ -20,7 +20,7 @@ class ReservationController extends AbstractController
     #[Route('/calender', name: 'mother_calender')]
     public function CalenderDisplay(Security $security,EventRepository $repository,UserRepository $userRepository)
     {
-        $mother=$userRepository->find(1);
+        $mother=$userRepository->find(2);
         //$mother=$security->getUser();
         $Events = $repository->MotherParticipatedEvents($mother);//creer une fonction dans le repository  pour récupérer les événements d'une maman authentifier 
         return $this->render("calender/calenderDisplay.html.twig",array('events'=>$Events));
@@ -31,7 +31,7 @@ class ReservationController extends AbstractController
     public function EventReservation(Security $security , $id,EventRepository $eventRepository,UserRepository $userRepository,ManagerRegistry $managerRegistry): Response
     {
         //$user = $security->getUser();
-        $user=$userRepository->find(1);
+        $user=$userRepository->find(2);
         $event = $eventRepository->find($id);
         if ($user) {
             // Check the role of the user
@@ -57,7 +57,7 @@ class ReservationController extends AbstractController
     public function CancelReservation( Security $security , $eventId,EventRepository $eventRepository,ManagerRegistry $managerRegistry,UserRepository $userRepository): Response
     {
         //$user = $security->getUser();
-        $user=$userRepository->find(1);
+        $user=$userRepository->find(2);
         $event = $eventRepository->find($eventId);
         if ($user) {
             // Check the role of the user
