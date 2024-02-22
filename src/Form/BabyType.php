@@ -3,22 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Baby;
-use App\Validator\Constraints\AfterToday;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
 
 class BabyType extends AbstractType
 {
-    private ValidatorInterface $validator;
-
-    public function __construct(ValidatorInterface $validator)
-    {
-        $this->validator = $validator;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -30,11 +23,10 @@ class BabyType extends AbstractType
                     'Féminin' => 'Féminin',
                 ],
             ])
-            ->add('dateNaissance', null, [
-                'constraints' => new AfterToday(),
-            ])
+            ->add('dateNaissance')
             ->add('poids')
-            ->add('taille');
+            ->add('taille')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -11,20 +11,28 @@
             <div class="col-md-6 offset-md-3">
                 {{ form_start(form, {'attr': {'class': 'form'}}) }}
                     <div class="form-group">
-                        {{ form_label(form.maladie, 'Maladie') }}
+                        {{ form_label(form.maladie, 'Maladie ') }}
                         {{ form_widget(form.maladie, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.maladie) }}
+
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.description, 'Write your description') }}
+                        {{ form_label(form.description, 'Write Sickness description') }}
                         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.description) }}
+
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.nbrVaccin, 'nbrVaccin') }}
+                        {{ form_label(form.nbrVaccin, 'Number of vaccin needed ') }}
                         {{ form_widget(form.nbrVaccin, {'attr': {'class': 'form-control'}}) }}
+                                           {{ form_errors(form.nbrVaccin) }}
+
                     </div>
                      <div class="form-group">
-                        {{ form_label(form.dateVaccin, 'nbrVaccin') }}
+                        {{ form_label(form.dateVaccin, 'Date vaccin') }}
                         {{ form_widget(form.dateVaccin, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.dateVaccin) }}
+
                     </div>
                     
                     <button type="submit" class="btn btn-danger" style="margin-top: 20px;margin-left: 20px">{{ button_label|default('Save') }}</button>

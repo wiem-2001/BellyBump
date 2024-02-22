@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}InfoMedicaux index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-4">InfoMedicaux index</h1>
+
+    <div class="row justify-content-center">
+        {% for info_medicaux in info_medicauxes %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ info_medicaux.maladie }}</h5>
+                    <p class="card-text">{{ info_medicaux.description }}</p>
+                    <p class="card-text"><strong>Number of Vaccines:</strong> {{ info_medicaux.nbrVaccin }}</p>
+                    <p class="card-text"><strong>Date of Vaccination:</strong> {{ info_medicaux.dateVaccin ? info_medicaux.dateVaccin|date('Y-m-d') : 'N/A' }}</p>
+                    <div class="text-center">
+                        <a href="{{ path('app_info_medicaux_show', {'id': info_medicaux.id}) }}" class="btn btn-warning">More Info</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text">No records found</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

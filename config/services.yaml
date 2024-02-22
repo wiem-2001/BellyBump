@@ -8,7 +8,6 @@ parameters:
 services:
 
     App\Validator\Constraints\AfterTodayValidator: ~
-    App\Validator\Constraints\AfterToday: ~
 
 
     # default configuration for services in *this* file

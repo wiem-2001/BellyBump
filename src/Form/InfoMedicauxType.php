@@ -6,6 +6,7 @@ use App\Entity\InfoMedicaux;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class InfoMedicauxType extends AbstractType
 {
@@ -13,7 +14,9 @@ class InfoMedicauxType extends AbstractType
     {
         $builder
             ->add('maladie')
-            ->add('description')
+            ->add('description', TextareaType::class, [
+                'attr' => ['rows' => 3], // Set the number of rows here
+            ])
             ->add('nbrVaccin')
             ->add('dateVaccin')
         ;

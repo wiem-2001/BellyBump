@@ -16,6 +16,7 @@ class InfoMedicaux
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Assert\Length(max: 15)]
     private ?string $maladie = null;
 
     #[ORM\Column(length: 255)]
@@ -24,7 +25,11 @@ class InfoMedicaux
 
     #[ORM\Column]
     #[Assert\NotBlank]
-    private ?int $nbrVaccin = null;
+    #[Assert\Range(
+        min: 0,
+        max: 10,
+        notInRangeMessage: "Le nombre de vaccins doit être compris entre 0 et 10."
+    )]    private ?int $nbrVaccin = null;
 
     #[ORM\Column(type: 'date')]
     #[Assert\NotBlank]

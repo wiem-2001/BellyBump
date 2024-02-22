@@ -34,19 +34,22 @@ class Baby
 
     #[ORM\Column(type: 'date')]
     #[Assert\NotBlank]
-    #[CustomAssert\AfterToday]
     private ?\DateTimeInterface $dateNaissance = null;
 
     #[ORM\Column(type: 'float')]
     #[Assert\NotBlank]
+    #[Assert\Length(max: 2)]
     private ?float $poids = null;
 
     #[ORM\Column(type: 'float')]
     #[Assert\NotBlank]
+    #[Assert\Length(max: 3)]
     private ?float $taille = null;
 
-    #[ORM\OneToMany(mappedBy: 'baby', targetEntity: InfoMedicaux::class)]
-    private Collection $IdInfoMedicaux;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?InfoMedicaux $jointure1 = null;
+
+    
 
     public function __construct()
     {
@@ -131,33 +134,17 @@ class Baby
         return $this;
     }
 
-    /**
-     * @return Collection<int, InfoMedicaux>
-     */
-    public function getIdInfoMedicaux(): Collection
+    public function getJointure1(): ?InfoMedicaux
     {
-        return $this->IdInfoMedicaux;
+        return $this->jointure1;
     }
 
-    public function addIdInfoMedicaux(InfoMedicaux $idInfoMedicaux): static
+    public function setJointure1(?InfoMedicaux $jointure1): static
     {
-        if (!$this->IdInfoMedicaux->contains($idInfoMedicaux)) {
-            $this->IdInfoMedicaux->add($idInfoMedicaux);
-            $idInfoMedicaux->setBaby($this);
-        }
+        $this->jointure1 = $jointure1;
 
         return $this;
     }
 
-    public function removeIdInfoMedicaux(InfoMedicaux $idInfoMedicaux): static
-    {
-        if ($this->IdInfoMedicaux->removeElement($idInfoMedicaux)) {
-            // set the owning side to null (unless already changed)
-            if ($idInfoMedicaux->getBaby() === $this) {
-                $idInfoMedicaux->setBaby(null);
-            }
-        }
-
-        return $this;
-    }
+   
 }

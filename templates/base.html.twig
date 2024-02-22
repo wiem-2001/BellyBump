@@ -39,7 +39,7 @@
     <body>
       {% block header %}
     <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" style="background-color:pink; opacity:0.9; margin-bottom:100px;">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
@@ -49,26 +49,19 @@
         <span> </span>
       </a>
       <!-- Nav Menu -->
-      <nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu" >
         <ul>
           <li><a href="index.html#hero" class="active">Home</a></li>
-          <li><a href="index.html#about">Events</a></li>
-          <li><a href="index.html#services ">Products</a></li>
-            <li><a href="index.html#services">Hospitals</a></li>
-         <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->
-          <li class="dropdown has-dropdown"><a href="#"><span>Maternal & Infant Health</span> <i class="bi bi-chevron-down"></i></a>
-            <ul class="dd-box-shadow">
-              <li><a href="#">Maternal Health</a></li>
-               <li><a href="#">Infant Health</a></li>
-              </li>
-            </ul>
-          </li>
+          <li><a href="{{path('app_babies_index')}}">Babies</a></li>
+          <li><a href="{{path('app_frontInfo_index')}}">Medical Data</a></li>
+           
          
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav><!-- End Nav Menu -->
       <a class="btn-getstarted" href="index.html#about">Get Started</a>
     </div>
+    <a class="btn btn-primary" href="{{path('app_baby_index')}}">BackOffice</a>
   </header><!-- End Header -->
   {% endblock %}
         {% block body %}
@@ -164,7 +157,7 @@
         {% endblock %}
         {% block footer %}
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
+  <footer id="footer" class="footer" >
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-5 col-md-12 footer-about">

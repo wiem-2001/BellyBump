@@ -24,23 +24,23 @@
                 <td>{{ baby.sexe }}</td>
             </tr>
             <tr>
-                <th>DateNaissance</th>
+                <th>Date Naissance</th>
                 <td>{{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Poids</th>
-                <td>{{ baby.poids }}</td>
+                <th>Poids /kg</th>
+                <td>{{ baby.poids }} kg</td>
             </tr>
             <tr>
-                <th>Taille</th>
-                <td>{{ baby.taille }}</td>
+                <th>Taille /cm</th>
+                <td>{{ baby.taille }} cm</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_baby_index') }}">back to list</a>
+    <a href="{{ path('app_baby_index') }}" class="btn btn-dark">back to list</a>
 
-    <a href="{{ path('app_baby_edit', {'id': baby.id}) }}">edit</a>
+    <a href="{{ path('app_baby_edit', {'id': baby.id}) }}" class="btn btn-success">edit</a>
 
     {{ include('baby/_delete_form.html.twig') }}
 {% endblock %}

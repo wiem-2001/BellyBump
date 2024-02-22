@@ -3,7 +3,7 @@
 {% block title %}InfoMedicaux{% endblock %}
 
 {% block body %}
-    <h1>InfoMedicaux</h1>
+    <h1>Information Medicale</h1>
 
     <table class="table">
         <tbody>
@@ -30,9 +30,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_info_medicaux_index') }}">back to list</a>
+    <a href="{{ path('app_info_medicaux_index') }}" class="btn btn-dark">back to list</a>
 
-    <a href="{{ path('app_info_medicaux_edit', {'id': info_medicaux.id}) }}">edit</a>
+    <a href="{{ path('app_info_medicaux_edit', {'id': info_medicaux.id}) }}" class="btn btn-success">edit</a>
 
     {{ include('info_medicaux/_delete_form.html.twig') }}
 {% endblock %}

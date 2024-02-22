@@ -21,6 +21,13 @@ class BabyController extends AbstractController
             'babies' => $babyRepository->findAll(),
         ]);
     }
+    #[Route('/babies', name: 'app_babies_index', methods: ['GET'])]
+    public function indexx(BabyRepository $babyRepository): Response
+    {
+        return $this->render('baby\frontBaby.html.twig', [
+            'babies' => $babyRepository->findAll(),
+        ]);
+    }
 
     #[Route('/new', name: 'app_baby_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

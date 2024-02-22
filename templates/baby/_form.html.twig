@@ -4,40 +4,68 @@
 
 {% block title %}Add New Baby{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
+
 {% block body %}
     <div class="container">
         
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    {# Affichage des erreurs globales du formulaire #}
+                    {{ form_errors(form) }}
+                    
                     <div class="form-group">
                         {{ form_label(form.nom, 'Last Name') }}
                         {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.nom) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(form.prenom, 'First Name') }}
                         {{ form_widget(form.prenom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.prenom) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.sexe, 'Gender') }}
+                        {{ form_label(form.sexe, 'select your Gender') }}
                         {{ form_widget(form.sexe, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.sexe) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(form.dateNaissance, 'Date of Birth') }}
                         {{ form_widget(form.dateNaissance, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.dateNaissance) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.poids, 'Weight') }}
+                        {{ form_label(form.poids, 'put your Weight /kg') }}
                         {{ form_widget(form.poids, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.poids) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.taille, 'Height') }}
+                        {{ form_label(form.taille, 'put your Height /cm') }}
                         {{ form_widget(form.taille, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.taille) }}
                     </div>
-                    <button type="submit" class="btn btn-danger">{{ button_label|default('Save') }}</button>
-                     <a href="{{ path('app_baby_index') }}" class="btn btn-primary">back to list</a>
+                    <button type="submit" class="btn btn-danger" style="margin-top: 20px;margin-left: 20px">{{ button_label|default('Save') }}</button>
+                     <a href="{{ path('app_baby_index') }}" class="btn btn-primary" style="margin-top: 20px;margin-left: 20px">back to list</a>
                 {{ form_end(form) }}
             </div>
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $(function() {
+            $( ".js-datepicker" ).datepicker({
+                dateFormat: 'yy-mm-dd', // Set the date format to match Symfony's expected format
+            });
+        });
+    </script>
+{% endblock %}
+

@@ -22,6 +22,14 @@ class InfoMedicauxController extends AbstractController
         ]);
     }
 
+    #[Route('/frontInfo', name: 'app_frontInfo_index', methods: ['GET'])]
+    public function indexxx(InfoMedicauxRepository $infoMedicauxRepository): Response
+    {
+        return $this->render('info_medicaux\frontInfo.html.twig', [
+            'info_medicauxes' => $infoMedicauxRepository->findAll(),
+        ]);
+    }
+
     #[Route('/new', name: 'app_info_medicaux_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
