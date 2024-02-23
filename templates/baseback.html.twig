@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
@@ -10,8 +14,8 @@
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 
         <!-- Nucleo Icons -->
-        <link href="{{'backOffice/assets/css/nucleo-icons.css'}}" rel="stylesheet" />
-        <link href="{{'backOffice/assets/css/nucleo-svg.css'}}" rel="stylesheet" />
+        <link href="{{asset('backoffice/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+        <link href="{{asset('backOffice/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
 
         <!-- Font Awesome Icons -->
         <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
@@ -23,15 +27,15 @@
 
 
 
-        <link id="pagestyle" href="{{'backOffice/assets/css/material-dashboard.css?v=3.1.0'}}" rel="stylesheet" />
+        <link id="pagestyle" href="{{asset('backOffice/assets/css/material-dashboard.css?v=3.1.0')}}" rel="stylesheet" />
     {% endblock %}
 
     {% block javascripts %}
         <!--   Core JS Files   -->
-        <script src="{{'backOffice/assets/js/core/popper.min.js'}}" ></script>
-        <script src="{{'backOffice/assets/js/core/bootstrap.min.js'}}" ></script>
-        <script src="{{'backOffice/assets/js/plugins/perfect-scrollbar.min.js'}}" ></script>
-        <script src="{{'backOffice/assets/js/plugins/smooth-scrollbar.min.js'}}" ></script>
+        <script src="{{asset('backOffice/assets/js/core/popper.min.js')}}" ></script>
+        <script src="{{asset('backOffice/assets/js/core/bootstrap.min.js')}}" ></script>
+        <script src="{{asset('backOffice/assets/js/plugins/perfect-scrollbar.min.js')}}" ></script>
+        <script src="{{asset('backOffice/assets/js/plugins/smooth-scrollbar.min.js')}}" ></script>
         <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
         <script>
             var win = navigator.platform.indexOf('Win') > -1;
@@ -61,13 +65,13 @@
                 </div>
             </a>
         </div>
-        <hr class="horizontal light mt-0 mb-2">
+        <hr class="horizontal light mt-0 mb-2" style="background-color:#ed63ad;">
 
-        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+        <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main" >
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
+                    <a class="nav-link text-white " href="#"  >
 
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
@@ -231,6 +235,7 @@
     </main>
 
 {% endblock %}
+
 
 </body>
 </html>

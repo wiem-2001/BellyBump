@@ -45,4 +45,14 @@ class PartenaireRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function findBySearchTerm($searchTerm)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nom LIKE :searchTerm OR p.marque LIKE :searchTerm OR p.email LIKE :searchTerm OR p.description LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

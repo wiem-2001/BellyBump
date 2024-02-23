@@ -100,4 +100,15 @@ class PartnerController extends AbstractController
             ,array('fpartner'=>$form));
 
     }
+
+    #[Route('/partners/search', name: 'partner_search')]
+    public function search(Request $request)
+    {
+        $searchTerm = $request->query->get('search');
+        $partners = $this->getDoctrine()->getRepository(Partenaire::class)->findBySearchTerm($searchTerm);
+
+        return $this->render('partner/showPartner.html.twig', [
+            'p' => $partners
+        ]);
+    }
 }

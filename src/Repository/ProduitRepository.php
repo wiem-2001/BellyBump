@@ -45,4 +45,16 @@ class ProduitRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function searchByQuery($query)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.partenaire', 'partenaire') // Assurez-vous que 'p.partenaire' correspond à l'association dans votre entité Produit
+            ->where('p.nom LIKE :query')
+            ->orWhere('p.description LIKE :query')
+            ->orWhere('partenaire.marque LIKE :query') // Utilisez l'alias 'partenaire' défini dans la jointure
+            ->setParameter('query', '%'.$query.'%')
+            ->getQuery()
+            ->getResult();
+    }
 }

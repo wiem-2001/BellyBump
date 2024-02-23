@@ -1,35 +1,39 @@
 {% extends 'baseback.html.twig' %}
+
 {% block main %}
-    <br> <br> <br> <br> <br>
-    <table>
-        <thead>
-        <th>name</th>
-        <th>marque</th>
-        <th>email</th>
-        <th>description</th>
-        <th>delete</th>
-        <th>update</th>
 
+    <a href="{{ path('add_partner') }}" class="btn btn-success mb-3">Become our partner</a>
+    <form action="{{ path('partner_search') }}" method="get" class="form-inline mb-3">
+        <input type="text" name="search" class="form-control mr-sm-2" placeholder="Search for partners...">
+        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">Search</button>
+    </form>
 
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Email</th>
+            <th>Description</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
         </thead>
         <tbody>
         {% for partner in p %}
             <tr>
-
                 <td>{{ partner.nom }}</td>
                 <td>{{ partner.marque }}</td>
                 <td>{{ partner.email }}</td>
                 <td>{{ partner.description }}</td>
-                <td><a href="{{  path('remove_partner',{'id':partner.id})}}"class="btn btn-primary"style="background-color: #bb2d3b">delete</a>
+                <td>
+                    <a href="{{ path('remove_partner', {'id':partner.id}) }}" class="btn btn-danger">Delete</a>
                 </td>
-                <td><a href="{{  path('update_partner',{'id':partner.id})}}"class="btn btn-primary" style="background-color: #0f5132">update</a>
+                <td>
+                    <a href="{{ path('update_partner', {'id':partner.id}) }}" class="btn btn-info">Update</a>
                 </td>
-
             </tr>
         {% endfor %}
         </tbody>
-
     </table>
-    <a href="{{path('add_partner') }}" class="btn btn-primary">become our partner</a>
-
 {% endblock %}

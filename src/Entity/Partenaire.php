@@ -52,13 +52,46 @@ class Partenaire
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\OneToMany(mappedBy: 'idPartner', targetEntity: Produit::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'partenaire', targetEntity: Produit::class, orphanRemoval: true)]
     private Collection $produits;
 
     public function __construct()
     {
         $this->produits = new ArrayCollection();
     }
+
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setPartenaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getPartenaire() === $this) {
+                $produit->setPartenaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+
+
 
 
     public function getId(): ?int
@@ -115,34 +148,10 @@ class Partenaire
         return $this->description;
     }
 
-    /**
-     * @return Collection<int, Produit>
-     */
-    public function getProduits(): Collection
-    {
-        return $this->produits;
-    }
 
-    public function addProduit(Produit $produit): static
-    {
-        if (!$this->produits->contains($produit)) {
-            $this->produits->add($produit);
-            $produit->setIdPartner($this);
-        }
 
-        return $this;
-    }
 
-    public function removeProduit(Produit $produit): static
-    {
-        if ($this->produits->removeElement($produit)) {
-            // set the owning side to null (unless already changed)
-            if ($produit->getIdPartner() === $this) {
-                $produit->setIdPartner(null);
-            }
-        }
 
-        return $this;
-    }
+
 
 }
