@@ -55,6 +55,30 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function sortEventsByDate(User $mother){
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.reservation', 'u')
+            ->andWhere('u != :mother OR u IS NULL')
+            ->setParameter('mother', $mother)
+            ->orderBy('e.day', 'ASC')
+            ->addOrderBy('e.heureDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+    public function sortEventsByCoach(User $mother){
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.coach','c')
+            ->leftJoin('e.reservation','u')
+            ->andWhere('u != :mother OR u IS NULL')
+            ->setParameter('mother', $mother)
+            ->addSelect('c')
+            ->orderBy('c.firstname','ASC')
+            ->addOrderBy('c.lastname','ASC')
+            ->getQuery()->getResult();
+    }
+
+
+
 
 //    /**
 //     * @return Event[] Returns an array of Event objects

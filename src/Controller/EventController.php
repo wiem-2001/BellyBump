@@ -31,13 +31,30 @@ class EventController extends AbstractController
     }
 
     #[Route('/eventsList', name: 'list_event_mother')]
-    public function EventsListMother(Security $security,EventRepository $repository,UserRepository $userRepository)
-    {
-        $mother=$userRepository->find(2);
-        //$mother=$security->getUser();
-        $Events = $repository->MotherNotParticipatedEvents($mother);
-        return $this->render("reservation/MotherEventList.html.twig",array('tabEvents'=>$Events));
+public function EventsListMother(Request $request, Security $security, EventRepository $repository, UserRepository $userRepository)
+{
+    $mother = $userRepository->find(2);
+    //$mother=$security->getUser();
+    $Events = $repository->MotherNotParticipatedEvents($mother);
+    $triOption = $request->query->get('tri');
+
+    if ($triOption == 'date') {
+        $sortedEvents = $repository->sortEventsByDate($mother);
+        dump($sortedEvents); // Debug statement
+    } elseif ($triOption == 'coach') {
+        $sortedEvents = $repository->sortEventsByCoach($mother);
+        dump($sortedEvents); // Debug statement
+    } else {
+        // Default behavior when no sorting option is provided
+        $sortedEvents = $Events;
+        dump($sortedEvents); // Debug statement
     }
+
+    return $this->render("reservation/MotherEventList.html.twig", [
+        'tabEvents' => $sortedEvents,
+    ]);
+}
+
 
     // ADD NEW EVENT
     #[Route('/addEvent', name: 'event_add')]
