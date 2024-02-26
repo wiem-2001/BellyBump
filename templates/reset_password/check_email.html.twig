@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+   <header id="header" class="header  d-flex ">
+    <div class="container-fluid d-flex  justify-content-between">
+      <!-- Nav Menu -->
+      <nav id="navmenu">
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav><!-- End Nav Menu -->
+      <a class="btn-getstarted" href="{{ path('app_register') }}" >Get Started</a>
+    </div>
+  </header><!-- End Header -->
+{% endblock %}
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <section id="hero" class="hero">
+        <img src="{{asset('frontOffice/assets/img/hero-bg.webp')}}" alt="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Check your email</h2>
+                     <p>Please follow the instructions that has been sent to your email to reset your password.</p>
+                     <p>If you still haven't received the email, you can <a href="{{ path('app_forgot_password_request') }}">request another email</a>.</p>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+{% endblock %}
+
+

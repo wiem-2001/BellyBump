@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Security;
+
 class AuthController extends AbstractController
 {
     #[Route('/admin/loginAdmin', name: 'admin_login')]
@@ -83,41 +84,4 @@ class AuthController extends AbstractController
     {
 
     }
-    #[Route('/forgetPassword', name: 'app_forgotPassword')]
-    public function forgetPassword(Request $request, UserRepository $usersRepository, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $entityManager): Response
-      {
-        $form = $this->createForm(ResetPasswordRequestFormType::class);
-        $form->handleRequest($request);
-   if ($form->isSubmitted() && $form->isValid()) {
-            //on va chercher l'utilisateur par son email
-            $user=$usersRepository->findOneBy(['email'=>$form->get('email')->getData()]);
-            dump($user);
-            if ($user) {
-                $token = $tokenGenerator->generateToken();
-                $user->setResetToken($token);
-                $entityManager->persist($user);
-                $entityManager->flush();
-                $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
-                $context = compact('url', 'user');
-                $mail = (new TemplatedEmail())
-                    ->from(new Address('bellybump4@gmail.com', 'reset_password'))
-                    ->to($user->getEmail() )
-                    ->subject('Reset your password')
-                    ->htmlTemplate("Security/resetPassword.html.twig")
-                    ->context($context);
-
-                $this->addFlash('success', 'Email envoyé avec succès');
-                return $this->redirectToRoute('app_login');
-            }
-        }
-        return $this->render('security/reset_password_request.html.twig', [
-            'requestPassForm' => $form->createView()
-        ]);
-    }
-    #[Route('/resetPassword', name: 'reset_password')]
-    public function resetPassword(): void
-    {
-
-    }
-
 }

@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
 
 
     #[Route('/verify/email', name: 'app_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
+    public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
         $id = $request->query->get('id');
 
@@ -99,9 +99,13 @@ class RegistrationController extends AbstractController
         // validate email confirmation link, sets User::isVerified=true and persists
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
+
+            // Set status to 1 after email verification
+            $user->setStatus(1);
+            $entityManager->persist($user);
+            $entityManager->flush();
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-
             return $this->redirectToRoute('confirmed_email');
         }
 
