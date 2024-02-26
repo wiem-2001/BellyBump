@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,6 +21,15 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
+    public function CommentsByPost(Post $post){
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.post', 'p')
+            ->andWhere('p = :post')
+            ->setParameter('post', $post)
+            ->getQuery()
+            ->getResult();
+    }
+
 
 //    /**
 //     * @return Comment[] Returns an array of Comment objects

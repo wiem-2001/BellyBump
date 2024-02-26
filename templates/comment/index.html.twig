@@ -137,11 +137,14 @@
     <h1 class="page-title">Voir les commentaires</h1>
 
     <div class="add-post-container">
-        <a href="{{ path('addcomment') }}" class="add-post-button">Ajouter un Comment</a>
+        <a href="{{ path('addcomment',{'id': postId}) }}" class="add-post-button">Ajouter un Comment</a>
     </div>
     <div class="post-container">
+
         {% if comments is not empty %}
             {% for comment in comments %}
+
+                {% if comment.post.id == postId %}
                 <div class="post">
 
                     <div class="post-content">
@@ -156,6 +159,7 @@
                         </a>
                     </div>
                 </div>
+                {% endif %}
             {% endfor %}
         {% else %}
             <p>Aucun Commentaire trouvé.</p>

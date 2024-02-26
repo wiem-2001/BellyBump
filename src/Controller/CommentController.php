@@ -17,13 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/comment", name="display_comment")
+     * @Route("/comment/{id}", name="display_comment")
      */
-    public function index(CommentRepository $rep): Response
+    public function index(CommentRepository $rep,$id): Response
     {
         $comments = $rep->findAll();
         return $this->render('comment/index.html.twig', [
             'comments' => $comments,
+            'postId'=>$id
         ]);
     }
 
@@ -48,11 +49,10 @@ class CommentController extends AbstractController
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $doctrine->getManager();
             $em->persist($comment);
             $em->flush();
-            return $this->redirectToRoute('display_comment');
+            return $this->redirectToRoute('display_post');
         }
         return $this->render('comment/createComment.html.twig', ['f' => $form->createView()]);
     }
@@ -69,7 +69,7 @@ class CommentController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($comment);
             $em->flush();
-            return $this->redirectToRoute('display_comment');
+            return $this->redirectToRoute('display_post');
         }
         return $this->render('comment/editComment.html.twig', [
             'form' => $form->createView(),
@@ -85,7 +85,7 @@ class CommentController extends AbstractController
         $comment=$rep->find($id);
         $em->remove($comment);
         $em->flush();
-        return $this->redirectToRoute('display_comment');
+        return $this->redirectToRoute('display_post');
     }
     /**
      * @Route("/deletecommentback/{id}", name="deletecommentback")
@@ -100,4 +100,3 @@ class CommentController extends AbstractController
     }
 
 }
-

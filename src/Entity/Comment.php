@@ -17,8 +17,11 @@ class Comment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $contenu = null;
 
-    #[ORM\ManyToOne(inversedBy: 'comment')]
+    #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?Post $post = null;
+
+
+
 
     public function getId(): ?int
     {
@@ -37,6 +40,14 @@ class Comment
         return $this;
     }
 
+
+
+
+    public function __toString()
+    {
+        return(string)$this->getContenu();
+    }
+
     public function getPost(): ?Post
     {
         return $this->post;
@@ -48,8 +59,8 @@ class Comment
 
         return $this;
     }
-    public function __toString()
-    {
-        return(string)$this->getContenu();
-    }
+
+
+
+
 }

@@ -68,15 +68,7 @@ class PostController extends AbstractController
         }
         return $this->render('post/createPost.html.twig', ['f' => $form->createView()]);
     }
-    /**
-     * @Route("/post/{id}/comment", name="post_comments")
-     */
-    public function comments(Post $post): Response
-    {
-        return $this->render('post/comments.html.twig', [
-            'post' => $post,
-        ]);
-    }
+
 
 
 
