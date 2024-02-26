@@ -143,6 +143,42 @@
             display: block; /* Pour centrer l'image verticalement */
             margin: 0 auto; /* Pour centrer l'image horizontalement */
         }
+        /* Styles pour la pagination */
+        .pagination-container {
+            margin-top: 20px; /* Ajoute de l'espace en haut de la pagination */
+            text-align: center; /* Centrage horizontal */
+        }
+
+        .pagination-container .pagination li {
+            display: inline-block; /* Pour afficher les éléments de pagination en ligne */
+            margin: 0 5px; /* Espacement entre les éléments de pagination */
+        }
+
+        .pagination-container .pagination li.active span {
+            background-color: #ff6666; /* Couleur de fond pour la page active */
+            color: #fff; /* Couleur du texte pour la page active */
+            padding: 8px 12px; /* Ajoute un peu de rembourrage pour la page active */
+            border-radius: 5px; /* Bordure arrondie pour la page active */
+        }
+
+        .pagination-container .pagination li a {
+            padding: 8px 12px; /* Ajoute un peu de rembourrage pour les liens de pagination */
+            background-color: #fde8e8; /* Couleur de fond pour les liens de pagination */
+            color: #ff6666; /* Couleur du texte pour les liens de pagination */
+            border-radius: 5px; /* Bordure arrondie pour les liens de pagination */
+            transition: background-color 0.3s, color 0.3s; /* Ajoute une transition pour une expérience utilisateur plus douce */
+        }
+
+        .pagination-container .pagination li a:hover {
+            background-color: #ff6666; /* Couleur de fond au survol des liens de pagination */
+            color: #fff; /* Couleur du texte au survol des liens de pagination */
+        }
+
+        .pagination-container .pagination li.disabled {
+            pointer-events: none; /* Désactive les événements de souris pour les pages désactivées */
+            opacity: 0.5; /* Réduit l'opacité pour indiquer que la page est désactivée */
+        }
+
     </style>
 
     <h1 class="page-title">Découvrez nos derniers posts</h1>
@@ -151,8 +187,8 @@
         <a href="{{ path('addpost') }}" class="add-post-button">Ajouter un Post</a>
     </div>
     <div class="post-container">
-        {% if posts is not empty %}
-            {% for post in posts %}
+
+            {% for post in pagination %}
                 <div class="post">
                     <h2 class="post-title">{{ post.title }}</h2>
                     <h6 >{{ post.auteur }}</h6>
@@ -176,9 +212,11 @@
                     </div>
                 </div>
             {% endfor %}
-        {% else %}
-            <p>Aucun post trouvé.</p>
-        {% endif %}
+        <div class="pagination-container">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+
     </div>
 {% endblock %}
 
