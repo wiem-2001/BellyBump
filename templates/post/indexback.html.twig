@@ -19,6 +19,7 @@
                     <th>Auteur</th>
                     <th>Contenu</th>
                     <th>Date de Création</th>
+                    <th>Comments</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -29,6 +30,9 @@
                         <td>{{ post.auteur }}</td>
                         <td>{{ post.content }}</td>
                         <td>{{ post.createdAt|date('Y-m-d H:i:s') }}</td>
+                        <td>
+                            <a href="{{ path('display_commentback', {'id': post.id}) }}" class="btn btn-info">Voir les commentaires</a>
+                        </td>
                         <td>
                             <form action="{{ path('deletepostback', {'id': post.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>

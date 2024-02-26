@@ -1,42 +1,10 @@
-{% extends 'backbase.html.twig' %}
-
-{% block title %}Hello CommentController!{% endblock %}
 
 {% block body %}
-    <div style="text-align: center;">
-        <br>
-        <br>
-        <div class="page-title">
-            <h1>Liste des Commentaires</h1>
-        </div>
-        <br>
-        <div class="example-wrapper">
-            <a href="{{ path('display_commentback') }}" class="btn btn-primary mb-3">Voir les commentaires</a>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Contenu</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for comment in comments %}
-                    <tr>
-
-                        <td>{{ comment.contenu }}</td>
-
-                        <td>
-                            <form action="{{ path('deletecommentback', {'id': comment.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     <style>
         body {
             display: flex;
@@ -53,12 +21,12 @@
 
         /* Styles pour le conteneur principal du tableau */
         .example-wrapper {
-            width: 100%; /* Ajustez la largeur comme vous le souhaitez */
+            width: 80%; /* Ajustez la largeur comme vous le souhaitez */
+            margin: 20px auto; /* Centre le tableau horizontalement et ajoute une marge en haut et en bas */
             background-color: rgba(255, 204, 203, 0.5); /* Couleur semi-transparente liée à la maternité */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Effet d'ombre */
-            margin-left: 170px; /* Ajoutez une marge à gauche pour décaler le tableau */
         }
 
         /* Styles pour le tableau */
@@ -98,4 +66,42 @@
             background-color: #ff4d4d; /* Couleur du bouton au survol */
         }
     </style>
+    <div style="text-align: center;">
+        <br>
+        <br>
+        <div class="page-title">
+            <h1>Liste des Commentaires</h1>
+        </div>
+        <br>
+        <div class="example-wrapper">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Contenu</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if comments is not empty %}
+                    {% for comment in comments %}
+                        {% if comment.post.id == postId %}
+                            <tr>
+                                <td>{{ comment.contenu }}</td>
+                                <td>
+                                    <a href="{{ path('deletecomment', {'id': comment.id}) }}" class="edit-post-button btn btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2">Aucun Commentaire trouvé.</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 {% endblock %}

@@ -27,18 +27,20 @@ class CommentController extends AbstractController
             'postId'=>$id
         ]);
     }
-
-
     /**
-     * @Route("/commentback", name="display_commentback")
+     * @Route("/commentback/{id}", name="display_commentback")
      */
-    public function indexbackcomment(CommentRepository $rep): Response
+    public function indexbackcomment(CommentRepository $rep,$id): Response
     {
         $comments = $rep->findAll();
         return $this->render('comment/indexbackcomment.html.twig', [
             'comments' => $comments,
+            'postId'=>$id
         ]);
     }
+
+
+
 
     /**
      * @Route("/addcomment", name="addcomment")
@@ -58,6 +60,8 @@ class CommentController extends AbstractController
     }
 
     /**
+     *
+     *
      * @Route("/updatecomment/{id}", name="updatecomment")
      */
     public function updateComment(ManagerRegistry $doctrine, Request $request, CommentRepository $rep, $id): Response

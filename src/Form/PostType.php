@@ -30,7 +30,7 @@ class PostType extends AbstractType
                     new Assert\NotBlank(['message' => 'Please enter content.'])
                 ]
             ])
-            ->add('createdat')
+            
             ->add('image',FileType::class,[
                 'label' => 'Choose Image',
                 'data_class'=> null ,
