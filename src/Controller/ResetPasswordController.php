@@ -38,7 +38,6 @@ class ResetPasswordController extends AbstractController
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
@@ -155,15 +154,14 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('app_check_email');
         }
 
-        $email = (new TemplatedEmail())
-            ->from(new Address('bellybump4@gmail.com', 'Reset Password'))
+       $email = (new TemplatedEmail())
+            ->from(new Address('bellybump4@gmail.com', 'BellyBump account Status'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Account Status Update Notification')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
-                'resetToken' => $resetToken,
-            ])
-        ;
+                'resetToken' => $resetToken, // Pass the user's status to the template
+            ]);
 
         $mailer->send($email);
 

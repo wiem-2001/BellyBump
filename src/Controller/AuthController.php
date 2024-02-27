@@ -19,6 +19,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class AuthController extends AbstractController
 {
@@ -68,10 +69,11 @@ class AuthController extends AbstractController
         // Handle login form rendering
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        $siteKey = $_ENV['GOOGLE_RECAPTCHA_SITE_KEY'];
         return $this->render('security/mother_login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
+            'recaptcha_site_key' => $siteKey
         ]);
     }
     #[Route('/admin/logoutAdmin', name: 'admin_logout')]
@@ -84,4 +86,5 @@ class AuthController extends AbstractController
     {
 
     }
+
 }

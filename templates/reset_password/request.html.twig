@@ -24,7 +24,7 @@
                     <p>Enter your email , and you will be sent a reset password email</p>
                 </div>
                 <div class="col-lg-6">
-    {{ form_start(requestForm) }}
+    {{ form_start(requestForm,{'attr': {'novalidate': 'novalidate'}}) }}
     {{ form_errors(requestForm) }}
        <div>
                         {{ form_label(requestForm.email) }}

@@ -18,6 +18,8 @@ use Symfony\Component\Validator\Constraints\Length;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
+
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -99,6 +101,7 @@ class RegistrationFormType extends AbstractType
 
             ])
             ->add('birthday', BirthdayType::class)
+            ->add('captcha', ReCaptchaType::class)
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ]);

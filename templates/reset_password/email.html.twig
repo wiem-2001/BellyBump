@@ -1,11 +1,10 @@
-<h1 style="color: #AB3319;">Hi!</h1>
 
 <p>
     Dear mother,<br><br>
 
 <p>To reset your password, please visit the following link</p>
 
-<a href="{{ url('app_reset_password', {token: resetToken.token}) | raw }}" style="background-color: #AB3319; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a>
+<a href="{{ "http://127.0.0.1:8000" ~ path('app_reset_password', {token: resetToken.token}) }}" style="background-color: #AB3319; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Reset Password</a>
 <p>Please note that this link expires in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}, after which you may need to request another verification email.</p>
 <p>Best regards,<br>BellyBump</p>
-</p
+

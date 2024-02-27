@@ -77,6 +77,11 @@
                         {{ form_widget(registrationForm.birthday) }}
                         <div class="error-message"><Strong>{{ form_errors(registrationForm.birthday) }}</Strong></div>
                     </div>
+                    <div>
+                        {{ form_label(registrationForm.captcha) }}
+                        {{ form_widget(registrationForm.captcha) }}
+                        <div class="error-message"><Strong>{{ form_errors(registrationForm.captcha) }}</Strong></div>
+                    </div>
                    <div style="margin-top: 10px;">
                       {{ form_widget(registrationForm.save, {'label': 'Sign up', 'attr': {'class': 'btn btn-danger float-end'}}) }}
                     </div>
