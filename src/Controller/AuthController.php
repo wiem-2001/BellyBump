@@ -20,6 +20,8 @@ use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class AuthController extends AbstractController
 {
@@ -49,33 +51,40 @@ class AuthController extends AbstractController
     }
 
     #[Route('/', name: 'app_login')]
-    public function login(AuthenticationUtils $authenticationUtils, Security $security): Response
+    public function login(AuthenticationUtils $authenticationUtils, Security $security, SessionInterface $session): Response
     {
+
         $user = $security->getUser();
+        $error = $authenticationUtils->getLastAuthenticationError();
         if ($user) {
             // Check the role of the user
             if (in_array('ROLE_MOTHER', $user->getRoles())) {
-                $isVerified=$user->getIsVerified();
-                dump($isVerified);
-                if($isVerified==1){
+                $isVerified = $user->getIsVerified();
+                if ($isVerified == 0 && $user->isStatus() == 0) {
+                    $this->addFlash('error', 'Your account is not verified. Please verify your account.');
+                }
+                elseif ($isVerified == 1 &&$user->isStatus() == 0) {
+                    $this->addFlash('error', 'Your account is inactive. Please contact support.');
+                }
+                else{
                     return $this->redirectToRoute('app_testTemplate');
                 }
-            }
-            else{
+            } else {
                 return $this->redirectToRoute('get_users');
             }
+        }elseif($error){
+            $this->addFlash('error', 'Invalid credentials. Please try again.');
+
         }
 
         // Handle login form rendering
-        $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        $siteKey = $_ENV['GOOGLE_RECAPTCHA_SITE_KEY'];
         return $this->render('security/mother_login.html.twig', [
             'last_username' => $lastUsername,
-            'error' => $error,
-            'recaptcha_site_key' => $siteKey
+            'error' => $error
         ]);
     }
+
     #[Route('/admin/logoutAdmin', name: 'admin_logout')]
     public function logoutAdmin(): void
     {

@@ -157,7 +157,7 @@ class ResetPasswordController extends AbstractController
        $email = (new TemplatedEmail())
             ->from(new Address('bellybump4@gmail.com', 'BellyBump account Status'))
             ->to($user->getEmail())
-            ->subject('Account Status Update Notification')
+            ->subject('Reset Password Request')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken, // Pass the user's status to the template

@@ -1,15 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-   <header id="header" class="header  d-flex ">
-    <div class="container-fluid d-flex  justify-content-between">
-      <!-- Nav Menu -->
-      <nav id="navmenu">
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav><!-- End Nav Menu -->
-      <a class="btn-getstarted" href="{{ path('app_register') }}" >Get Started</a>
-    </div>
-  </header><!-- End Header -->
 {% endblock %}
 {% block body %}
     {% for flash_error in app.flashes('reset_password_error') %}
