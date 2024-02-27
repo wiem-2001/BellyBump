@@ -43,11 +43,13 @@ class CommentController extends AbstractController
 
 
     /**
-     * @Route("/addcomment", name="addcomment")
+     * @Route("/addcomment/{id}", name="addcomment")
      */
-    public function addComment(ManagerRegistry $doctrine, Request $request): Response
+    public function addComment(ManagerRegistry $doctrine, Request $request, $id, PostRepository $rep): Response
     {
         $comment = new Comment();
+        $post = $rep->find($id);
+        $comment->setPost($post);
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -18,10 +18,6 @@ class CommentType extends AbstractType
         $builder
 
             ->add('contenu')
-            ->add('post', EntityType::class, [
-                'class' => Post::class,
-                'choice_label' => 'id', // ou tout autre champ que vous souhaitez afficher
-            ])
             ->add('ajouter',SubmitType::class)
         ;
     }

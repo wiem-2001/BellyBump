@@ -1,6 +1,6 @@
 
 
-{% extends 'base.html.twig' %}
+
 
 {% block title %}Ajouter un Comment{% endblock %}
 
@@ -44,7 +44,7 @@
 
     <div class="form-container">
         {{ form_start(f) }}
-        {{ form_row(f.contenu, {'attr': {'class': 'form-input'}}) }}
+            {{ form_row(f.contenu, {'attr': {'class': 'form-input'}}) }}
         {{ form_end(f) }}
     </div>
 {% endblock %}

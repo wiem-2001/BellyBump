@@ -30,6 +30,15 @@ class PostRepository extends ServiceEntityRepository
             ->getQuery()
         ;
     }
+    public function searchByKeyword($keyword)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.title LIKE :keyword OR p.content LIKE :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->orderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Post
 //    {

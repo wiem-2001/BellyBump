@@ -178,6 +178,43 @@
             pointer-events: none; /* Désactive les événements de souris pour les pages désactivées */
             opacity: 0.5; /* Réduit l'opacité pour indiquer que la page est désactivée */
         }
+        .search-bar-container {
+            text-align: center;
+            margin-bottom: 20px; /* Ajoute de l'espace en bas de la barre de recherche */
+        }
+
+        .search-bar {
+            padding: 10px;
+            width: 300px; /* Largeur de la barre de recherche */
+            font-size: 16px;
+            border: 2px solid #ccc; /* Couleur de la bordure */
+            border-radius: 5px; /* Bordure arrondie */
+            transition: border-color 0.3s; /* Transition en cas de changement de couleur de bordure */
+        }
+
+        .search-bar:focus {
+            border-color: #ff6666; /* Couleur de la bordure lorsque la barre de recherche est en focus */
+            outline: none; /* Supprime la bordure bleue par défaut sur le focus */
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #ff6666; /* Couleur de fond du bouton */
+            color: #fff; /* Couleur du texte */
+            border: none; /* Supprime la bordure du bouton */
+            border-radius: 5px; /* Bordure arrondie */
+            font-size: 16px;
+            cursor: pointer; /* Curseur de type pointer au survol */
+            transition: background-color 0.3s, color 0.3s; /* Transition en cas de changement de couleur */
+        }
+
+        .search-button:hover {
+            background-color: #ff4d4d; /* Couleur de fond du bouton au survol */
+        }
+
+        .search-button:active {
+            background-color: #ff3333; /* Couleur de fond du bouton lorsqu'il est enfoncé */
+        }
 
     </style>
 
@@ -186,6 +223,11 @@
     <div class="add-post-container">
         <a href="{{ path('addpost') }}" class="add-post-button">Ajouter un Post</a>
     </div>
+<div class="search-bar-container">
+    <form action="{{ path('search') }}" method="GET">
+        <input type="text" name="keyword" class="search-bar" placeholder="Recherche...">
+        <button type="submit" class="search-button">Rechercher</button>
+    </form>
     <div class="post-container">
 
             {% for post in pagination %}
@@ -215,7 +257,7 @@
         <div class="pagination-container">
             {{ knp_pagination_render(pagination) }}
         </div>
-
+    </div>
 
     </div>
 {% endblock %}

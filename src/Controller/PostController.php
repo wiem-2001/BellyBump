@@ -145,5 +145,23 @@ class PostController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('display_postback');
     }
+    /**
+     * @Route("/search", name="search")
+     */
+    public function search(Request $request, PostRepository $postRepository): Response
+    {
+        $keyword = $request->query->get('keyword');
+
+        if ($keyword) {
+            $posts = $postRepository->searchByKeyword($keyword);
+        } else {
+            $posts = [];
+        }
+
+        return $this->render('post/search_results.html.twig', [
+            'posts' => $posts,
+            'keyword' => $keyword,
+        ]);
+    }
 
 }
