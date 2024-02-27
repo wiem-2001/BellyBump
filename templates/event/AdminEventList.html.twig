@@ -54,6 +54,7 @@
 <td class="align-middle text-center">
 <span class="text-secondary text-xs font-weight-bold">{{event.heureFin | date('H:i')}}</span>
 </td>
+{% if event.launched == false %}
 <td class="align-middle">
 <a href="{{ path('event_update',{id: event.id})}}" class="badge badge-sm bg-gradient-success " data-toggle="tooltip" data-original-title="Edit event">
 Edit
@@ -65,10 +66,26 @@ Delete
 </a>
 </td>
 <td class="align-middle">
-<a href="#" class="badge badge-sm bg-gradient-start " data-toggle="tooltip" data-original-title="launch event">
+<a href="{{path('send_meeting_invite',{id:event.id})}}" class="badge badge-sm bg-gradient-start " data-toggle="tooltip" data-original-title="launch event">
 Launch
 </a>
 </td>
+{% else %}
+<td class="align-middle">
+<a href="{{ path('event_update',{id: event.id})}}" class="badge badge-sm bg-gradient-success " data-toggle="tooltip" data-original-title="Edit event">
+Edit
+</a>
+</td>
+
+<td class="align-middle">
+<a href="{{path('send_meeting_invite',{id:event.id})}}" class="badge badge-sm bg-gradient-start " data-toggle="tooltip" data-original-title="launch event">
+Launch
+</a>
+</td>
+<td class="align-middle info-launch">
+<strong> is Launched </strong>
+</td>
+{% endif %}
 </tr>
 {% endfor %}
 </tbody>
@@ -303,6 +320,9 @@ Delete
     .space{
         margin-bottom:7%;
     }
-    
+    .info-launch{
+        margin-top:5px;
+        color:rgb(181, 28, 28);
+    }
 </style>
 {% endblock %}

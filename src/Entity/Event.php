@@ -43,6 +43,9 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'cochedEvents')]
     private ?Coach $coach = null;
 
+    #[ORM\Column]
+    private ?bool $launched = False;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -169,6 +172,18 @@ class Event
     public function setCoach(?Coach $coach): static
     {
         $this->coach = $coach;
+
+        return $this;
+    }
+
+    public function isLaunched(): ?bool
+    {
+        return $this->launched;
+    }
+
+    public function setLaunched(bool $launched): static
+    {
+        $this->launched = $launched;
 
         return $this;
     }

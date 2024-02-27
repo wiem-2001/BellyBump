@@ -33,7 +33,7 @@ class EventController extends AbstractController
     #[Route('/eventsList', name: 'list_event_mother')]
 public function EventsListMother(Request $request, Security $security, EventRepository $repository, UserRepository $userRepository)
 {
-    $mother = $userRepository->find(2);
+    $mother = $userRepository->find(1);
     //$mother=$security->getUser();
     $Events = $repository->MotherNotParticipatedEvents($mother);
     $triOption = $request->query->get('tri');

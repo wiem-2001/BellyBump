@@ -35,7 +35,9 @@ class EventRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->leftJoin('e.reservation', 'u')
             ->andWhere('u != :mother OR u IS NULL')
+            ->andWhere('e.day > :today')
             ->setParameter('mother', $mother)
+            ->setParameter('today', new \DateTime())
             ->getQuery()
             ->getResult();
     }
@@ -59,6 +61,8 @@ class EventRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('e')
             ->leftJoin('e.reservation', 'u')
             ->andWhere('u != :mother OR u IS NULL')
+            ->andWhere('e.day > :today')
+            ->setParameter('today', new \DateTime())
             ->setParameter('mother', $mother)
             ->orderBy('e.day', 'ASC')
             ->addOrderBy('e.heureDebut', 'ASC')
@@ -70,6 +74,8 @@ class EventRepository extends ServiceEntityRepository
             ->leftJoin('e.coach','c')
             ->leftJoin('e.reservation','u')
             ->andWhere('u != :mother OR u IS NULL')
+            ->andWhere('e.day > :today')
+            ->setParameter('today', new \DateTime())
             ->setParameter('mother', $mother)
             ->addSelect('c')
             ->orderBy('c.firstname','ASC')
