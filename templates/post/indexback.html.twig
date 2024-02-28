@@ -21,6 +21,7 @@
                     <th>Date de Création</th>
                     <th>Comments</th>
                     <th>Action</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,7 @@
                         <td>
                             <a href="{{ path('display_commentback', {'id': post.id}) }}" class="btn btn-info">Voir les commentaires</a>
                         </td>
+
                         <td>
                             <form action="{{ path('deletepostback', {'id': post.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
