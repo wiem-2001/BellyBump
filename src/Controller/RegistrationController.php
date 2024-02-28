@@ -56,10 +56,10 @@ class RegistrationController extends AbstractController
                 }
 
                 $fileName = md5(uniqid()).'.'.$fileExtension;
-                $file->move($this->getParameter('images_directory'), $fileName);
+                $file->move($this->getParameter('images_directory_user'), $fileName);
                 $user->setImage($fileName);
             }
-
+            $user->setCreatedAt(new \DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
 

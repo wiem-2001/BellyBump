@@ -16,6 +16,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 
 class UserController extends AbstractController
@@ -139,7 +141,7 @@ class UserController extends AbstractController
 
                 // Move the file to the directory where images are stored
                 $imageFile->move(
-                    $this->getParameter('images_directory'),
+                    $this->getParameter('images_directory_user'),
                     $newFilename
                 );
             }
@@ -200,7 +202,74 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('get_users');
     }
+    #[Route('/stats', name: 'user_stats')]
+    public function stats(UserRepository $userRepository, ChartBuilderInterface $chartBuilder): Response
+    {
+        // Get all users registered this year
+        $currentYear = (new \DateTime())->format('Y');
+        $users = $userRepository->findUsersWithMotherRole();
+        $labels = [];
+        $datasets = [];
 
+        // Initialize an array to hold user counts for each month
+        $userCountsByMonth = [
+            '01' => 0, '02' => 0, '03' => 0, '04' => 0,
+            '05' => 0, '06' => 0, '07' => 0, '08' => 0,
+            '09' => 0, '10' => 0, '11' => 0, '12' => 0
+        ];
+
+        // Count users for each month
+        foreach ($users as $user) {
+            $createdAt = $user->getCreatedAt();
+            if ($createdAt !== null ) { // Check if createdAt is not null
+                $year = $createdAt->format('Y');
+                if ($year == $currentYear) { // Check if the user was created in the current year
+                    $monthNumber = $createdAt->format('m'); // Extract month number
+                    $monthNumber = sprintf('%02d', $monthNumber); // Format month number to ensure two digits
+                    if (array_key_exists($monthNumber, $userCountsByMonth)) {
+                        $userCountsByMonth[$monthNumber]++;
+                    } else {
+                        // Handle unexpected month numbers if necessary
+                    }
+                }
+            }
+        }
+
+        // Generate labels for each month
+        $monthNames = [
+            '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
+            '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
+            '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+        ];
+
+        // Modify $userCountsByMonth array to use month names as labels
+        $userCountsByMonthWithNames = [];
+        foreach ($userCountsByMonth as $monthNumber => $userCount) {
+            $monthName = $monthNames[$monthNumber];
+            $userCountsByMonthWithNames[$monthName] = $userCount;
+        }
+
+        // Generate dataset
+        $datasets[] = [
+            'label' => 'New Users',
+            'data' => array_values($userCountsByMonth), // Values of user counts for each month
+            'backgroundColor' => 'rgb(255, 99, 132)',
+            'borderColor' => 'rgb(255, 99, 132)',
+            'borderWidth' => 1
+        ];
+
+        // Create the bar chart
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => array_keys($userCountsByMonthWithNames),
+            'datasets' => $datasets,
+        ]);
+
+        return $this->render('user/userStats.html.twig', [
+            'chart' => $chart,
+            'userCountsByMonth' => $userCountsByMonthWithNames
+        ]);
+    }
 
 
 }

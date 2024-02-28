@@ -1,0 +1,57 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block header %}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <!-- Include any additional stylesheets here -->
+{% endblock %}
+
+{% block body %}
+    <main class="main-content border-radius-lg">
+        <div class="container-fluid py-4">
+            {% block main %}
+                <div>
+                    <canvas id="myChart" width="900" height="400"></canvas>
+                </div>
+
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                <script>
+                    const ctx = document.getElementById('myChart');
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [
+                                {% for month, count in userCountsByMonth %}
+                                '{{ month }}', // Month names
+                                {% endfor %}
+                            ],
+                            datasets: [{
+                                label: 'Number Of Users Created Per Month This Year',
+                                data: [
+                                    {% for month, count in userCountsByMonth %}
+                                    {{ count }}, // Number of users
+                                    {% endfor %}
+                                ],
+                                backgroundColor: 'rgb(255, 99, 132)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true, // Ensure y-axis starts at zero
+                                    stepSize: 1 // Increment y-axis by 1
+                                }
+                            }
+                        }
+                    });
+                </script>
+            {% endblock %}
+        </div>
+    </main>
+{% endblock %}
