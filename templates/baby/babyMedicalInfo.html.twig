@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Baby index{% endblock %}
+
+{% block body %}
+ <h1 >Baby index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>maladie </th>
+                <th>description</th>
+                <th>nbrVaccin</th>
+                <th>dateVaccin</th>
+                <th>BloodType</th>
+                <th>sicknessEstimation</th>
+                
+
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for baby in babies %}
+            <tr>
+               
+                <td>{{ baby.jointure1.maladie }}</td>
+                <td>{{ baby.jointure1.description }}</td>
+                <td>{{ baby.jointure1.nbrVaccin }}</td>
+                <td>{{ baby.jointure1.dateVaccin ? baby.jointure1.dateVaccin|date('Y-m-d') : '' }}</td>
+                <td>{{ baby.jointure1.BloodType }}</td>
+                <td>{{ baby.jointure1.sicknessEstimation }}</td>
+               
+
+              
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

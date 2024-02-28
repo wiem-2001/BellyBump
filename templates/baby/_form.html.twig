@@ -48,7 +48,7 @@
                         {{ form_widget(form.taille, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.taille) }}
                     </div>
-                    <button type="submit" class="btn btn-danger" style="margin-top: 20px;margin-left: 20px">{{ button_label|default('Save') }}</button>
+                    <button type="submit" class="btn btn-danger" style="margin-top: 20px;margin-left: 20px">{{ button_label|default('next') }}</button>
                      <a href="{{ path('app_baby_index') }}" class="btn btn-primary" style="margin-top: 20px;margin-left: 20px">back to list</a>
                 {{ form_end(form) }}
             </div>
@@ -56,16 +56,5 @@
     </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script>
-        $(function() {
-            $( ".js-datepicker" ).datepicker({
-                dateFormat: 'yy-mm-dd', // Set the date format to match Symfony's expected format
-            });
-        });
-    </script>
-{% endblock %}
+
 

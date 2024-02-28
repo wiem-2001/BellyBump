@@ -16,6 +16,24 @@
                                             {{ form_errors(form.maladie) }}
 
                     </div>
+
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.BloodType, 'Blood Type ') }}
+                        {{ form_widget(form.BloodType, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.BloodType) }}
+
+                    </div>
+
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.sicknessEstimation, 'Sickness Estimation ') }}
+                        {{ form_widget(form.sicknessEstimation, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.sicknessEstimation) }}
+
+                    </div>
+
+
                     <div class="form-group">
                         {{ form_label(form.description, 'Write Sickness description') }}
                         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
@@ -29,7 +47,7 @@
 
                     </div>
                      <div class="form-group">
-                        {{ form_label(form.dateVaccin, 'Date vaccin') }}
+                        {{ form_label(form.dateVaccin, 'Last Vaccin Date') }}
                         {{ form_widget(form.dateVaccin, {'attr': {'class': 'form-control'}}) }}
                                                 {{ form_errors(form.dateVaccin) }}
 

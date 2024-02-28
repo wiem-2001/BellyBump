@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>List of babies</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>nom</th>
+                    <th>prenom</th>
+                    <th>sexe</th>
+                    <th>dateNaissance</th>
+                    <th>poids</th>
+                    <th>taille</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for baby in babies %}
+                    <tr>
+                        <td>{{ baby.nom}}</td>
+                        <td>{{ baby.prenom}}</td>
+                        <td>{{ baby.sexe}}</td>
+                        <td>{{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</td>
+                        <td>{{ baby.poids }}</td>
+                        <td>{{ baby.taille }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No records found</td>
+                    </tr>
+                {% endfor %}
+
+                 <h1 class="logo me-auto me-lg-0"><a href="#">WorkVision</a></h1>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

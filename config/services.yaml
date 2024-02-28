@@ -6,8 +6,12 @@
 parameters:
 
 services:
+    App\Service\PdfGenerator:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $twig: '@twig'
+            
 
-    App\Validator\Constraints\AfterTodayValidator: ~
 
 
     # default configuration for services in *this* file
@@ -26,3 +30,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+# config/services.yaml
+
+

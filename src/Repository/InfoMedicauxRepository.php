@@ -45,4 +45,16 @@ class InfoMedicauxRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findBySearchQuery(?string $query): array
+{
+    if (!$query) {
+        return $this->findAll();
+    }
+
+    return $this->createQueryBuilder('b')
+        ->andWhere('b.nom LIKE :query OR b.prenom LIKE :query OR b.sexe LIKE :query OR b.poids LIKE :query')
+        ->setParameter('query', '%' . $query . '%')
+        ->getQuery()
+        ->getResult();
+}
 }

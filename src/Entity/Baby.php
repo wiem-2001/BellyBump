@@ -7,7 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use App\Validator\Constraints as CustomAssert;
+
+
+
 
 #[ORM\Entity(repositoryClass: BabyRepository::class)]
 class Baby
@@ -46,8 +48,7 @@ class Baby
     #[Assert\Length(max: 3)]
     private ?float $taille = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?InfoMedicaux $jointure1 = null;
+    
 
     
 
@@ -134,17 +135,7 @@ class Baby
         return $this;
     }
 
-    public function getJointure1(): ?InfoMedicaux
-    {
-        return $this->jointure1;
-    }
-
-    public function setJointure1(?InfoMedicaux $jointure1): static
-    {
-        $this->jointure1 = $jointure1;
-
-        return $this;
-    }
+    
 
    
 }

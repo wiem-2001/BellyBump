@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\InfoMedicauxRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,6 +36,24 @@ class InfoMedicaux
     #[ORM\Column(type: 'date')]
     #[Assert\NotBlank]
     private ?\DateTimeInterface $dateVaccin = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $BloodType = null;
+
+    
+    #[ORM\Column(length: 255)]
+    private ?string $sicknessEstimation = null;
+
+    #[ORM\OneToMany(mappedBy: 'infoMedicaux', targetEntity: Med::class)]
+    private Collection $Med;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Baby $babyName = null;
+
+    public function __construct()
+    {
+        $this->Med = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -84,6 +104,72 @@ class InfoMedicaux
     public function setDateVaccin(\DateTimeInterface  $dateVaccin): static
     {
         $this->dateVaccin = $dateVaccin;
+
+        return $this;
+    }
+
+    public function getBloodType(): ?string
+    {
+        return $this->BloodType;
+    }
+
+    public function setBloodType(string $BloodType): static
+    {
+        $this->BloodType = $BloodType;
+
+        return $this;
+    }
+
+    public function getSicknessEstimation(): ?string
+    {
+        return $this->sicknessEstimation;
+    }
+
+    public function setSicknessEstimation(string $sicknessEstimation): static
+    {
+        $this->sicknessEstimation = $sicknessEstimation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Med>
+     */
+    public function getMed(): Collection
+    {
+        return $this->Med;
+    }
+
+    public function addMed(Med $med): static
+    {
+        if (!$this->Med->contains($med)) {
+            $this->Med->add($med);
+            $med->setInfoMedicaux($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMed(Med $med): static
+    {
+        if ($this->Med->removeElement($med)) {
+            // set the owning side to null (unless already changed)
+            if ($med->getInfoMedicaux() === $this) {
+                $med->setInfoMedicaux(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getBabyName(): ?Baby
+    {
+        return $this->babyName;
+    }
+
+    public function setBabyName(?Baby $babyName): static
+    {
+        $this->babyName = $babyName;
 
         return $this;
     }
