@@ -6,21 +6,49 @@
 {% block stylesheets %}
     {{ parent() }}
     <!-- Include any additional stylesheets here -->
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px; /* Adjust as needed */
+        }
+        #pieChart {
+            width: 400px !important;
+            height: 400px !important;
+        }
+        #myChart {
+            width: 600px !important;
+            height: 300px !important;
+        }
+        .chart-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
     <main class="main-content border-radius-lg">
         <div class="container-fluid py-4">
             {% block main %}
-                <div>
-                    <canvas id="myChart" width="900" height="400"></canvas>
+                <div class="chart-container">
+                    <div class="chart-title">Users Statistics</div>
+                    <div>
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="pieChart"></canvas>
+                    </div>
                 </div>
 
                 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                 <script>
+                    // JavaScript code for rendering charts
                     const ctx = document.getElementById('myChart');
-
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
@@ -50,7 +78,24 @@
                             }
                         }
                     });
+
+                    const pieCtx = document.getElementById('pieChart');
+                    new Chart(pieCtx, {
+                        type: 'pie',
+                        data: {
+                            labels: ['Active Users', 'Inactive Users'],
+                            datasets: [{
+                                label: 'User Status',
+                                data: [{{ blockedUsersCount }}, {{ unblockedUsersCount }}], // Sample data, replace with actual values
+                                backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)'],
+                            }]
+                        },
+                        options: {
+                            // Add options here if needed
+                        }
+                    });
                 </script>
+
             {% endblock %}
         </div>
     </main>

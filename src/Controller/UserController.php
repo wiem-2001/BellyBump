@@ -208,6 +208,9 @@ class UserController extends AbstractController
         // Get all users registered this year
         $currentYear = (new \DateTime())->format('Y');
         $users = $userRepository->findUsersWithMotherRole();
+        $blockedUsersCount = $userRepository->countBlockedUsers();
+        $unblockedUsersCount = $userRepository->countunBlockedUsers();
+
         $labels = [];
         $datasets = [];
 
@@ -267,7 +270,9 @@ class UserController extends AbstractController
 
         return $this->render('user/userStats.html.twig', [
             'chart' => $chart,
-            'userCountsByMonth' => $userCountsByMonthWithNames
+            'userCountsByMonth' => $userCountsByMonthWithNames,
+            'blockedUsersCount' => $blockedUsersCount,
+            'unblockedUsersCount'=>$unblockedUsersCount
         ]);
     }
 
