@@ -85,7 +85,7 @@ public function EventsListMother(Request $request, Security $security, EventRepo
 
                 // Handle file upload and entity persisting
                 $fileName = md5(uniqid()).'.'.$fileExtension;
-                $file->move($this->getParameter('images_directory'), $fileName);
+                $file->move($this->getParameter('images_directory_event'), $fileName);
                 $event->setImage($fileName);
                 
                 $entityManager = $managerRegistry->getManager();
@@ -143,12 +143,12 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
 
             // Move the file to the directory where images are stored
             $file->move(
-                $this->getParameter('images_directory'),
+                $this->getParameter('images_directory_event'),
                 $newFilename
             );
 
             // Delete the old file if it exists
-            $oldFilePath = $this->getParameter('images_directory') . '/' . $oldFileName;
+            $oldFilePath = $this->getParameter('images_directory_event') . '/' . $oldFileName;
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
             }
@@ -185,7 +185,7 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
             $oldFileName = $event->getImage();
             // Delete the old file if it exists
                         
-            $oldFilePath = $this->getParameter('images_directory') . '/' . $oldFileName;
+            $oldFilePath = $this->getParameter('images_directory_event') . '/' . $oldFileName;
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
             }
