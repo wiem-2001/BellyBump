@@ -8,30 +8,23 @@
         {% block stylesheets %}
             <!--     Fonts and icons     -->
             <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-
             <!-- Nucleo Icons --> 
-            <link href="{{'backOffice/assets/css/nucleo-icons.css'}}" rel="stylesheet" />
-            <link href="{{'backOffice/assets/css/nucleo-svg.css'}}" rel="stylesheet" />
-
+            <link href="{{asset('backOffice/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
+            <link href="{{asset('backOffice/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
             <!-- Font Awesome Icons -->
             <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-
             <!-- Material Icons -->
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
             <!-- CSS Files -->
-
-
-
-            <link id="pagestyle" href="{{'backOffice/assets/css/material-dashboard.css?v=3.1.0'}}" rel="stylesheet" />
+            <link id="pagestyle" href="{{asset('backOffice/assets/css/material-dashboard.css?v=3.1.0')}}" rel="stylesheet" />
         {% endblock %}
 
         {% block javascripts %}
             <!--   Core JS Files   -->
-            <script src="{{'backOffice/assets/js/core/popper.min.js'}}" ></script>
-            <script src="{{'backOffice/assets/js/core/bootstrap.min.js'}}" ></script>
-            <script src="{{'backOffice/assets/js/plugins/perfect-scrollbar.min.js'}}" ></script>
-            <script src="{{'backOffice/assets/js/plugins/smooth-scrollbar.min.js'}}" ></script>
+            <script src="{{asset('backOffice/assets/js/core/popper.min.js')}}" ></script>
+            <script src="{{asset('backOffice/assets/js/core/bootstrap.min.js')}}" ></script>
+            <script src="{{asset('backOffice/assets/js/plugins/perfect-scrollbar.min.js')}}" ></script>
+            <script src="{{asset('backOffice/assets/js/plugins/smooth-scrollbar.min.js')}}" ></script>
             <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
             <script>
             var win = navigator.platform.indexOf('Win') > -1;
@@ -47,64 +40,47 @@
     <body>
     {% block sidenav %}
         <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
-
             <div class="sidenav-header">
                 <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
                 <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard " target="_blank">
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-          
           <div class="input-group input-group-outline">
             <label class="form-label">Type here...</label>
             <input type="text" class="form-control">
           </div>
-          
       </div>
                 </a>
             </div>
             <hr class="horizontal light mt-0 mb-2">
-
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">    
-            
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
-                        
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
-                        
-                        <span class="nav-link-text ms-1">Check posts</span>
+                        <span class="nav-link-text ms-1" href='#'>Check posts</span>
                     </a>
                     </li>
-
-            
                     <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
+                    <a class="nav-link text-white " href="{{path('get_users')}}">
                         
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">table_view</i>
                         </div>
-                        
                         <span class="nav-link-text ms-1">Manage Users</span>
                     </a>
                     </li>
-
-                    
-
-                    
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
-                        
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">view_in_ar</i>
                         </div>
-                        
                         <span class="nav-link-text ms-1">Manage Hospitals</span>
                     </a>
                     </li>
-
                     <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
+                    <a class="nav-link text-white " href="{{path('list_event')}}">
                         
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">receipt_long</i>
@@ -115,16 +91,12 @@
                     </li>
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
-                        
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
                         </div>
-                        
                         <span class="nav-link-text ms-1">Manage partners</span>
                     </a>
                     </li>
-
-                    
                     <li class="nav-item">
                     <a class="nav-link text-white " href="#">
                         
@@ -135,62 +107,29 @@
                         <span class="nav-link-text ms-1">Notifications</span>
                     </a>
                     </li>
-
-                    
                         <li class="nav-item mt-3">
                         <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
                         </li>
-                    
                     <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
-                        
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">person</i>
-                        </div>
-                        
-                        <span class="nav-link-text ms-1">Profile</span>
-                    </a>
                     </li>
-
-                    
-                    <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
-                        
-                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="material-icons opacity-10">login</i>
-                        </div>
-                        
-                        <span class="nav-link-text ms-1">Sign Out</span>
-                    </a>
+                        <li class="nav-item">
+                            <button class="nav-link text-white btn" onclick="location.href='{{ path('admin_logout') }}'">
+                                <div class="text-white text-center me-1 d-flex align-items-center  justify-content-center ">
+                                    <i class="material-icons ">logout</i>
+                                    <span class="nav-link-text ms-1 opacity-10">SignOut</span>
+                                </div>
+                            </button>
                     </li>
-
-                    
-                    
                 </ul>
             </div>
-  
-  
         </aside>
     {% endblock %}
-    
-    
         {% block body %}
-         
-
       <main class="main-content border-radius-lg ">
-        
-        
-
-        
-
-
 <div class="container-fluid py-4">
-
 {% block main %}
     <h6>If you are not redirected automatically, follow <a href=" https://demos.creative-tim.com/material-dashboard/pages/dashboard ">this link</a>.</h6>
-    
 {% endblock %}
-
 {% block footer %}
         <main class="main-content border-radius-lg ">
         <footer class="footer py-4  ">
@@ -227,10 +166,8 @@
 </footer>
 </main>
         {% endblock %}
-         
+</div>
        </main>
-    
         {% endblock %}
-        
     </body>
 </html>

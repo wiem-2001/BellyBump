@@ -7,6 +7,8 @@ use phpDocumentor\Reflection\Types\True_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -16,6 +18,8 @@ use Symfony\Component\Validator\Constraints\Length;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
+
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -33,7 +37,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => True,
                 'constraints' => [
                     new Assert\NotBlank([
-                        'message' => 'Please enter an last name.',
+                        'message' => 'Please enter your last name.',
                     ]),
                 ],
             ])
@@ -44,6 +48,24 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Assert\NotBlank([
                         'message' => 'Please enter an email address.',
+                    ]),
+                ],
+            ])
+            ->add('adress', TextType::class, [
+                'constraints' => [
+                    new Assert\NotBlank(['message' => 'Please enter your address.',]),
+                ],
+            ])
+            ->add('phoneNumber', NumberType::class, [
+                'label' => 'Phone Number (Tunisia)',
+                'required' => true,
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Please enter 8-digit phone number',
+                    ]),
+                    new Assert\Regex([
+                        'pattern' => '/^[0-9]{8}$/',
+                        'message' => 'Please enter a valid 8-digit phone number for Tunisia (e.g., 12345678)',
                     ]),
                 ],
             ])
@@ -72,7 +94,14 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('image',FileType::class,[
+                'label' => 'Choose Image',
+                'data_class'=> null ,
+                'constraints'=> [new Assert\NotBlank(array("message" => "Please choose an image")),]
+
+            ])
             ->add('birthday', BirthdayType::class)
+            ->add('captcha', ReCaptchaType::class)
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'save'],
             ]);

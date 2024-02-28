@@ -1,0 +1,93 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block header %}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+      <main class="main-content border-radius-lg ">
+        
+        
+<div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3">users table</h6>
+              </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+              <div class="table-responsive p-0">
+              {% if  users is empty%}
+                 <img src="{{ asset('backOffice/assets/img/empty-table.svg') }}" style="display: block; margin: 0 auto; width: 10%;">
+                {% else %}
+                <table class="table align-items-center mb-2">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">first and last name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">email</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Birthday</th>
+                     <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for user in users %}
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2 py-1">
+                        <img src="{{ asset('uploads/UserImages/' ~ user.image) }}" width="100px" class="avatar  me-3 border-radius-lg" alt="event">
+                          <div class="d-flex flex-column justify-content-center">
+                            <h6 class="mb-0 text-sm">{{user.firstName}} {{user.lastName}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-xs font-weight-bold mb-0">{{user.email}}</p>
+                      </td>
+                      <td class="align-middle text-center text-sm">
+                          {% if user.isStatus== 1 %}
+                              <span class="badge badge-sm bg-gradient-success">actived</span>
+                          {% else %}
+                              <span class="badge badge-sm bg-gradient-danger">desactived</span>
+                          {% endif %}
+                        </td>
+                      <td class="align-middle text-center">
+                        <span class="text-secondary text-xs font-weight-bold">{{user.birthday | date('d/m/Y')}}</span>
+                      </td>
+                     <td>
+                         <a href="{{path('delete_user',{'id': user.id})}}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-original-title="Delete user" onclick="return confirm('Are you sure you want to delete this user ? ')">
+                        Delete
+                        </a>
+                      {% if user.status == 1 %}
+                             <a href="{{path('update_status',{'id': user.id})}}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-original-title="update status" onclick="return confirm('Are you sure you want to change this user status? ')">
+                                 desactivate</a>
+                             {% else %}
+                         <a href="{{path('update_status',{'id': user.id})}}" class="btn btn-sm btn-success" data-toggle="tooltip" data-original-title="update status" onclick="return confirm('Are you sure you want to change this user status? ')">
+                             activate
+                         </a>
+                      {% endif %}
+
+                     </td>
+                    </tr>
+                     {% endfor %}
+                  </tbody>
+                </table>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<div class="container-fluid py-4">
+{% block main %}
+{% endblock %}
+       </main>
+        {% endblock %}
