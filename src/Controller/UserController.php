@@ -139,7 +139,7 @@ class UserController extends AbstractController
 
                 // Move the file to the directory where images are stored
                 $imageFile->move(
-                    $this->getParameter('images_directory'),
+                    $this->getParameter('images_directory_user'),
                     $newFilename
                 );
             }
