@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Controller;
-
+use App\Form\MedType;
 use App\Entity\Etab;
+use App\Entity\Med;
 use App\Form\EtabType;
 use App\Repository\EtabRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,6 +22,17 @@ class EtabController extends AbstractController
             'etabs' => $etabRepository->findAll(),
         ]);
     }
+
+
+
+    #[Route('/showFront', name: 'app_etabFront_index', methods: ['GET'])]
+    public function showFront(EtabRepository $etabRepository): Response
+    {
+        return $this->render('etab/showFront.html.twig', [
+            'etabs' => $etabRepository->findAll(),
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_etab_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -78,4 +90,24 @@ class EtabController extends AbstractController
 
         return $this->redirectToRoute('app_etab_index', [], Response::HTTP_SEE_OTHER);
     }
+    public function addMed(Request $request, EntityManagerInterface $entityManager)
+{
+    $med = new Med();
+    $form = $this->createForm(medType::class, $med);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Handle the association between Med and Etab
+        $etab = $form->get('etab')->getData();
+        $etab->addMed($med);
+
+        // Persist entities
+        $entityManager->persist($etab);
+        $entityManager->persist($med);
+        $entityManager->flush();
+
+        // Redirect or handle success
+        // ...
+    }
+}
 }

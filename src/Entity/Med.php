@@ -1,9 +1,10 @@
 <?php
- // src/Entity/Med.php
 
 namespace App\Entity;
 
 use App\Repository\MedRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MedRepository::class)]
@@ -25,6 +26,14 @@ class Med
 
     #[ORM\ManyToOne(inversedBy: 'Med')]
     private ?Etab $etab = null;
+
+    #[ORM\OneToMany(mappedBy: 'nomMed', targetEntity: RendezVous::class)]
+    private Collection $RendezVous;
+
+    public function __construct()
+    {
+        $this->RendezVous = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +84,36 @@ class Med
     public function setEtab(?Etab $etab): static
     {
         $this->etab = $etab;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, RendezVous>
+     */
+    public function getRendezVous(): Collection
+    {
+        return $this->RendezVous;
+    }
+
+    public function addRendezVou(RendezVous $rendezVou): static
+    {
+        if (!$this->RendezVous->contains($rendezVou)) {
+            $this->RendezVous->add($rendezVou);
+            $rendezVou->setNomMed($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRendezVou(RendezVous $rendezVou): static
+    {
+        if ($this->RendezVous->removeElement($rendezVou)) {
+            // set the owning side to null (unless already changed)
+            if ($rendezVou->getNomMed() === $this) {
+                $rendezVou->setNomMed(null);
+            }
+        }
 
         return $this;
     }

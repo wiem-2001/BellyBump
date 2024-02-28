@@ -1,4 +1,58 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<style>
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust the height based on your needs */
+    }
+
+    .custom-form {
+        width: 400px; /* Adjust the width based on your needs */
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 8px;
+    }
+    .error-message {
+        color: red;
+    }
+</style>
+
+<div class="center-form">
+    <div class="custom-form">
+       {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.nom, 'Nom') }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez le nom'}}) }}
+        <div class="error-message">
+                {{ form_errors(form.nom) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.prenom, 'Prenom') }}
+            {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez le prénom'}}) }}
+        <div class="error-message">
+                {{ form_errors(form.prenom) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.specialite, 'Spécialite') }}
+            {{ form_widget(form.specialite, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez la spécialité'}}) }}
+        <div class="error-message">
+                {{ form_errors(form.specialite) }}
+            </div>
+        </div>
+<div class="form-group">
+    {{ form_label(form.etab, 'Establishment') }}
+    {{ form_widget(form.etab, {'attr': {'class': 'form-control','style': 'border: 1px solid black;', 'placeholder': 'Entrez l etablissement'}}) }}
+       <div class="error-message">
+                {{ form_errors(form.etab) }}
+            </div>
+       </div>
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>

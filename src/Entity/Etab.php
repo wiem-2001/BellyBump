@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\EtabRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EtabRepository::class)]
@@ -19,10 +18,8 @@ class Etab
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
-    #[ORM\Column]
-    private ?int $nbrMedcin = null;
 
-    #[ORM\Column(length: 255)]
+#[ORM\Column(length: 255)]
     private ?string $nom = null;
 
     
@@ -44,7 +41,7 @@ class Etab
 
 
 
-   
+
 
     public function getId(): ?int
     {

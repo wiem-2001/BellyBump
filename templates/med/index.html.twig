@@ -1,9 +1,9 @@
 {% extends 'back.html.twig' %}
 
-{% block title %}Medcin index{% endblock %}
+{% block title %}List of Doctors{% endblock %}
 
 {% block body %}
-    <h1>Doctors index</h1>
+    <h1>List of doctors</h1>
 
     <table class="table">
         <thead>
@@ -12,7 +12,7 @@
                 <th>Name</th>
                 <th>Full name</th>
                 <th>Speciality</th>
-                 
+                 <th>Etablissement</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,10 +23,10 @@
                 <td>{{ med.nom }}</td>
                 <td>{{ med.prenom }}</td>
                 <td>{{ med.specialite }}</td>
-               
+                <td>{{ med.etab.nom }}</td>
                 <td>
-                    <a href="{{ path('app_med_show', {'id': med.id}) }}">show</a>
-                    <a href="{{ path('app_med_edit', {'id': med.id}) }}">edit</a>
+                <a href="{{ path('app_med_show', {'id': med.id}) }}" class="btn btn-info">Show</a>
+                   <a href="{{ path('app_med_edit', {'id': med.id}) }}" class="btn btn-primary">Edit</a>
                 </td>
 
             </tr>
@@ -38,5 +38,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_med_new') }}">Create new</a>
+    <a href="{{ path('app_med_new') }}" class="btn btn-primary">Create new</a>
 {% endblock %}

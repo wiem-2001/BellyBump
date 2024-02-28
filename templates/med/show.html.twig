@@ -21,14 +21,14 @@
             </tr>
             <tr>
                 <th>Speciality</th>
-                <td>{{ med.specialité }}</td>
+                <td>{{ med.specialite }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_med_index') }}">back to list</a>
+     <a href="{{ path('app_med_index') }}" class="btn btn-primary">back to list</a>
 
-    <a href="{{ path('app_med_edit', {'id': med.id}) }}">edit</a>
+    <a href="{{ path('app_med_edit', {'id': med.id}) }}" class="btn btn-primary">edit</a>
 
     {{ include('med/_delete_form.html.twig') }}
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Establishment index{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 300px;
+            margin: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        {% for etab in etabs %}
+            <div class="card">
+                <h2>{{ etab.nom }}</h2>
+                <p><strong>Location:</strong> {{ etab.localisation }}</p>
+                <p><strong>Type:</strong> {{ etab.type }}</p>
+                <p><strong>Number of Doctors:</strong> {{ etab.nbrMedcin }}</p>
+            </div>
+        {% else %}
+            <p>No records found</p>
+        {% endfor %}
+    </div>
+{% endblock %}

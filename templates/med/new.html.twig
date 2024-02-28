@@ -3,9 +3,9 @@
 {% block title %}New Doctor{% endblock %}
 
 {% block body %}
-    <h1>Create new Doctor</h1>
+    <h1 style ="margin-top:100px;margin-left:200px;margin-bottom:-100px">Create new Doctor</h1>
 
     {{ include('med/_form.html.twig') }}
 
-    <a href="{{ path('app_med_index') }}">back to list</a>
+    <a href="{{ path('app_med_index') }}" class="btn btn-primary">back to list</a>
 {% endblock %}

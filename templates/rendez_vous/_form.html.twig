@@ -1,4 +1,59 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+<style>
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Adjust the height based on your needs */
+    }
+
+    .custom-form {
+        width: 400px; /* Adjust the width based on your needs */
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 8px;
+    }
+    .error-message {
+        color: red;
+    }
+</style>
+
+<div class="center-form">
+    <div class="custom-form">
+      {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+
+        {% if app.flashes('error') is not empty %}
+        <div class="alert alert-danger">
+            {{ app.flashes('error')|first }}
+        </div>
+    {% endif %}
+
+        <div class="form-group">
+            {{ form_label(form.DateReservation, 'Date de Réservation') }}
+            {{ form_widget(form.DateReservation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Sélectionnez la date'}}) }}
+        <div class="error-message">
+                {{ form_errors(form.DateReservation) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.heureReservation, 'Heure de Réservation (entre 8 a.m et 7 p.m)') }}
+            {{ form_widget(form.heureReservation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez l\'heure'}}) }}
+             <div class="error-message">
+                {{ form_errors(form.heureReservation) }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.nomMed, 'Médecin') }}
+            {{ form_widget(form.nomMed, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Choisissez un médecin'}}) }}
+ <div class="error-message">
+                {{ form_errors(form.nomMed) }}
+            </div>        
+        </div>
+
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+

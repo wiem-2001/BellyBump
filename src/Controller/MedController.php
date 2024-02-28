@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\SearchType;
 
 #[Route('/med')]
 class MedController extends AbstractController
@@ -18,6 +19,13 @@ class MedController extends AbstractController
     public function index(MedRepository $medRepository): Response
     {
         return $this->render('med/index.html.twig', [
+            'meds' => $medRepository->findAll(),
+        ]);
+    }
+    #[Route('/medFront', name: 'app_medFront_index', methods: ['GET'])]
+    public function showMedFront(MedRepository $medRepository): Response
+    {
+        return $this->render('med/medFront.html.twig', [
             'meds' => $medRepository->findAll(),
         ]);
     }
@@ -77,5 +85,22 @@ class MedController extends AbstractController
         }
 
         return $this->redirectToRoute('app_med_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/search', name: 'app_med_search', methods: ['GET', 'POST'])]
+    public function search(Request $request, MedRepository $medecinRepository): Response
+    {
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+
+        $results = [];
+        if ($form->isSubmitted() && $form->isValid()) {
+            $searchTerm = $form->get('searchTerm')->getData();
+            $results = $medecinRepository->searchMedecin($searchTerm);
+        }
+
+        return $this->render('med/search_results.html.twig', [
+            'form' => $form->createView(),
+            'results' => $results,
+        ]);
     }
 }

@@ -23,24 +23,36 @@ class RendezVousController extends AbstractController
     }
 
     #[Route('/new', name: 'app_rendez_vous_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $rendezVou = new RendezVous();
-        $form = $this->createForm(RendezVousType::class, $rendezVou);
-        $form->handleRequest($request);
+public function new(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $rendezVou = new RendezVous();
+    $form = $this->createForm(RendezVousType::class, $rendezVou);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($rendezVou);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Check if similar rendezvous exists
+        $existingRendezVous = $entityManager->getRepository(RendezVous::class)->findOneBy([
+            'nomMed' => $rendezVou->getNomMed(),
+            'DateReservation' => $rendezVou->getDateReservation(),
+            'heureReservation' => $rendezVou->getHeureReservation(),
+        ]);
 
-            return $this->redirectToRoute('app_rendez_vous_index', [], Response::HTTP_SEE_OTHER);
+        if ($existingRendezVous) {
+            $this->addFlash('error', 'Un rendez-vous existe déjà à cette date et heure.');
+            return $this->redirectToRoute('app_rendez_vous_new');
         }
 
-        return $this->renderForm('rendez_vous/new.html.twig', [
-            'rendez_vou' => $rendezVou,
-            'form' => $form,
-        ]);
+        $entityManager->persist($rendezVou);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_rendez_vous_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('rendez_vous/new.html.twig', [
+        'rendez_vou' => $rendezVou,
+        'form' => $form,
+    ]);
+}
 
     #[Route('/{id}', name: 'app_rendez_vous_show', methods: ['GET'])]
     public function show(RendezVous $rendezVou): Response

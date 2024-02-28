@@ -45,4 +45,19 @@ class MedRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+ /**
+     * Recherche les médecins en fonction d'un terme de recherche.
+     *
+     * @param string $searchTerm
+     * @return Medecin[]|null
+     */
+    public function searchMedecin($searchTerm): ?array
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.nom LIKE :searchTerm')
+            ->orWhere('m.prenom LIKE :searchTerm')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->getQuery()
+            ->getResult();
+    }
 }
