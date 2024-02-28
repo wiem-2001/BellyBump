@@ -40,7 +40,46 @@
         .form-button:hover {
             background-color: #45a049;
         }
+        /* Styles pour la fenêtre modale */
+        .modal {
+            display: none; /* Par défaut, la fenêtre modale est cachée */
+            position: fixed; /* Position fixe pour qu'elle reste au-dessus du contenu */
+            z-index: 1; /* Assurez-vous que la fenêtre modale est au-dessus de tout */
+            left: 0;
+            top: 0;
+            width: 100%; /* Largeur pleine de la fenêtre modale */
+            height: 100%; /* Hauteur pleine de la fenêtre modale */
+            overflow: auto; /* Ajoutez un défilement si nécessaire */
+            background-color: rgb(0,0,0); /* Fallback couleur noire avec une certaine opacité */
+            background-color: rgba(0,0,0,0.4); /* Couleur noire avec une opacité de 40% */
+            padding-top: 60px; /* Ajouter un peu d'espace au-dessus de la fenêtre modale */
+        }
+
+        /* Contenu de la fenêtre modale */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 5% de haut et de bas, centré horizontalement */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Largeur de la fenêtre modale */
+        }
+
+        /* Bouton de fermeture */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
+
 
     <div class="form-container">
         {{ form_start(f, { 'attr': {'novalidate': 'novalidate'} }) }}
@@ -61,4 +100,38 @@
         {{ form_row(f.ajouter, {'attr': {'class': 'form-button'}}) }}
         {{ form_end(f) }}
     </div>
+
+    <!-- Fenêtre modale -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Fonction pour afficher la fenêtre modale avec un message
+        function displayModal(message) {
+            document.getElementById('modal-message').innerText = message;
+            modal.style.display = "block";
+        }
+
+        // Vérifier s'il y a un message d'erreur dans la session Flash
+        {% if app.session.flashBag.has('error') %}
+        displayModal('{{ app.session.flashBag.get('error')[0] }}');
+        {% endif %}
+    </script>
 {% endblock %}

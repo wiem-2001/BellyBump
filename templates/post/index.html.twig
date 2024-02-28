@@ -223,12 +223,12 @@
     <div class="add-post-container">
         <a href="{{ path('addpost') }}" class="add-post-button">Ajouter un Post</a>
     </div>
-<div class="search-bar-container">
-    <form action="{{ path('search') }}" method="GET">
-        <input type="text" name="keyword" class="search-bar" placeholder="Recherche...">
-        <button type="submit" class="search-button">Rechercher</button>
-    </form>
-    <div class="post-container">
+    <div class="search-bar-container">
+        <form action="{{ path('search') }}" method="GET">
+            <input type="text" name="keyword" class="search-bar" placeholder="Recherche...">
+            <button type="submit" class="search-button">Rechercher</button>
+        </form>
+        <div class="post-container">
 
             {% for post in pagination %}
                 <div class="post">
@@ -254,12 +254,11 @@
                     </div>
                 </div>
             {% endfor %}
-        <div class="pagination-container">
-            {{ knp_pagination_render(pagination) }}
+            <div class="pagination-container">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </div>
-    </div>
 
     </div>
 {% endblock %}
-
 

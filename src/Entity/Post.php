@@ -36,6 +36,8 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
     private Collection $comments;
 
+
+
     public function __construct()
     {
         $this->createdat = new \DateTimeImmutable();
@@ -143,9 +145,6 @@ class Post
 
         return $this;
     }
-
-
-
 
 
 }

@@ -15,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PostController extends AbstractController
 {
+
     /**
      * @Route("/post", name="display_post")
      */
@@ -51,7 +52,22 @@ class PostController extends AbstractController
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
+        $badWords = ['idiot', 'bete', 'naif','debile'];
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($badWords as $word) {
+                if (stripos($post->getTitle(), $word) !== false) {
+                    $this->addFlash('error', 'Your post contains inappropriate content.');
+                    return $this->redirectToRoute('addpost');
+                }
+            }
+
+            // Vérifier si le contenu contient des mots inappropriés
+            foreach ($badWords as $word) {
+                if (stripos($post->getContent(), $word) !== false) {
+                    $this->addFlash('error', 'Your post contains inappropriate content.');
+                    return $this->redirectToRoute('addpost');
+                }
+            }
             $file = $form->get('image')->getData();
             if ($file instanceof UploadedFile) {
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
