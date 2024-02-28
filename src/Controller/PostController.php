@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class PostController extends AbstractController
 {
@@ -180,6 +181,36 @@ class PostController extends AbstractController
             'keyword' => $keyword,
         ]);
     }
+    /**
+     * @Route("/export/pdf", name="export_pdf")
+     */
+    public function exportPdf(PostRepository $postRepository): Response
+    {
+        // Récupérer la liste des posts depuis le repository
+        $posts = $postRepository->findAll();
+
+        // Générer le contenu PDF
+        $pdfContent = $this->renderView('post/pdf_export.html.twig', [
+            'posts' => $posts,
+        ]);
+
+        // Créer une instance de Dompdf et définir les options
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $dompdf = new Dompdf($options);
+
+        // Charger le contenu PDF dans Dompdf
+        $dompdf->loadHtml($pdfContent);
+
+        // Rendre le PDF
+        $dompdf->render();
+
+        // Envoyer le PDF au navigateur en tant que réponse
+        return new Response($dompdf->output(), 200, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    }
+
 
 
 }
