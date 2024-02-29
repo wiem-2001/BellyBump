@@ -46,6 +46,9 @@ class Event
     #[ORM\Column]
     private ?bool $launched = False;
 
+    #[ORM\Column]
+    private ?bool $favorie = False;
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -184,6 +187,18 @@ class Event
     public function setLaunched(bool $launched): static
     {
         $this->launched = $launched;
+
+        return $this;
+    }
+
+    public function isFavorie(): ?bool
+    {
+        return $this->favorie;
+    }
+
+    public function setFavorie(bool $favorie): static
+    {
+        $this->favorie = $favorie;
 
         return $this;
     }

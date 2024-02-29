@@ -177,7 +177,8 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
     #[Route('/deleteEvent/{id}', name:"event_delete")]
     public function deleteEvent($id,EventRepository $repository,ManagerRegistry $managerRegistry , Request $request)
     {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $event= $repository->find($id);
 

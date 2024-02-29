@@ -45,13 +45,22 @@
             </div>
 
             <div class="col-lg-8 event-details">
+            {% if event.favorie == false %}
+             <i class="far fa-heart heart-style"></i>
+            {% else %}
+             <i class="fas fa-heart heart-style"></i>
+            {% endif %}
+            
             {% if event.coach != null %}
              <p><strong class="properties-title">Coached By </strong><b> {{ event.coach }}</b> ~ {{event.coach.job}} </p>
              {% endif %}
              <p><strong class="properties-title">Description </strong> {{ event.description }}</p>
              <p><strong class="properties-title">Date </strong> {{ event.day|date("d F, Y")  }}. From {{ event.heureDebut|date("H:i") }} To {{ event.heureFin|date("H:i")  }}</p>
              <p><strong class="properties-title">Number of participants: </strong> {{ event.reservation|length }}</p>
+             
+             
              <a href="{{path('reserve_event',{id:event.id})}}"   class="btn participate-btn">Join Now</a>
+             
              </div>
         </div>
         {% endfor %}
@@ -147,6 +156,10 @@
             float:right;
             margin-bottom:3%;
             padding:5px;
+        }
+        .heart-style{
+            color:#E84545;
+            font-size:24px;
         }
     </style>
     </main>
