@@ -122,4 +122,27 @@ class ProductController extends AbstractController
         ]);
     }
 
+
+
+/////pour les statistique
+    #[Route('/stats', name: 'produit_stats')]
+    public function index(ProduitRepository $produitRepository): Response
+    {
+
+
+        $stats = $produitRepository->getProduitStats();
+
+        $labels = [];
+        $data = [];
+        foreach ($stats as $stat) {
+            $labels[] = $stat['gammePrix'];
+            $data[] = $stat['nombreProduits'];
+        }
+
+        return $this->render('product/stat.html.twig', [
+            'labels' => $labels,
+            'data' => $data,
+        ]);
+    }
+
 }

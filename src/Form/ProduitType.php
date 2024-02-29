@@ -13,6 +13,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Partenaire;
 
+
 class ProduitType extends AbstractType
 {
 public function buildForm(FormBuilderInterface $builder, array $options): void

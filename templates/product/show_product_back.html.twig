@@ -1,5 +1,7 @@
 {% extends 'baseback.html.twig' %}
 {% block main %}
+    <!-- Bouton pour revenir à la page des statistiques -->
+    <a href="{{ path('produit_stats') }}" class="btn btn-primary">Voir les statistiques</a>
     <a href="{{ path('produit_new') }}" class="btn btn-success mb-3">Return to add a product</a>
     <div class="search-container">
     <form action="{{ path('shop_search') }}" method="GET"  class="form-control mr-sm-2">

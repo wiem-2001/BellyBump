@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
@@ -32,6 +33,9 @@
 
     {% block javascripts %}
         <!--   Core JS Files   -->
+        //pour stat
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
         <script src="{{asset('backOffice/assets/js/core/popper.min.js')}}" ></script>
         <script src="{{asset('backOffice/assets/js/core/bootstrap.min.js')}}" ></script>
         <script src="{{asset('backOffice/assets/js/plugins/perfect-scrollbar.min.js')}}" ></script>
