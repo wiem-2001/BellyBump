@@ -63,8 +63,9 @@ class AuthController extends AbstractController
                 if ($isVerified == 0 && $user->isStatus() == 0) {
                     $this->addFlash('error', 'Your account is not verified. Please verify your account.');
                 }
-                elseif ($isVerified == 1 &&$user->isStatus() == 0) {
+                elseif ($isVerified == 1 && $user->isStatus() == 0) {
                     $this->addFlash('error', 'Your account is inactive. Please contact support.');
+                    $this->redirectToRoute('app_logout');
                 }
                 else{
                     return $this->redirectToRoute('app_testTemplate');
