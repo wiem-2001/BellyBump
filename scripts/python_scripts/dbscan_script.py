@@ -1,38 +1,41 @@
-# Import necessary libraries
+import sys
+import json
 from sklearn.cluster import DBSCAN
 import numpy as np
 
-# Function to perform DBSCAN clustering on user ages
-def cluster_users_by_age(user_ages):
-    # Convert user ages to numpy array
-    ages_array = np.array(user_ages).reshape(-1, 1)  # Reshape to a column vector
+def cluster_users_by_address(user_addresses):
+    # Convert user addresses to numpy array
+    encoded_addresses = np.arange(len(user_addresses)).reshape(-1, 1)
     
-    # Define DBSCAN parameters (you may need to adjust these)
-    eps = 5  # Epsilon neighborhood size
-    min_samples = 5  # Minimum number of samples in a neighborhood
+    # Define DBSCAN parameters
+    eps = 0.1  # Epsilon neighborhood size
+    min_samples = 2  # Minimum number of samples in a neighborhood
     
     # Initialize DBSCAN object
     dbscan = DBSCAN(eps=eps, min_samples=min_samples)
     
     # Perform clustering
-    labels = dbscan.fit_predict(ages_array)
+    labels = dbscan.fit_predict(encoded_addresses)
     
     # Assign cluster labels to users
     clustered_users = {}
     for i, label in enumerate(labels):
-        if label not in clustered_users:
-            clustered_users[label] = []
-        clustered_users[label].append(user_ages[i])
+        address = user_addresses[i]
+        label_str = str(label)  # Convert label to string
+        if label_str not in clustered_users:
+            clustered_users[label_str] = {}
+        if address not in clustered_users[label_str]:
+            clustered_users[label_str][address] = 0
+        clustered_users[label_str][address] += 1
     
-    return clustered_users
+    return json.dumps(clustered_users)
 
-# Sample user ages retrieved from Symfony application (replace with actual data)
-user_ages = [20, 25, 27, 30, 33, 35, 40, 42, 45, 50]
-
-
-# Perform DBSCAN clustering
-clustered_users = cluster_users_by_age(user_ages)
-
-# Print clustered users
-for cluster_label, ages in clustered_users.items():
-    print(f"Cluster {cluster_label}: {ages}")
+if __name__ == '__main__':
+    # Read user addresses from command-line arguments
+    user_addresses = json.loads(sys.argv[1])
+    
+    # Perform DBSCAN clustering
+    clustered_users_json = cluster_users_by_address(user_addresses)
+    
+    # Print JSON string containing clustered users
+    print(clustered_users_json)
