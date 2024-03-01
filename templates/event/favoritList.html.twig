@@ -5,36 +5,21 @@
 
 {% endblock %}
 
-{% block title %}Events List{% endblock %}
+{% block title %}Favorit Events {% endblock %}
 {% block body %}
     <main>
     <div class="events-list">
     <div class="row">
-        <h3 class="event-title">Events </h3>
+        <h3 class="event-title">Favorit Events </h3>
 
     </div>
 
      <hr class="title-hr">
-    <div class="select-sort">
-    <form id="triForm" action="{{ path('list_event_mother') }}" method="get">
-        <select name="tri" id="tri" >
-            <option value="" disabled selected style="display:none;">Sort by</option>
-            <option value="date" > Date</option>
-            <option value="coach" >Coach</option>
-        </select>
-    </form>
-<script>
-        document.getElementById('tri').addEventListener('change', function() {
-            document.getElementById('triForm').submit();
-            console.log(this.value);
-
-        });
-    </script>
-    </div>
-        {% if tabEvents is empty  %}
+    
+        {% if favoriteEvents is empty  %}
         <p>No events to display.</p>
         {% else %}
-        {% for event in tabEvents %}
+        {% for event in favoriteEvents %}
         <div class="row event-item" id="event">
             <div class="col-lg-4 event-image">
                 <div class="overlay">
@@ -44,11 +29,9 @@
             </div>
 
             <div class="col-lg-8 event-details">
-            {% if event not in favoriteEvents %}
-            <a href="{{path('favorate_event',{id:event.id})}}" > <i class="far fa-heart heart-style"></i></a>
-            {% else %}
+            
             <a href="{{path('cancel_favorate_event',{id:event.id})}}" >  <i class="fas fa-heart heart-style"></i></a>
-            {% endif %}
+            
             
             {% if event.coach != null %}
              <p><strong class="properties-title">Coached By </strong><b> {{ event.coach }}</b> ~ {{event.coach.job}} </p>
@@ -57,9 +40,11 @@
              <p><strong class="properties-title">Date </strong> {{ event.day|date("d F, Y")  }}. From {{ event.heureDebut|date("H:i") }} To {{ event.heureFin|date("H:i")  }}</p>
              <p><strong class="properties-title">Number of participants: </strong> {{ event.reservation|length }}</p>
              
-             
+             {% if event in EventsNotParticipated %}
              <a href="{{path('reserve_event',{id:event.id})}}"   class="btn participate-btn">Join Now</a>
-             
+             {% else %}
+             <strong class="participated-txt"> Participated </strong>
+             {% endif %}
              </div>
         </div>
         {% endfor %}
@@ -161,6 +146,11 @@
             font-size:24px;
             float:right;
             cursor:pointer;
+        }
+        .participated-txt{
+            float:right;
+            color:red;
+            
         }
     </style>
     </main>

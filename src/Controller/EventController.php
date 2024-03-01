@@ -40,23 +40,41 @@ public function EventsListMother(Request $request, Security $security, EventRepo
     //$mother = $userRepository->find(1);
     $mother=$security->getUser();
     $Events = $repository->MotherNotParticipatedEvents($mother);
+    $favoriteEvents=$mother->getFavoriteEvents();
     $triOption = $request->query->get('tri');
 
     if ($triOption == 'date') {
         $sortedEvents = $repository->sortEventsByDate($mother);
-        dump($sortedEvents); // Debug statement
     } elseif ($triOption == 'coach') {
         $sortedEvents = $repository->sortEventsByCoach($mother);
-        dump($sortedEvents); // Debug statement
     } else {
         // Default behavior when no sorting option is provided
         $sortedEvents = $Events;
-        dump($sortedEvents); // Debug statement
     }
 
     return $this->render("reservation/MotherEventList.html.twig", [
         'tabEvents' => $sortedEvents,
-        'user'=>$mother
+        'user'=>$mother,
+        'favoriteEvents'=>$favoriteEvents
+    ]);
+}
+
+
+/// favories list
+#[Route('/favoritEvents', name: 'favories_list')]
+public function FavoritEvents(Security $security,EventRepository $repository,  UserRepository $userRepository)
+{
+    $this->denyAccessUnlessGranted('ROLE_MOTHER');
+
+    //$mother = $userRepository->find(1);
+    $mother=$security->getUser();
+    $Events=$mother->getFavoriteEvents();
+    $EventsNotParticipated = $repository->MotherNotParticipatedEvents($mother);
+    return $this->render("event/favoritList.html.twig", [
+        
+        'user'=>$mother,
+        'favoriteEvents'=>$Events,
+        'EventsNotParticipated'=>$EventsNotParticipated
     ]);
 }
 
@@ -195,8 +213,49 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
             $em->flush();
             return $this->redirectToRoute("list_event");    
     }
+//*******************************************FAVORIE********************************************* */
+    #[Route('/addEventToFavorie/{id}', name: 'favorate_event')]
+    public function addFavorie(Security $security , $id,EventRepository $eventRepository,UserRepository $userRepository,ManagerRegistry $managerRegistry): Response
+    {
+    $this->denyAccessUnlessGranted('ROLE_MOTHER');
 
+        $user = $security->getUser();
+        //$user=$userRepository->find(1);
+        $event = $eventRepository->find($id);
+        if ($user) {
+            // Check the role of the user
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {
+                // If the user is a mother, add the participation 
+                $user->addFavoriteEvent($event);
+                $entityManager = $managerRegistry->getManager();
+                $entityManager->flush();
+                return $this->redirectToRoute('list_event_mother');               }
+        }
+           
+        return $this->redirectToRoute('list_event_mother');           
+    }
 
+    #[Route('/removeEventFromFavories/{id}', name: 'cancel_favorate_event')]
+    public function removeFavorie( Security $security , $id,EventRepository $eventRepository,ManagerRegistry $managerRegistry,UserRepository $userRepository): Response
+    {
+    $this->denyAccessUnlessGranted('ROLE_MOTHER');
+
+        $user = $security->getUser();
+        //$user=$userRepository->find(1);
+        $event = $eventRepository->find($id);
+        if ($user) {
+            // Check the role of the user
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {
+                // If the user is a mother, add the participation 
+                $user->removeFavoriteEvent($event);
+                $entityManager = $managerRegistry->getManager();
+                $entityManager->flush();
+                return $this->redirectToRoute('list_event_mother');
+            }
+        }
+        
+        return $this->redirectToRoute('list_event_mother');        
+    }
 
     
 

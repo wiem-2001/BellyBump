@@ -51,6 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->events = new ArrayCollection();
+        $this->favoriteEvents = new ArrayCollection();
     }
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -67,6 +68,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(nullable: true)]
     private ?bool $Status = null;
+
+    #[ORM\ManyToMany(targetEntity: Event::class)]
+    private Collection $favoriteEvents;
 
     public function getId(): ?int
     {
@@ -289,6 +293,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setStatus(?bool $Status): static
     {
         $this->Status = $Status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getFavoriteEvents(): Collection
+    {
+        return $this->favoriteEvents;
+    }
+
+    public function addFavoriteEvent(Event $favoriteEvent): static
+    {
+        if (!$this->favoriteEvents->contains($favoriteEvent)) {
+            $this->favoriteEvents->add($favoriteEvent);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteEvent(Event $favoriteEvent): static
+    {
+        $this->favoriteEvents->removeElement($favoriteEvent);
 
         return $this;
     }
