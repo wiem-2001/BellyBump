@@ -23,7 +23,7 @@ class RendezVousType extends AbstractType
             'label' => 'Date',
             'constraints' => [
                 new Assert\Callback([$this, 'validateDate']),
-                new Assert\NotBlank(['message' => 'Veuillez entrer une date.']),
+                new Assert\NotBlank(['message' => 'Please enter a date.']),
             ],])
 
             ->add('heureReservation', IntegerType::class, [
@@ -33,7 +33,7 @@ class RendezVousType extends AbstractType
                         'max' => 19,
                         'notInRangeMessage' => 'L\'heure de réservation doit être entre {{ min }} heures et {{ max }} heures.',
                     ]),
-                    new Assert\NotBlank(['message' => 'Veuillez entrer une heure de rendez-vous']),
+                    new Assert\NotBlank(['message' => 'Please enter the houre']),
                 ],
                 
             ])
@@ -42,7 +42,7 @@ class RendezVousType extends AbstractType
                 'choice_label' => 'nom', // Choisissez le champ à afficher dans la liste déroulante
                 'placeholder' => 'Choisissez un médecin', // Texte facultatif pour l'option par défaut
                 'constraints' => [
-                    new Assert\NotBlank(['message' => 'Veuillez choisir un médecin.']),
+                    new Assert\NotBlank(['message' => 'Please select doctor ']),
                 ],
             ])
         ;
@@ -53,7 +53,7 @@ class RendezVousType extends AbstractType
         $currentDay = new \DateTime();
         
         if($date < $currentDay){
-            $context->buildViolation('Vous pouvez pas prendre un rendez vous dans le passé')
+            $context->buildViolation('This date is in the pass please try again')
             ->atPath('date')->addViolation();
         }
     }

@@ -39,10 +39,6 @@ class Etab
     // #[ORM\ManyToOne(inversedBy: 'etabs')]
     // private ?Med $Med = null;
 
-
-
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -59,19 +55,7 @@ class Etab
 
         return $this;
     }
-
-    public function getNbrMedcin(): ?int
-    {
-        return $this->nbrMedcin;
-    }
-
-    public function setNbrMedcin(int $nbrMedcin): static
-    {
-        $this->nbrMedcin = $nbrMedcin;
-
-        return $this;
-    }
-
+    
     public function getNom(): ?string
     {
         return $this->nom;
@@ -99,19 +83,6 @@ class Etab
 
         return $this;
     }
-
-    // public function getMed(): ?Med
-    // {
-    //     return $this->Med;
-    // }
-
-    // public function setMed(?Med $Med): static
-    // {
-    //     $this->Med = $Med;
-
-    //     return $this;
-    // }
-
     /**
      * @return Collection<int, Med>
      */

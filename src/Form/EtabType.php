@@ -19,7 +19,7 @@ class EtabType extends AbstractType
         ->add('nom',TextType::class,[
             'label' => 'Nom',
             'mapped' => True,
-            'constraints'=> [new Assert\NotBlank(array("message" => "Please enter a name")),]
+            'constraints'=> [new Assert\NotBlank(array("message" => "Please Enter a name")),]
         ])
         ->add('Localisation', ChoiceType::class, [
             'choices' => [
@@ -48,8 +48,8 @@ class EtabType extends AbstractType
                 'Tunis' => 'tunis',
                 'Zaghouan' => 'zaghouan',
             ],
-            'placeholder' => 'Sélectionnez adresse',
-            'required' => true,
+            'placeholder' => 'Adresse',
+            'constraints'=> [new Assert\NotBlank(array("message" => "Please Enter an adress")),]
         ])
         
         ->add('type', ChoiceType::class, [
@@ -57,8 +57,8 @@ class EtabType extends AbstractType
                 'Public' => 'public',
                 'Privé' => 'prive',
             ],
-            'placeholder' => 'Sélectionnez le type',
-            'required' => true,
+            'placeholder' => 'Type',
+            'constraints'=> [new Assert\NotBlank(array("message" => "Please Enter a type")),]
         ])
             ->add('Med', CollectionType::class, [
                 'entry_type' => MedType::class,

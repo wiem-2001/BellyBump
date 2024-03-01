@@ -24,7 +24,7 @@
 
         <div class="form-group">
             {{ form_label(form.type, 'Type') }}
-            {{ form_widget(form.type, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez le type'}}) }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'please enter the type'}}) }}
             <div class="error-message">
                 {{ form_errors(form.type) }}
             </div>
@@ -32,8 +32,8 @@
 
 
         <div class="form-group">
-            {{ form_label(form.nom, 'Nom') }}
-            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez le nom'}}) }}
+            {{ form_label(form.nom, 'Name') }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'please enter  the name'}}) }}
             <div class="error-message">
                 {{ form_errors(form.nom) }}
             </div>

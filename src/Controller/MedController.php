@@ -86,21 +86,4 @@ class MedController extends AbstractController
 
         return $this->redirectToRoute('app_med_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/search', name: 'app_med_search', methods: ['GET', 'POST'])]
-    public function search(Request $request, MedRepository $medecinRepository): Response
-    {
-        $form = $this->createForm(SearchType::class);
-        $form->handleRequest($request);
-
-        $results = [];
-        if ($form->isSubmitted() && $form->isValid()) {
-            $searchTerm = $form->get('searchTerm')->getData();
-            $results = $medecinRepository->searchMedecin($searchTerm);
-        }
-
-        return $this->render('med/search_results.html.twig', [
-            'form' => $form->createView(),
-            'results' => $results,
-        ]);
-    }
 }

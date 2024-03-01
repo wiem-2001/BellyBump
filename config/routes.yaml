@@ -2,6 +2,6 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 # config/routes.yaml
-app_med_search:
-    path: '/search'
-    controller: 'App\Controller\MedController::search'
+rate_etab:
+    path: '/rate/{id}'
+    controller: App\Controller\EtabController::rateEtab

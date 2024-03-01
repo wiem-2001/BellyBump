@@ -5,14 +5,7 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
+       
         .content {
             display: flex;
             flex-wrap: wrap;
@@ -27,17 +20,26 @@
             border-radius: 8px;
             text-align: center;
         }
+         h1 {
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 {% endblock %}
 
 {% block body %}
+  <h1>welcome in our list of establishments</h1>
     <div class="content">
+    
+     
         {% for etab in etabs %}
             <div class="card">
                 <h2>{{ etab.nom }}</h2>
                 <p><strong>Location:</strong> {{ etab.localisation }}</p>
                 <p><strong>Type:</strong> {{ etab.type }}</p>
-                <p><strong>Number of Doctors:</strong> {{ etab.nbrMedcin }}</p>
+                
+               <a href="{{ path('app_medFront_index', {'id': etab.id}) }}" class="view-med-btn">View Doctors</a>
             </div>
         {% else %}
             <p>No records found</p>

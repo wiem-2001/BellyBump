@@ -6,17 +6,13 @@
     {{ parent() }}
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+           margin: 1em auto; max-width: 700px; width: 80%; font: 18px/1.5 sans-serif;
         }
 
         .content {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center;
+           
         }
 
         .card {
@@ -25,7 +21,7 @@
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            text-align: center;
+            
         }
     </style>
 {% endblock %}
@@ -38,6 +34,7 @@
                 <p><strong>Full Name:</strong> {{ med.prenom }}</p>
                 <p><strong>Speciality:</strong> {{ med.specialite }}</p>
                  <p><strong>Etablissement:</strong> {{ med.etab.nom}}</p>
+                   <a href="{{ path('app_rendez_vous_front', {'id': med.id}) }}" class="view-med-btn">View appointment</a>
             </div>
         {% else %}
             <p>No records found</p>

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    List of Appointments
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+     body {
+            
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1 class="text-center">List of Appointments</h1>
+
+    {% if rendez_vouses is not empty %}
+        <div class="row">
+            {% for rendez_vou in rendez_vouses %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                           
+                            <p class="card-text">Reservation Date: {{ rendez_vou.DateReservation ? rendez_vou.DateReservation|date('Y-m-d') : 'Not available' }}</p>
+                            <p class="card-text">Reservation Time: {{ rendez_vou.heureReservation }}</p>
+                            <p class="card-text">Doctor: {{ rendez_vou.nomMed.nom }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">No records found</p>
+    {% endif %}
+{% endblock %}
