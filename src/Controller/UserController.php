@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\PasswordUpdateFormType;
 use App\Form\UpdateProfilFormType;
 use App\Repository\UserRepository;
+use App\Service\Dbscan;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -18,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
+
 
 
 class UserController extends AbstractController
@@ -275,6 +277,25 @@ class UserController extends AbstractController
             'unblockedUsersCount'=>$unblockedUsersCount
         ]);
     }
+    #[Route('/test-dbscan-connection', name: 'test_dbscan_connection')]
+    public function testDbscanConnection(Dbscan $dbscanService): Response
+    {
+        // Sample data to test DBSCAN connection
+        $testData = [20, 25, 27, 30, 33, 35, 40, 42, 45, 50];
 
+        try {
+            // Call the performClustering method to test the connection
+            $result = $dbscanService->performClustering($testData);
+
+            // Output the result (for testing purposes)
+          //  dd($result); // Use dd() to dump and die (halt execution) for debugging
+
+            // Optionally, return a response confirming successful connection
+            return new Response('Connection to Python script successful!');
+        } catch (\Exception $e) {
+            // Handle any exceptions that may occur (e.g., connection error)
+            return new Response('Connection to Python script failed: ' . $e->getMessage());
+        }
+    }
 
 }

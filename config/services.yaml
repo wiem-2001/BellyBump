@@ -7,6 +7,8 @@ parameters:
     images_directory_user: '%kernel.project_dir%/public/uploads/UserImages/'
     images_directory_event: '%kernel.project_dir%/public/uploads/EventImages/'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+    python_script_path: 'C:\xampp\htdocs\BellyBump\scripts\python_scripts\dbscan_script.py'
+
 
 services:
     # default configuration for services in *this* file
@@ -26,6 +28,10 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    # Add the DbscanService definition here
+    App\Services\Dbscan:
+        autowire: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
