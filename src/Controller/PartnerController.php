@@ -10,6 +10,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class PartnerController extends AbstractController
 {
@@ -36,8 +37,9 @@ class PartnerController extends AbstractController
 
 
     #[Route('/addpartner', name: 'add_partner')]
-    public function addpartner(Request $request, ManagerRegistry $managerRegistry): Response
+    public function addpartner(Request $request, ManagerRegistry $managerRegistry,Security $security): Response
     {
+        $user = $this->getUser();
         $partner = new Partenaire();
         $form = $this->createForm(PartenaireType::class, $partner);
         $form->handleRequest($request);
@@ -56,6 +58,7 @@ class PartnerController extends AbstractController
             // Render the same page to stay on it
             return $this->renderForm("partner/addpartner.html.twig", [
                 'fpartner' => $form,
+                'user'=>$user
             ]);
         }
 
@@ -84,8 +87,8 @@ class PartnerController extends AbstractController
 
 
     #[Route('/updatepartner/{id}', name: 'update_partner')]
-    public function updatepartner(Request $request,ManagerRegistry $managerRegistry,$id,partenaireRepository $repository): Response
-    {
+    public function updatepartner(Request $request,ManagerRegistry $managerRegistry,$id,partenaireRepository $repository,Security $security): Response
+    {   $user=$security->getUser();
         $partner = $this->getDoctrine()->getManager()->getRepository(partenaire::class)->find($id);
         $form = $this->createForm(partenaireType::class, $partner);
         $form->handleRequest($request);
@@ -97,7 +100,7 @@ class PartnerController extends AbstractController
         }
 
         return $this->renderForm("partner/update.html.twig"
-            ,array('fpartner'=>$form));
+            ,array('fpartner'=>$form , 'user'=>$user));
 
     }
 

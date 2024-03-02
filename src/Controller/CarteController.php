@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Repository\ProduitRepository;
+use Random\Engine\Secure;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,15 +13,14 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
-
-
+use Symfony\Component\Security\Core\Security;
 
 class CarteController extends AbstractController
 {
     #[Route('/carte', name: 'app_carte')]
-    public function index(SessionInterface $session, ProduitRepository $productRepository): Response
+    public function index(SessionInterface $session, ProduitRepository $productRepository, Security $security): Response
     {
+        $user=$security->getUser();
         $panier = $session->get('panier', []);
         $panierWithData = [];
         foreach ($panier as $id => $quantity) {
@@ -45,7 +45,8 @@ class CarteController extends AbstractController
 
         return $this->render('carte/index.html.twig', [
             'items' => $panierWithData,
-            'total' => $total
+            'total' => $total,
+            'user'=>$user
         ]);
     }
 
@@ -125,7 +126,7 @@ public function remove($id,SessionInterface $session){
     {
         // Ici, vous simulez le processus de paiement. Dans un cas réel, vous intégreriez avec une API de paiement.
         // Pour la simulation, vous pouvez juste nettoyer le panier et rediriger vers une page de succès.
-
+       
         $session->set('panier', []); // Nettoyer le panier après "paiement"
         $this->addFlash('success', 'Votre paiement a été traité avec succès !'); // Ajouter un message de succès
 
@@ -135,11 +136,11 @@ public function remove($id,SessionInterface $session){
 
 
     #[Route('/payment', name: 'payment_form')]
-    public function paymentForm(): Response
+    public function paymentForm(Security $security): Response
     {
-
+        $user=$security->getUser();
         $this->addFlash('success', 'Paiement traité avec succès !');
-        return $this->render('Carte/form.html.twig');
+        return $this->render('Carte/form.html.twig',['user'=>$user]);
     }
 
 }

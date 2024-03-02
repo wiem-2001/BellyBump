@@ -69,7 +69,7 @@ class AuthController extends AbstractController
 
                 }
                 else{
-                    return $this->redirectToRoute('app_testTemplate');
+                    return $this->redirectToRoute('display_post');
                 }
             } else {
                 return $this->redirectToRoute('get_users');

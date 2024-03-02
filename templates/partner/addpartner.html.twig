@@ -1,16 +1,8 @@
-{% extends 'base.html.twig'%}
-
-
-
+{% extends 'baseBackOffice.html.twig'%}
 
 {% block body %}
-
-
-
-    <section id="hero" class="hero">
-
-
-        <img src="frontoffice/assets/img/hero-bg.webp" alt="" data-aos="fade-in">
+      <main class="main-content border-radius-lg ">
+            <section id="hero" class="hero">
 
         <div class="container">
             <div class="row">
@@ -69,62 +61,8 @@
 
     </section>
 
+<div class="container-fluid py-4">
+{% block main %}
 {% endblock %}
-
-{% block footer %}
-    <footer>
-        <!-- ... contenu existant du pied de page ... -->
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-5 col-md-12 footer-about">
-                    <a href="index.html" class="logo d-flex align-items-center">
-                        <span>Belly Bump</span>
-                    </a>
-
-                    <div class="social-links d-flex mt-4">
-                        <a href=""><i class="bi bi-twitter"></i></a>
-                        <a href=""><i class="bi bi-facebook"></i></a>
-                        <a href=""><i class="bi bi-instagram"></i></a>
-                        <a href=""><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                    <h4>Contact Us</h4>
-                    <p>esprit,petite ariana</p>
-                    <p>Ariana</p>
-                    <p>Tunisia</p>
-                    <p class="mt-4"><strong>Phone:</strong> <span>+216 90 680 241</span></p>
-                    <p><strong>Email:</strong> <span>bellybump@gmail.com</span></p>
-                </div>
-
-            </div>
-        </div>
-
-
-        </div>
-        <!-- Détails de contact relocalisés ici -->
-    </footer>
-{% endblock %}
+       </main>
+        {% endblock %}

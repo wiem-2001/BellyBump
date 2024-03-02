@@ -55,11 +55,11 @@
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
                 <ul class="navbar-nav">    
                     <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
+                    <a class="nav-link text-white " href="{{path('display_postback')}}">
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">dashboard</i>
                         </div>
-                        <span class="nav-link-text ms-1" href='#'>Check posts</span>
+                        <span class="nav-link-text ms-1" href="#">Check posts</span>
                     </a>
                     </li>
                     <li class="nav-item">
@@ -73,11 +73,25 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white " href="{{path('user_stats')}}">
-
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                                 <i class="material-icons opacity-10">table_view</i>
                             </div>
                             <span class="nav-link-text ms-1">User Statistics</span>
+                        </a>
+                    </li><li class="nav-item">
+                        <a class="nav-link text-white " href="{{path('produit_stats')}}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Products Statistics</span>
+                        </a>
+                    </li>
+                      </li><li class="nav-item">
+                        <a class="nav-link text-white " href="{{path('produit_new')}}">
+                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="material-icons opacity-10">table_view</i>
+                            </div>
+                            <span class="nav-link-text ms-1">Manage Products</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -99,11 +113,13 @@
                     </a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link text-white " href="#">
+                   <a class="nav-link text-white "  href="{{path('back_partner')}}">
+                        
                         <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
                         </div>
-                        <span class="nav-link-text ms-1">Manage partners</span>
+                        
+                        <span class="nav-link-text ms-1" >Manage partners</span>
                     </a>
                     </li>
 

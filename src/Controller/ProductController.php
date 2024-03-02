@@ -128,7 +128,7 @@ class ProductController extends AbstractController
 
 
 /////pour les statistique
-    #[Route('/stats', name: 'produit_stats')]
+    #[Route('/Productstats', name: 'produit_stats')]
     public function index(ProduitRepository $produitRepository): Response
     {
 

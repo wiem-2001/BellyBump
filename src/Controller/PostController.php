@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Security\Core\Security;
 
 class PostController extends AbstractController
 {
@@ -21,10 +22,10 @@ class PostController extends AbstractController
     /**
      * @Route("/post", name="display_post")
      */
-    public function index(PostRepository $rep, Request $request,PaginatorInterface $paginator): Response
+    public function index(PostRepository $rep, Request $request,PaginatorInterface $paginator,Security $security): Response
     {
 
-
+        $user=$security->getUser();
         $pagination =$paginator->paginate(
             $rep->paginationQuery(),
             $request->query->get('page',1),
@@ -32,7 +33,8 @@ class PostController extends AbstractController
         );
         return $this->render('post/index.html.twig', [
 
-            'pagination'=>$pagination
+            'pagination'=>$pagination,
+            'user'=>$user
         ]);
     }
     /**
@@ -49,8 +51,9 @@ class PostController extends AbstractController
     /**
      * @Route("/addpost", name="addpost")
      */
-    public function addPost(ManagerRegistry $doctrine, Request $request): Response
+    public function addPost(ManagerRegistry $doctrine, Request $request,Security $security): Response
     {
+        $user=$security->getUser();
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
@@ -92,7 +95,7 @@ class PostController extends AbstractController
                 return $this->redirectToRoute('display_post');
             }
         }
-        return $this->render('post/createPost.html.twig', ['f' => $form->createView()]);
+        return $this->render('post/createPost.html.twig', ['f' => $form->createView(),'user'=>$user]);
     }
 
 
