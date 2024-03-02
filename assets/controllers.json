@@ -1,11 +1,14 @@
 {
     "controllers": {
+<<<<<<< HEAD
         "@symfony/ux-chartjs": {
             "chart": {
                 "enabled": true,
                 "fetch": "eager"
             }
         },
+=======
+>>>>>>> 78bfff6b2fa9630a3500d26724f2fd9afc6decd3
         "@symfony/ux-turbo": {
             "turbo-core": {
                 "enabled": true,

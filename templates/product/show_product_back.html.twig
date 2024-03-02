@@ -1,0 +1,40 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block main %}
+    <!-- Bouton pour revenir à la page des statistiques -->
+    <a href="{{ path('produit_stats') }}" class="btn btn-primary">Voir les statistiques</a>
+    <a href="{{ path('produit_new') }}" class="btn btn-success mb-3">Return to add a product</a>
+    <div class="search-container">
+    <form action="{{ path('shop_search') }}" method="GET"  class="form-control mr-sm-2">
+        <input type="text" placeholder="search a product..." name="query">
+        <button type="submit" class="btn btn-outline-success my-2 my-sm-0 ">search</button>
+    </form>
+        <br> <br> <br>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Delete</th>
+            <th>Update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in pr %}
+            <tr>
+                <td>{{ product.nom }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.prix }}</td>
+                <td>
+                    <a href="{{ path('remove_product', {'id':product.id}) }}" class="btn btn-danger">Delete</a>
+                </td>
+                <td>
+                    <a href="{{ path('update_product', {'id':product.id}) }}" class="btn btn-info">Update</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

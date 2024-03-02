@@ -8,7 +8,9 @@ parameters:
     images_directory_event: '%kernel.project_dir%/public/uploads/EventImages/'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     python_script_path: 'C:\xampp\htdocs\BellyBump\scripts\python_scripts\dbscan_script.py'
-
+    openai.api_key: '%env(OPENAI_KEY)%'
+    app.path.product_images: '%kernel.project_dir%/public/uploads/images/products/'
+    images_directory_post:  '%kernel.project_dir%/public/uploads/imagesPost/'
 
 services:
     # default configuration for services in *this* file
@@ -32,6 +34,7 @@ services:
     # Add the DbscanService definition here
     App\Services\Dbscan:
         autowire: true
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

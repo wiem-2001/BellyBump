@@ -68,7 +68,7 @@
   </head>
   <body>
   {% block header %}
-    <!-- ======= Header ======= -->
+       <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
@@ -81,7 +81,7 @@
       <!-- Nav Menu -->
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html#hero" >Home</a></li>
+          <li><a href="{{ path('display_post') }}" >Home</a></li>
           <li class="dropdown has-dropdown"><a href="#"><span>Events</span> <i class="bi bi-chevron-down"></i></a>
             <ul class="dd-box-shadow">
               <li><a href="{{path('list_event_mother')}}">List</a></li>
@@ -89,7 +89,7 @@
               </li>
             </ul>
           </li>
-          <li><a href="index.html#services">Products</a></li>
+          <li><a  href="{{path('back_product') }}">Products</a></li>
             <li><a href="index.html#services">Hospitals</a></li>
          <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->
           <li class="dropdown has-dropdown"><a href="#"><span>Maternal & Infant Health</span> <i class="bi bi-chevron-down"></i></a>
@@ -103,7 +103,17 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav><!-- End Nav Menu -->
-         <!-- User Dropdown -->
+      
+
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+      <a href="{{path('back_product') }}" class="btn-getstarted">visit shop</a>
+      <a href="{{ path('app_carte') }}" class="btn btn-primary">
+        <i class="fas fa-shopping-cart" class="btn btn-primary"></i>
+      </a>
+
+      <a href="{{path('add_partner') }}" class="btn-getstarted">become our partner</a>
+       <!-- User Dropdown -->
     <div class="dropdown">
       <div class="dropdown">
         <span>{{ user.firstName }} {{ user.lastName}} <i class="bi bi-chevron-down"></i></span>
@@ -140,5 +150,57 @@
     a{
       color:#8c6b95  ;
     }
+/* Style The Dropdown Button */
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width:  160px;
+  box-shadow:  0px  8px  16px  0px rgba(0,0,0,0.2);
+  z-index:  1;
+  right: -10px; /* Adjust this value to move the dropdown to the left */
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #dc3545;
+  color:white;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+  color:#dc3545
+}
+
   </style>
 </html>

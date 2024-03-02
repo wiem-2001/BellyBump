@@ -21,7 +21,6 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 
-
 class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user')]

@@ -34,6 +34,8 @@
 
   <!-- Template Main JS File -->
   <script src="{{asset('frontOffice/assets/js/main.js')}}"></script>
+
+
         {% endblock %}
     </head>
     <body>
@@ -51,7 +53,7 @@
       <!-- Nav Menu -->
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html#hero" class="active">Home</a></li>
+          <li><a href="{{ path('display_post') }}" >Home</a></li>
           <li class="dropdown has-dropdown"><a href="#"><span>Events</span> <i class="bi bi-chevron-down"></i></a>
             <ul class="dd-box-shadow">
               <li><a href="{{path('list_event_mother')}}">List</a></li>
@@ -59,7 +61,7 @@
               </li>
             </ul>
           </li>
-          <li><a href="index.html#services">Products</a></li>
+          <li><a  href="{{path('back_product') }}">Products</a></li>
             <li><a href="index.html#services">Hospitals</a></li>
          <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->
           <li class="dropdown has-dropdown"><a href="#"><span>Maternal & Infant Health</span> <i class="bi bi-chevron-down"></i></a>
@@ -73,6 +75,16 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav><!-- End Nav Menu -->
+      
+
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+      <a href="{{path('back_product') }}" class="btn-getstarted">visit shop</a>
+      <a href="{{ path('app_carte') }}" class="btn btn-primary">
+        <i class="fas fa-shopping-cart" class="btn btn-primary"></i>
+      </a>
+
+      <a href="{{path('add_partner') }}" class="btn-getstarted">become our partner</a>
        <!-- User Dropdown -->
     <div class="dropdown">
       <div class="dropdown">
@@ -103,7 +115,6 @@
            <p data-aos="fade-up" data-aos-delay="200">Where Motherhood's Challenges Transform into Triumphs</p>
          </div>
          <div class="col-lg-5">
-
          </div>
        </div>
      </div>
@@ -180,6 +191,12 @@
     </section><!-- End Contact Section -->
   </main>
         {% endblock %}
+
+      {% block  panier %}
+
+
+      {% endblock %}
+
         {% block footer %}
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
