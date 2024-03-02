@@ -1,0 +1,75 @@
+{# pdf_export.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Posts - Export PDF</title>
+    <style>
+        body {
+            background-color: #fce4ec; /* Rose pastel */
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff; /* Fond blanc */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre douce */
+        }
+
+        h1 {
+            color: #ff4081; /* Rose plus vif */
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd; /* Bordure inférieure grise */
+        }
+
+        th {
+            background-color: #ff80ab; /* Rose clair pour l'en-tête du tableau */
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f3e5f5; /* Rose pâle pour les lignes impaires */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Liste des Posts</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <!-- Ajoutez d'autres en-têtes si nécessaire -->
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td>{{ post.content }}</td>
+                <!-- Ajoutez d'autres colonnes si nécessaire -->
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

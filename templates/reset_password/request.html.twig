@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+
+{% endblock %}
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <section id="hero" class="hero">
+        <img src="{{ asset('frontOffice/assets/img/hero-bg.webp') }}" alt="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <p>Enter your email , and you will be sent a reset password email</p>
+                </div>
+                <div class="col-lg-6">
+    {{ form_start(requestForm,{'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_errors(requestForm) }}
+       <div>
+                        {{ form_widget(requestForm.email, { 'attr': { 'class': 'form-control' ~ (not requestForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter email address' } }) }}
+                        <div class="error-message"><Strong>{{ form_errors(requestForm.email) }}</Strong></div>
+                    </div>
+<div style="margin-top: 10px;">
+                      {{ form_widget(requestForm.ResetPassword, {'label': 'Reset Password', 'attr': {'class': 'btn btn-danger float-end'}}) }}
+                    </div>
+    {{ form_end(requestForm) }}
+     </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+{% endblock %}

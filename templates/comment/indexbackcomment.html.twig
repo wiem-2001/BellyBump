@@ -1,0 +1,107 @@
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Styles pour le titre */
+        .page-title {
+            margin-top: 20px;
+        }
+
+        /* Styles pour le conteneur principal du tableau */
+        .example-wrapper {
+            width: 80%; /* Ajustez la largeur comme vous le souhaitez */
+            margin: 20px auto; /* Centre le tableau horizontalement et ajoute une marge en haut et en bas */
+            background-color: rgba(255, 204, 203, 0.5); /* Couleur semi-transparente liée à la maternité */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Effet d'ombre */
+        }
+
+        /* Styles pour le tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            overflow-wrap: break-word; /* Empêcher le retour à la ligne automatique */
+        }
+
+        th {
+            background-color: #ff6666; /* Couleur de fond pour l'en-tête de tableau */
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Couleur de fond pour les lignes paires */
+        }
+
+        /* Styles pour le bouton */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6666; /* Couleur du bouton */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ff4d4d; /* Couleur du bouton au survol */
+        }
+    </style>
+    <div style="text-align: center;">
+        <br>
+        <br>
+        <div class="page-title">
+            <h1>Liste des Commentaires</h1>
+        </div>
+        <br>
+        <div class="example-wrapper">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Contenu</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if comments is not empty %}
+                    {% for comment in comments %}
+                        {% if comment.post.id == postId %}
+                            <tr>
+                                <td>{{ comment.contenu }}</td>
+                                <td>
+                                    <a href="{{ path('deletecomment', {'id': comment.id}) }}" class="edit-post-button btn btn-danger">Supprimer</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="2">Aucun Commentaire trouvé.</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

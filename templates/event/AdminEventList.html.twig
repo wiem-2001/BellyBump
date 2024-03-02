@@ -1,0 +1,328 @@
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %} Event List {% endblock %}
+{% block main %}
+<div class="row">
+<div class="col-12">
+<div class="card my-4">
+<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+<h6 class="text-white text-capitalize ps-3">Events table</h6>
+</div>
+</div>
+<div class="card-body px-0 pb-2">
+<div class="table-responsive p-0">
+<p class="table-sous-title"> To Launch Events </p>
+{% if notrealizedEvents is empty %}
+<table class="table align-items-center mb-0">
+<tbody>
+<tr><td colspan='5' class='text-center'>No future events yet.</td></tr>
+</tbody>
+</table>
+{% else %}
+<table class="table align-items-center mb-0">
+<thead>
+<tr>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Day</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Time</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Time</th>
+<th class="text-secondary opacity-7"></th>
+<th class="text-secondary opacity-7"></th>
+<th class="text-secondary opacity-7"></th>
+
+</tr>
+</thead>
+<tbody>
+{% for  event in notrealizedEvents %}
+<tr>
+<td>
+<div class="d-flex px-2 py-1">
+<div>
+<img src="{{ asset('uploads/EventImages/' ~ event.image) }}" width="100px" class="avatar  me-3 border-radius-lg" alt="event">
+</div>
+<div class="d-flex flex-column justify-content-center">
+<h6 class="mb-0 text-sm"> {{event.name}} </h6>
+</div>
+</div>
+</td>
+<td>
+<p class="text-xs font-weight-bold mb-0"> {{event.day  | date('j F, Y') }} </p>
+</td>
+<td class="align-middle text-center text-sm">
+<span class="text-secondary text-xs font-weight-bold">{{event.heureDebut | date('H:i')}}</span>
+</td>
+<td class="align-middle text-center">
+<span class="text-secondary text-xs font-weight-bold">{{event.heureFin | date('H:i')}}</span>
+</td>
+{% if event.launched == false %}
+<td class="align-middle">
+<a href="{{ path('event_update',{id: event.id})}}" class="badge badge-sm bg-gradient-success " data-toggle="tooltip" data-original-title="Edit event">
+Edit
+</a>
+</td>
+<td class="align-middle">
+<a href="{{ path('event_delete',{id: event.id})}}" class="badge badge-sm bg-gradient-danger " data-toggle="tooltip" data-original-title="delete event">
+Delete
+</a>
+</td>
+<td class="align-middle">
+<a href="{{path('send_meeting_invite',{id:event.id})}}" class="badge badge-sm bg-gradient-start " data-toggle="tooltip" data-original-title="launch event">
+Launch
+</a>
+</td>
+{% else %}
+<td class="align-middle">
+<a href="{{ path('event_update',{id: event.id})}}" class="badge badge-sm bg-gradient-success " data-toggle="tooltip" data-original-title="Edit event">
+Edit
+</a>
+</td>
+
+<td class="align-middle">
+<a href="{{path('send_meeting_invite',{id:event.id})}}" class="badge badge-sm bg-gradient-start " data-toggle="tooltip" data-original-title="launch event">
+Launch
+</a>
+</td>
+<td class="align-middle info-launch">
+<strong> is Launched </strong>
+</td>
+{% endif %}
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endif %}
+<!--- End of Table 1****************** -->
+<!-- ****************Table 2*****************-->
+<p class="table-sous-title"> Old Events</p>
+{% if realizedEvents is empty %}
+<table class="table align-items-center mb-0">
+<tbody>
+<tr><td colspan='5' class='text-center'>No old events .</td></tr>
+</tbody>
+</table>
+{% else %}
+<table class="table align-items-center mb-0">
+<thead>
+<tr>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Day</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Start Time</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">End Time</th>
+<th class="text-secondary opacity-7"></th>
+<th class="text-secondary opacity-7"></th>
+<th class="text-secondary opacity-7"></th>
+
+</tr>
+</thead>
+<tbody>
+{% for  event in realizedEvents %}
+<tr>
+<td>
+<div class="d-flex px-2 py-1">
+<div>
+<img src="{{ asset('uploads/EventImages/' ~ event.image) }}" width="100px" class="avatar  me-3 border-radius-lg" alt="event">
+</div>
+<div class="d-flex flex-column justify-content-center">
+<h6 class="mb-0 text-sm"> {{event.name}} </h6>
+</div>
+</div>
+</td>
+<td>
+<p class="text-xs font-weight-bold mb-0"> {{event.day  | date('j F, Y') }} </p>
+</td>
+<td class="align-middle text-center text-sm">
+<span class="text-secondary text-xs font-weight-bold">{{event.heureDebut | date('H:i')}}</span>
+</td>
+<td class="align-middle text-center">
+<span class="text-secondary text-xs font-weight-bold">{{event.heureFin | date('H:i')}}</span>
+</td>
+<td class="align-middle">
+
+</td>
+<td class="align-middle">
+
+</td>
+<td class="align-middle">
+
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endif %}
+</div>
+</div>
+</div>
+<a href="{{ path('event_add') }}" class="btn btn-primary addEventbtn">Add Event</a>
+</div>
+</div>
+<!--********************************************************************* -->
+<div class="row second-row">
+    <div class="col-12">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                    <h6 class="text-white text-capitalize ps-3">Participations table</h6>
+                </div>
+            </div>
+            <div class="card-body px-0 pb-2">
+                <div class="partcipationT table-responsive p-0">
+                    <table class=" table align-items-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> Event Name</th>
+                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Participant Name</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"> email</th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% set currentEventId = null %}
+                            {% set notEmptynbr = 0 %}
+                            {% for event in tabEvents %}
+                              {% if event.reservation is not empty%}
+                                {% set notEmptynbr = notEmptynbr + 1 %}
+                                {% if currentEventId != event.id %}
+                                    {% set currentEventId = event.id %}
+                                    <tr>
+                                        <td >
+                                            <div class="d-flex px-2 py-1">
+                                                <div class="d-flex flex-column justify-content-center">
+                                                    <h6 class="mb-0 text-sm">{{event.name }}</h6>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                                {% for reservation in event.reservation %}
+                                <tr>
+                                    <td></td> {# empty cell for indentation #}
+                                    <td>
+                                        <p class="text-xs font-weight-bold mb-0">{{ reservation.firstName }} {{ reservation.lastName }}</p>
+                                    </td>
+                                    <td >
+                                        <p class="text-xs font-weight-bold mb-0">{{reservation.email}}</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                              {% endif %}
+                            {% endfor %}
+                            {% if notEmptynbr == 0 %}
+                            <tr><td colspan='3' class='text-center'>No participation in any event yet</td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="space"></div>
+{# ******************************************************************************* #}
+<div class="row third-row">
+<div class="col-12">
+<div class="card my-4">
+<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+<div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+<h6 class="text-white text-capitalize ps-3">Coachs table</h6>
+</div>
+</div>
+<div class="card-body px-0 pb-2">
+<div class="table-responsive p-0">
+{% if tabCoach is empty %}
+<table class="table align-items-center mb-0">
+<tbody>
+<tr><td colspan='5' class='text-center'>No Coach exist yet </td></tr>
+</tbody>
+</table>
+{% else %}
+<table class="table align-items-center mb-0">
+<thead>
+<tr>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">FirstName</th>
+<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">LastName</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Job</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+<th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">PhoneNumber</th>
+<th class="text-secondary opacity-7"></th>
+<th class="text-secondary opacity-7"></th>
+
+</tr>
+</thead>
+<tbody>
+{% for  coach in tabCoach %}
+<tr>
+<td>
+<div class="d-flex px-2 py-1">
+<div>
+
+</div>
+<div class="d-flex flex-column justify-content-center">
+<p class="text-xs font-weight-bold mb-0"> {{coach.firstname}} </p>
+</div>
+</div>
+</td>
+<td>
+<p class="text-xs font-weight-bold mb-0"> {{coach.lastname}} </p>
+</td>
+<td class="align-middle text-center text-sm">
+<span class="text-secondary text-xs font-weight-bold">{{coach.job}}</span>
+</td>
+<td class="align-middle text-center">
+<span class="text-secondary text-xs font-weight-bold">{{coach.email }}</span>
+</td>
+<td class="align-middle text-center">
+<span class="text-secondary text-xs font-weight-bold">{{coach.phone }}</span>
+</td>
+<td class="align-middle">
+<a href="{{ path('coach_update',{id: coach.id})}}" class="badge badge-sm bg-gradient-success " data-toggle="tooltip" data-original-title="Edit event">
+Edit
+</a>
+</td>
+<td class="align-middle">
+<a href="{{ path('coach_delete',{id: coach.id})}}" class="badge badge-sm bg-gradient-danger " data-toggle="tooltip" data-original-title="delete event">
+Delete
+</a>
+</td>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endif %}
+
+<a href="{{ path('coach_add') }}" class="btn btn-primary addEventbtn ">Add Coach</a>
+</div>
+</div>
+
+
+<style>
+    .bg-gradient-danger {
+        background-image: linear-gradient(195deg, rgb(181, 28, 28) 0%, rgb(181, 28, 28) 100%);
+    }
+    .bg-gradient-start{
+        background-image: linear-gradient(195deg, rgb(114, 72, 35) 0%, rgb(114, 72, 35) 100%);
+    }
+    .addEventbtn{
+        float: right;
+        margin-right:5%;
+    }
+    .second-row{
+        margin-top:5%;
+    }
+    .table-sous-title{
+        margin-left:5%;
+        font-weight: bold;
+    }
+    .space{
+        margin-bottom:7%;
+    }
+    .info-launch{
+        margin-top:5px;
+        color:rgb(181, 28, 28);
+    }
+</style>
+{% endblock %}

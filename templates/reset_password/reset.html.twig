@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+
+{% block body %}
+    <section id="hero" class="hero">
+        <img src="{{ asset('frontOffice/assets/img/hero-bg.webp') }}" alt="">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    {{ form_start(resetForm,{'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_errors(resetForm) }}
+                    <div>
+                        {{ form_label(resetForm.plainPassword.first) }}
+                        {{ form_widget(resetForm.plainPassword.first, { 'attr': { 'class': 'form-control' ~ (not resetForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your password' } }) }}
+                        <div class="error-message"><Strong>{{ form_errors(resetForm.plainPassword.first) }}</Strong></div>
+                    </div>
+                    <div>
+                        {{ form_label(resetForm.plainPassword.second) }}
+                        {{ form_widget(resetForm.plainPassword.second, { 'attr': { 'class': 'form-control' ~ (not resetForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Confirm password' } }) }}
+                        <div class="error-message"><Strong>{{ form_errors(resetForm.plainPassword.second) }}</Strong></div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        {{ form_widget(resetForm.save, {'label': 'Reset Password', 'attr': {'class': 'btn btn-danger float-end'}}) }}
+                    </div>
+                    {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+{% endblock %}
