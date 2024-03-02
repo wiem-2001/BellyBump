@@ -11,6 +11,9 @@ parameters:
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
+    App\Service\RecommendationEventsService:
+        arguments:
+            $pythonScriptPath: '%kernel.project_dir%/public/PythonScript/EventRecommendation.py'
     # default configuration for services in *this* file
     app.logout_success_handler:
         class: App\Security\LogoutSuccessHandler

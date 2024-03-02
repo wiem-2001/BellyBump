@@ -47,7 +47,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $qb->getQuery()->getResult();
     }
 
+    public function getFavoritedOrParticipatedEvents(User $user): array
+    {
+        $favoritedEvents = $user->getFavoriteEvents()->toArray();
+        $participatedEvents = $user->getEvents()->toArray();
 
+        // Merge and remove duplicates
+        $events = array_unique(array_merge($favoritedEvents, $participatedEvents), SORT_REGULAR);
+
+        return $events;
+    }
+
+    public function getFavoritedOrParticipatedEventsIds(User $user): array
+    {
+       $events = $this->getFavoritedOrParticipatedEvents($user);
+       $eventsIds = []; 
+       foreach ($events as $event){
+           $eventsIds[]=$event->getId();
+       }
+       return $eventsIds ; 
+    }
 
 //    /**
 //     * @return User[] Returns an array of User objects
