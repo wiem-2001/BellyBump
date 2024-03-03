@@ -157,8 +157,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('detail_user', ['id' => $user->getId()]);
         }
 
-        $this->addFlash('success', 'Profile updated successfully');
-
         // Render the profile update form
         return $this->render('user/show_profil.html.twig', [
             'profilUpdateForm' => $form->createView(),

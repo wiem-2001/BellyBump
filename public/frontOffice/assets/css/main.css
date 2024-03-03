@@ -2890,3 +2890,60 @@ section,
   color: var(--contrast-color);
   background-color: rgba(var(--accent-color-rgb), 0.8);
 }
+////////////////////////
+.form-add-product {
+  background-color: #ffccf9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: auto;
+}
+
+.form-add-product h1 {
+  color: #ff66c4;
+  text-align: center;
+}
+
+.form-add-product .btn {
+  background-color: #ff66c4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.form-add-product .btn:hover {
+  background-color: #ff33a6;
+}
+
+.form-add-product a.btn-secondary {
+  background-color: #f2c4ff;
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.form-add-product a.btn-secondary:hover {
+  background-color: #e2a2ff;
+}
+
+.form-add-product label {
+  color: #ff66c4;
+  margin-top: 10px;
+}
+
+.form-add-product input,
+.form-add-product select,
+.form-add-product textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ffccf9;
+  border-radius: 5px;
+}
