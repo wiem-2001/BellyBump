@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Med;
+use App\Entity\Etab;
+
 use App\Form\MedType;
 use App\Repository\MedRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,13 +24,17 @@ class MedController extends AbstractController
             'meds' => $medRepository->findAll(),
         ]);
     }
-    #[Route('/medFront', name: 'app_medFront_index', methods: ['GET'])]
-    public function showMedFront(MedRepository $medRepository): Response
-    {
-        return $this->render('med/medFront.html.twig', [
-            'meds' => $medRepository->findAll(),
-        ]);
-    }
+    #[Route('/medFront/{id}', name: 'app_medFront_index', methods: ['GET'])]
+public function showMedFront(MedRepository $medRepository, Etab $etab): Response
+{
+    // Assuming you have a relationship between Med and Etab entities
+    $meds = $medRepository->findBy(['etab' => $etab]);
+
+    return $this->render('med/medFront.html.twig', [
+        'meds' => $meds,
+    ]);
+}
+
 
     #[Route('/new', name: 'app_med_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response

@@ -6,38 +6,110 @@
     {{ parent() }}
     <style>
         body {
-           margin: 1em auto; max-width: 700px; width: 80%; font: 18px/1.5 sans-serif;
+            font-family: 'Arial', sans-serif;
         }
 
         .content {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        #specialityFilter {
+            font-size: 16px;
+            padding: 8px;
+        }
+
+        .doctors-list {
             display: flex;
             flex-wrap: wrap;
-           
+            justify-content: space-around;
+            margin-top: 20px;
         }
 
         .card {
             width: 300px;
-            margin: 10px;
+            margin: 20px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .view-med-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .view-med-btn:hover {
+            background-color: #0056b3;
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="content">
-        {% for med in meds %}
-            <div class="card">
-                <h2>{{ med.nom }}</h2>
-                <p><strong>Full Name:</strong> {{ med.prenom }}</p>
-                <p><strong>Speciality:</strong> {{ med.specialite }}</p>
-                 <p><strong>Etablissement:</strong> {{ med.etab.nom}}</p>
-                   <a href="{{ path('app_rendez_vous_front', {'id': med.id}) }}" class="view-med-btn">View appointment</a>
-            </div>
-        {% else %}
-            <p>No records found</p>
-        {% endfor %}
+    <div class="content" style="margin-top:100px;">
+        <label for="specialityFilter">Filter by Speciality:</label>
+        <select id="specialityFilter">
+            <option value="all">All Specialities</option>
+            {% for med in meds %}
+                <option value="{{ med.specialite }}">{{ med.specialite }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="doctors-list">
+            {% for med in meds %}
+                <div class="card" data-speciality="{{ med.specialite }}">
+                    <h2>{{ med.nom }} {{ med.prenom }}</h2>
+                    <p><strong>Speciality:</strong> {{ med.specialite }}</p>
+                    <p><strong>Etablissement:</strong> {{ med.etab.nom }}</p>
+                    <a href="{{ path('app_rendez_vous_front', {'id': med.id}) }}" class="view-med-btn">View Appointments</a>
+                </div>
+            {% else %}
+                <p>No records found</p>
+            {% endfor %}
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#specialityFilter').change(function () {
+                var selectedSpeciality = $(this).val();
+
+                if (selectedSpeciality === 'all') {
+                    $('.card').fadeIn(300);
+                } else {
+                    $('.card').fadeOut(300);
+                    $('.card[data-speciality="' + selectedSpeciality + '"]').fadeIn(300);
+                }
+            });
+        });
+    </script>
 {% endblock %}

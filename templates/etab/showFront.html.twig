@@ -5,7 +5,11 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-       
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+        }
+
         .content {
             display: flex;
             flex-wrap: wrap;
@@ -14,35 +18,98 @@
 
         .card {
             width: 300px;
-            margin: 10px;
+            margin: 20px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
             text-align: center;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
         }
-         h1 {
-            color: black;
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #333;
             text-align: center;
             margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #777;
+            margin-bottom: 15px;
+        }
+
+        .view-med-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .view-med-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .rating {
+            display: inline-block;
+            margin-top: 30px;
         }
     </style>
 {% endblock %}
 
 {% block body %}
-  <h1>welcome in our list of establishments</h1>
-    <div class="content">
+    <h1 style="margin-top: 150px;">Welcome to our list of establishments</h1>
     
-     
+    <div class="content">
         {% for etab in etabs %}
             <div class="card">
-                <h2>{{ etab.nom }}</h2>
+                <h2><strong>{{ etab.nom }}</strong></h2>
                 <p><strong>Location:</strong> {{ etab.localisation }}</p>
                 <p><strong>Type:</strong> {{ etab.type }}</p>
-                
-               <a href="{{ path('app_medFront_index', {'id': etab.id}) }}" class="view-med-btn">View Doctors</a>
+                <a href="{{ path('app_medFront_index', {'id': etab.id}) }}" class="view-med-btn">View Doctors</a>
+                <div class="rating" data-id="{{ etab.id }}"></div>
             </div>
         {% else %}
             <p>No records found</p>
         {% endfor %}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('.rating').each(function () {
+                var establishmentId = $(this).data('id');
+                
+                // Retrieve the saved rating from local storage or set a default value
+                var savedRating = localStorage.getItem('rating_' + establishmentId) || 3.5;
+
+                $(this).rateYo({
+                    rating: savedRating,
+                    starWidth: '20px',
+                    onChange: function (rating, rateYoInstance) {
+                        // Save the rating to local storage
+                        localStorage.setItem('rating_' + establishmentId, rating);
+
+                        console.log('Rating changed for Establishment ID ' + establishmentId + ': ' + rating);
+                        // Add an Ajax call here to send the rating to the server if needed
+                    }
+                    // Add more options as needed
+                });
+            });
+        });
+    </script>
 {% endblock %}

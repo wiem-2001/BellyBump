@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Form\MedType;
 use App\Entity\Etab;
 use App\Entity\Med;
+use App\Repository\MedRepository;
 use App\Form\EtabType;
 use App\Repository\EtabRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -26,12 +27,18 @@ class EtabController extends AbstractController
 
 
     #[Route('/showFront', name: 'app_etabFront_index', methods: ['GET'])]
-    public function showFront(EtabRepository $etabRepository): Response
+    public function showFront(EtabRepository $etabRepository, MedRepository $medRepository): Response
     {
+        $etabs = $etabRepository->findAll();
+        $allSpecialities = $medRepository->findUniqueSpecialities();
+    
         return $this->render('etab/showFront.html.twig', [
-            'etabs' => $etabRepository->findAll(),
+            'etabs' => $etabs,
+            'allSpecialities' => $allSpecialities,
         ]);
     }
+    
+    
 
 
     #[Route('/new', name: 'app_etab_new', methods: ['GET', 'POST'])]
@@ -110,4 +117,5 @@ class EtabController extends AbstractController
         // ...
     }
 }
+
 }

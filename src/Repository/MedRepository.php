@@ -60,4 +60,12 @@ class MedRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+    public function findUniqueSpecialities()
+{
+    return $this->createQueryBuilder('m')
+        ->select('DISTINCT m.specialite')
+        ->getQuery()
+        ->getResult();
+}
+
 }
