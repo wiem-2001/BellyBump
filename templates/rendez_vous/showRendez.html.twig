@@ -1,48 +1,130 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    List of Appointments
+    List of Appointments for {{ rendez_vouses[0].nomMed.nom }}
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <style>
-     body {
-            
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            margin-bottom: 20px;
+        body {
+            font-family: 'Arial', sans-serif;
         }
 
-        .card-body {
-            padding: 20px;
+        .content {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 90%;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        #specialityFilter {
+            font-size: 16px;
+            padding: 8px;
+        }
+
+        .doctors-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .view-med-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .view-med-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .appointment-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .appointment-card {
+            width: 300px;
+            margin: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .appointment-card:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
         }
     </style>
 {% endblock %}
 
-{% block body %}
-    <h1 class="text-center">List of Appointments</h1>
 
-    {% if rendez_vouses is not empty %}
-        <div class="row">
-            {% for rendez_vou in rendez_vouses %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                           
-                            <p class="card-text">Reservation Date: {{ rendez_vou.DateReservation ? rendez_vou.DateReservation|date('Y-m-d') : 'Not available' }}</p>
-                            <p class="card-text">Reservation Time: {{ rendez_vou.heureReservation }}</p>
-                            <p class="card-text">Doctor: {{ rendez_vou.nomMed.nom }}</p>
+{% block body %}
+    <h1 style="margin-top: 150px;">Appointments for {{ rendez_vouses[0].nomMed.nom }}</h1>
+    <div class="content">
+        {% if rendez_vouses is not empty %}
+            <div class="row">
+                {% for rendez_vou in rendez_vouses %}
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">Reservation Date: {{ rendez_vou.DateReservation ? rendez_vou.DateReservation|date('Y-m-d') : 'Not available' }} </p>
+                                <p class="card-text">Reservation Time: {{ rendez_vou.heureReservation }} heure</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+              <div class="text-center">
+            <a href="{{ path('app_rendez_vous_new') }}" class="btn btn-primary">Take Appointment</a>
         </div>
-    {% else %}
-        <p class="text-center">No records found</p>
-    {% endif %}
+        {% else %}
+            <p class="text-center">No records found</p>
+        {% endif %}
+    </div>
 {% endblock %}

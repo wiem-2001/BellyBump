@@ -66,15 +66,80 @@
             display: inline-block;
             margin-top: 30px;
         }
+
+        .filter-container {
+            margin-bottom: 20px;
+        }
+
+        .filter-container label {
+            margin-right: 10px;
+        }
+
+        .custom-select {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.5;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .custom-select:focus {
+            border-color: #66afe9;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-    <h1 style="margin-top: 150px;">Welcome to our list of establishments</h1>
+    <h1 style="margin-top: 150px;"><strong> Welcome to our list of establishments</strong></h1>
+
+    <!-- Type filter dropdown -->
     
+    <!-- Rating filter dropdown -->
+    <style>
+    .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 10vh; /* Optional: Adjust the height as needed */
+    }
+
+    /* Additional styling for the label elements to provide some spacing */
+    label {
+        margin-right: 10px;
+    }
+</style>
+
+<div class="filter-container center-container">
+    <label for="typeFilter"><strong>Type:</strong></label>
+    <select id="typeFilter" class="custom-select">
+        <option value="all">All</option>
+        <option value="public">Public</option>
+        <option value="private">Private</option>
+    </select>
+
+    <label for="ratingFilter"><strong>Rating:</strong></label>
+    <select id="ratingFilter" class="custom-select">
+        <option value="all">All</option>
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+    </select>
+</div>
+
+
     <div class="content">
         {% for etab in etabs %}
-            <div class="card">
+            <div class="card" data-type="{{ etab.type }}">
                 <h2><strong>{{ etab.nom }}</strong></h2>
                 <p><strong>Location:</strong> {{ etab.localisation }}</p>
                 <p><strong>Type:</strong> {{ etab.type }}</p>
@@ -93,7 +158,7 @@
         $(document).ready(function () {
             $('.rating').each(function () {
                 var establishmentId = $(this).data('id');
-                
+
                 // Retrieve the saved rating from local storage or set a default value
                 var savedRating = localStorage.getItem('rating_' + establishmentId) || 3.5;
 
@@ -110,6 +175,28 @@
                     // Add more options as needed
                 });
             });
+
+            // Filter establishments based on the selected type and rating
+            $('#typeFilter, #ratingFilter').change(function () {
+                filterEstablishments();
+            });
+
+            function filterEstablishments() {
+                var selectedType = $('#typeFilter').val();
+                var selectedRating = $('#ratingFilter').val();
+
+                $('.card').each(function () {
+                    var establishmentType = $(this).data('type');
+                    var establishmentRating = $(this).find('.rating').rateYo('rating');
+
+                    if ((selectedType === 'all' || selectedType === establishmentType) &&
+                        (selectedRating === 'all' || selectedRating == establishmentRating)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
         });
     </script>
 {% endblock %}

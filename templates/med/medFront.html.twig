@@ -70,11 +70,17 @@
         .view-med-btn:hover {
             background-color: #0056b3;
         }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 {% endblock %}
 
 {% block body %}
-    <div class="content" style="margin-top:100px;">
+<h1 style="margin-top: 150px;">Welcome to our list of doctors</h1>
+    <div class="content" >
         <label for="specialityFilter">Filter by Speciality:</label>
         <select id="specialityFilter">
             <option value="all">All Specialities</option>
@@ -89,7 +95,7 @@
                     <h2>{{ med.nom }} {{ med.prenom }}</h2>
                     <p><strong>Speciality:</strong> {{ med.specialite }}</p>
                     <p><strong>Etablissement:</strong> {{ med.etab.nom }}</p>
-                    <a href="{{ path('app_rendez_vous_front', {'id': med.id}) }}" class="view-med-btn">View Appointments</a>
+<a href="{{ path('app_rendez_vous_front', {'id': med.id}) }}" class="view-med-btn">View Appointments</a>
                 </div>
             {% else %}
                 <p>No records found</p>

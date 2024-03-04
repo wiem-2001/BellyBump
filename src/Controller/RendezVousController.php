@@ -21,13 +21,16 @@ class RendezVousController extends AbstractController
             'rendez_vouses' => $rendezVousRepository->findAll(),
         ]);
     }
-    #[Route('/front', name: 'app_rendez_vous_front', methods: ['GET'])]
-    public function redezfront(RendezVousRepository $rendezVousRepository): Response
+    #[Route('/front/{id}', name: 'app_rendez_vous_front', methods: ['GET'])]
+    public function redezfront(RendezVousRepository $rendezVousRepository, $id): Response
     {
+        $doctorAppointments = $rendezVousRepository->findBy(['nomMed' => $id]);
+    
         return $this->render('rendez_vous/showRendez.html.twig', [
-            'rendez_vouses' => $rendezVousRepository->findAll(),
+            'rendez_vouses' => $doctorAppointments,
         ]);
     }
+    
     #[Route('/new', name: 'app_rendez_vous_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
@@ -51,7 +54,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         $entityManager->persist($rendezVou);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_rendez_vous_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_etabFront_index', [], Response::HTTP_SEE_OTHER);
     }
 
     return $this->renderForm('rendez_vous/new.html.twig', [
@@ -97,4 +100,6 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
 
         return $this->redirectToRoute('app_rendez_vous_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+ 
 }

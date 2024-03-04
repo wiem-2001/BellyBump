@@ -18,11 +18,18 @@
     }
 </style>
 
-<div class="center-form">
-    <div class="custom-form">
-        {{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
 
-        <div class="form-group">
+
+
+    <div class="center-form">
+        <div class="custom-form">
+            {{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
+
+            <!-- ... your other form fields ... -->
+
+           
+
+                 <div class="form-group">
             {{ form_label(form.type, 'Type') }}
             {{ form_widget(form.type, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'please enter the type'}}) }}
             <div class="error-message">
@@ -39,18 +46,37 @@
             </div>
         </div>
 
-        <div class="form-group">
-            {{ form_label(form.Localisation, 'Localisation') }}
-            {{ form_widget(form.Localisation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Entrez la localisation'}}) }}
-            <div class="error-message">
-                {{ form_errors(form.Localisation) }}
+         <div class="form-group">
+                {{ form_label(form.Localisation, 'Localisation') }}
+                {{ form_widget(form.Localisation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter localisation'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.Localisation) }}
+                </div>
+
+                
+                <!-- Add a map container -->
+                <div id="map" style="height: 300px;"></div>
             </div>
+
+            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+            {{ form_end(form) }}
         </div>
-
-
-        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-
-        {{ form_end(form) }}
     </div>
-</div>
+
+    <!-- Add a script to initialize the map -->
+    <!-- Add a script to initialize the map -->
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker on click
+    map.on('click', function(e) {
+        var marker = L.marker(e.latlng).addTo(map);
+        // Do not update the form field directly, let the form submit handle it
+    });
+</script>
+
 

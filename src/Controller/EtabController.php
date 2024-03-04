@@ -47,14 +47,18 @@ class EtabController extends AbstractController
         $etab = new Etab();
         $form = $this->createForm(EtabType::class, $etab);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
+            // Save the selected localisation and set it as the name
+            $etab->setLocalisation($request->request->get('etab')['Localisation']);
+            $etab->setLocalisation($etab->getLocalisation());
+    
             $entityManager->persist($etab);
             $entityManager->flush();
-
+    
             return $this->redirectToRoute('app_etab_index', [], Response::HTTP_SEE_OTHER);
         }
-
+    
         return $this->renderForm('etab/new.html.twig', [
             'etab' => $etab,
             'form' => $form,

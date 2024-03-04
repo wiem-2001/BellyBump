@@ -72,9 +72,9 @@ class Etab
 
    
 
-    public function getLocalisation(): ?string
+public function getLocalisation(): ?string
     {
-        return $this->localisation;
+        return $this->localisation ? ucfirst(str_replace('_', ' ', $this->localisation)) : null;
     }
 
     public function setLocalisation(string $localisation): static
