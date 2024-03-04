@@ -1,0 +1,133 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+    <input id="search-input" type="form-control" placeholder="Search...">
+    <title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <div style="text-align: center;">
+        <br>
+        <br>
+        <div class="page-title">
+            <h1>Liste des Articles</h1>
+        </div>
+        <br>
+        <div class="example-wrapper">
+            <a href="{{ path('display_postback') }}" class="btn btn-primary mb-3">Voir les articles dans l'interface d'administration</a>
+            <a href="{{ path('export_pdf') }}" class="btn btn-primary">Export PDF</a>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Contenu</th>
+                    <th>Date de Création</th>
+                    <th>Comments</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.auteur }}</td>
+                        <td>{{ post.content }}</td>
+                        <td>{{ post.createdAt|date('Y-m-d H:i:s') }}</td>
+                        <td>
+                            <a href="{{ path('display_commentback', {'id': post.id}) }}" class="btn btn-info">Voir les commentaires</a>
+                        </td>
+
+                        <td>
+                            <form action="{{ path('deletepostback', {'id': post.id}) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?');">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <style>
+        /* Styles pour centrer le contenu */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Styles pour le titre */
+        .page-title {
+            margin-top: 20px;
+        }
+
+        /* Styles pour le conteneur principal du tableau */
+        .example-wrapper {
+            width: 100%; /* Ajustez la largeur comme vous le souhaitez */
+            background-color: rgba(255, 204, 203, 0.5); /* Couleur semi-transparente liée à la maternité */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Effet d'ombre */
+            margin-left: 170px; /* Ajoutez une marge à gauche pour décaler le tableau */
+        }
+
+        /* Styles pour le tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #ff6666; /* Couleur de fond pour l'en-tête de tableau */
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Couleur de fond pour les lignes paires */
+        }
+
+        /* Styles pour le bouton */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff6666; /* Couleur du bouton */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #ff4d4d; /* Couleur du bouton au survol */
+        }
+        .search-input {
+            width: 300px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+    </style>
+{% endblock %}

@@ -55,13 +55,7 @@ class ReservationController extends AbstractController
                 $entityManager->flush();
                 return $this->redirectToRoute('mother_calender');               }
         }
-        /*$userId=2;
-        $user=$userRepository->find($userId);
-        $event = $eventRepository->find($id);
-        if ($user->getRoles()[0]=="ROLE_MOTHER") {
-            $user->addEvent($event);
-            $event->addReservation( $user );    
-        }*/    
+           
         return $this->redirectToRoute('mother_calender');           
     }
 
@@ -87,6 +81,7 @@ class ReservationController extends AbstractController
         
         return $this->redirectToRoute('mother_calender');        
     }
+    
     #[Route("/send-meeting-invite/{id}", name:"send_meeting_invite")]
     public function LunchEvent($id,EventRepository $eventRepository,ManagerRegistry $managerRegistry){
     $this->denyAccessUnlessGranted('ROLE_ADMIN');

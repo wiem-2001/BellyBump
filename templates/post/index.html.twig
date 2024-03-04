@@ -1,0 +1,264 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <style>
+        /* Styles CSS pour le titre */
+        .page-title {
+            font-size: 36px;
+            text-align: center; /* Centrage horizontal */
+            color: #333; /* Couleur du texte */
+            margin: auto; /* Centrage horizontal */
+            margin-bottom: 20px; /* Marge inférieure pour l'espace */
+        }
+
+        /* Styles CSS pour le bouton Ajouter un Post */
+        .add-post-container {
+            text-align: center;
+            margin-bottom: 40px; /* Ajoute de l'espace sous le bouton */
+        }
+
+        .add-post-button {
+            padding: 12px 24px;
+            background-color: #ff6666;
+            color: #fff;
+            border: 2px solid #ff6666;
+            border-radius: 5px;
+            font-size: 18px;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            display: inline-block; /* Pour que le lien soit sur la même ligne */
+            margin: 20px; /* Espacement autour du bouton */
+        }
+
+        .add-post-button:hover {
+            background-color: #ff4d4d;
+            border-color: #ff4d4d;
+        }
+
+        .add-post-button:active {
+            background-color: #ff3333;
+            border-color: #ff3333;
+        }
+
+        /* Styles CSS pour chaque post */
+        .post-container {
+            background-color: #fde8e8; /* Couleur de fond rose */
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .post {
+            width: 700px; /* Largeur fixe du post */
+            height: 500px; /* Hauteur fixe du post */
+            margin: 0 auto; /* Centrage horizontal */
+            background-color: #fff; /* Couleur de fond blanche */
+            padding: 20px; /* Espace intérieur du post */
+            border-radius: 10px; /* Bordures arrondies */
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Effet d'ombre */
+        }
+
+        .post-title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .post-date {
+            font-size: 14px;
+            text-align: right;
+            color: #888;
+        }
+
+        .post-content {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Styles CSS pour les boutons d'action */
+        .post-actions {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .action-button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .edit-post-button,
+        .delete-post-button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            background-color: rgba(255, 204, 203, 0.5); /* Couleur semi-transparente liée à la maternité */
+        }
+
+        .edit-post-button:hover,
+        .delete-post-button:hover {
+            background-color: #fde8e8; /* Couleur de fond rose */
+            border-color: #fde8e8; /* Couleur de la bordure */
+        }
+
+        .edit-post-button:active,
+        .delete-post-button:active {
+            background-color: #ffb3b3; /* Couleur de fond rose plus foncé au clic */
+            border-color: #ffb3b3; /* Couleur de la bordure plus foncée au clic */
+        }
+        .post-author {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: #ff6666; /* Couleur du fond pour l'attribut auteur */
+            color: #fff; /* Couleur du texte */
+            padding: 5px 10px;
+            border-top-left-radius: 8px; /* Arrondi pour le coin supérieur gauche */
+            border-bottom-right-radius: 8px; /* Arrondi pour le coin inférieur droit */
+        }
+        .image-container {
+            text-align: center; /* Pour centrer l'image horizontalement */
+        }
+
+        .image-container img {
+            border-radius: 10px; /* Pour ajouter des bordures arrondies */
+            width: 200px; /* Pour définir la largeur de l'image */
+            height: auto; /* Pour conserver les proportions de l'image */
+            display: block; /* Pour centrer l'image verticalement */
+            margin: 0 auto; /* Pour centrer l'image horizontalement */
+        }
+        /* Styles pour la pagination */
+        .pagination-container {
+            margin-top: 20px; /* Ajoute de l'espace en haut de la pagination */
+            text-align: center; /* Centrage horizontal */
+        }
+
+        .pagination-container .pagination li {
+            display: inline-block; /* Pour afficher les éléments de pagination en ligne */
+            margin: 0 5px; /* Espacement entre les éléments de pagination */
+        }
+
+        .pagination-container .pagination li.active span {
+            background-color: #ff6666; /* Couleur de fond pour la page active */
+            color: #fff; /* Couleur du texte pour la page active */
+            padding: 8px 12px; /* Ajoute un peu de rembourrage pour la page active */
+            border-radius: 5px; /* Bordure arrondie pour la page active */
+        }
+
+        .pagination-container .pagination li a {
+            padding: 8px 12px; /* Ajoute un peu de rembourrage pour les liens de pagination */
+            background-color: #fde8e8; /* Couleur de fond pour les liens de pagination */
+            color: #ff6666; /* Couleur du texte pour les liens de pagination */
+            border-radius: 5px; /* Bordure arrondie pour les liens de pagination */
+            transition: background-color 0.3s, color 0.3s; /* Ajoute une transition pour une expérience utilisateur plus douce */
+        }
+
+        .pagination-container .pagination li a:hover {
+            background-color: #ff6666; /* Couleur de fond au survol des liens de pagination */
+            color: #fff; /* Couleur du texte au survol des liens de pagination */
+        }
+
+        .pagination-container .pagination li.disabled {
+            pointer-events: none; /* Désactive les événements de souris pour les pages désactivées */
+            opacity: 0.5; /* Réduit l'opacité pour indiquer que la page est désactivée */
+        }
+        .search-bar-container {
+            text-align: center;
+            margin-bottom: 20px; /* Ajoute de l'espace en bas de la barre de recherche */
+        }
+
+        .search-bar {
+            padding: 10px;
+            width: 300px; /* Largeur de la barre de recherche */
+            font-size: 16px;
+            border: 2px solid #ccc; /* Couleur de la bordure */
+            border-radius: 5px; /* Bordure arrondie */
+            transition: border-color 0.3s; /* Transition en cas de changement de couleur de bordure */
+        }
+
+        .search-bar:focus {
+            border-color: #ff6666; /* Couleur de la bordure lorsque la barre de recherche est en focus */
+            outline: none; /* Supprime la bordure bleue par défaut sur le focus */
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            background-color: #ff6666; /* Couleur de fond du bouton */
+            color: #fff; /* Couleur du texte */
+            border: none; /* Supprime la bordure du bouton */
+            border-radius: 5px; /* Bordure arrondie */
+            font-size: 16px;
+            cursor: pointer; /* Curseur de type pointer au survol */
+            transition: background-color 0.3s, color 0.3s; /* Transition en cas de changement de couleur */
+        }
+
+        .search-button:hover {
+            background-color: #ff4d4d; /* Couleur de fond du bouton au survol */
+        }
+
+        .search-button:active {
+            background-color: #ff3333; /* Couleur de fond du bouton lorsqu'il est enfoncé */
+        }
+
+    </style>
+
+    <h1 class="page-title">Découvrez nos derniers posts</h1>
+
+    <div class="add-post-container">
+        <a href="{{ path('addpost') }}" class="add-post-button">Ajouter un Post</a>
+    </div>
+    <div class="search-bar-container">
+        <form action="{{ path('search') }}" method="GET">
+            <input type="text" name="keyword" class="search-bar" placeholder="Recherche...">
+            <button type="submit" class="search-button">Rechercher</button>
+        </form>
+        <div class="post-container">
+
+            {% for post in pagination %}
+                <div class="post">
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    <h6 >{{ post.auteur }}</h6>
+                    <p class="post-date">Date de création : {{ post.createdAt|date('Y-m-d H:i:s') }}</p>
+                    <div class="post-content">
+                        <p>{{ post.content }}</p>
+
+                    </div>
+                    <div class="image-container">
+                        <img src="{{ asset('uploads/imagesPost/' ~ post.image) }}" alt="post">
+                    </div>
+                    <div class="post-actions">
+                        <a href="{{ path('updatepost', {'id': post.id}) }}" class="edit-post-button">Éditer</a>
+                    </div>
+                    <div class="post-actions">
+                        <a href="{{ path('deletepost', {'id': post.id}) }}" class="edit-post-button">Supprimer
+                        </a>
+                    </div>
+                    <div class="post-actions">
+                        <a href="{{ path('display_comment', {'id': post.id}) }}" class="btn">Voir les commentaires</a>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="pagination-container">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
