@@ -48,8 +48,8 @@ class Baby
     #[Assert\Length(max: 3)]
     private ?float $taille = null;
 
-    
-
+    #[ORM\OneToOne(mappedBy: 'babyName', targetEntity: InfoMedicaux::class)]
+    private ?InfoMedicaux $infoMedicaux = null;
     
 
     public function __construct()
@@ -108,7 +108,7 @@ class Baby
     {
         $this->dateNaissance = $dateNaissance;
 
-        return $this;
+        return $this;   
     }
 
     public function getPoids(): ?float
@@ -136,6 +136,16 @@ class Baby
     }
 
     
+    public function getInfoMedicaux(): ?InfoMedicaux
+    {
+        return $this->infoMedicaux;
+    }
 
+    public function setInfoMedicaux(?InfoMedicaux $infoMedicaux): static
+    {
+        $this->infoMedicaux = $infoMedicaux;
+
+        return $this;
+    }
    
 }

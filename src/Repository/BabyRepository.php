@@ -31,4 +31,21 @@ class BabyRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+    public function findAllAscending(): array
+    {
+        return $this->createQueryBuilder('R')
+            ->orderBy('R.dateNaissance', 'ASC') // Replace 'fieldToSortBy' with the actual field name you want to sort by
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllDescending(): array
+    {
+        return $this->createQueryBuilder('r')
+            ->orderBy('r.dateNaissance', 'DESC') // Replace 'fieldToSortBy' with the actual field name you want to sort by
+            ->getQuery()
+            ->getResult();
+    }
 }

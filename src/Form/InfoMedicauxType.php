@@ -10,6 +10,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Baby;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+
+
 
 
 class InfoMedicauxType extends AbstractType
@@ -43,7 +49,13 @@ class InfoMedicauxType extends AbstractType
                 'attr' => ['rows' => 3], // Set the number of rows here
             ])
             ->add('nbrVaccin')
-            ->add('dateVaccin')
+            ->add('dateVaccin', DateType::class, [
+            'label' => 'Date',
+            'constraints' => [
+                new NotBlank(['message' => 'Entrer une date.']),
+                new Callback([$this, 'validateDate']),
+            ],
+            ])
             
         ;
     }
@@ -53,5 +65,17 @@ class InfoMedicauxType extends AbstractType
         $resolver->setDefaults([
             'data_class' => InfoMedicaux::class,
         ]);
+    }
+
+
+    public function validateDate($dateVaccin, ExecutionContextInterface $context)
+    {
+        $currentDay = new \DateTime();
+        
+        if ($dateVaccin < $currentDay) {
+            $context->buildViolation('Vous ne pouvez pas avoir une date dans le passe.')
+                ->atPath('dateVaccin')
+                ->addViolation();
+        }
     }
 }

@@ -20,6 +20,25 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 #[Route('/baby')]
 class BabyController extends AbstractController
 {
+    #[Route('/trieasc', name: 'app_trieascc', methods: ['GET'])]
+    public function ascendingAction(BabyRepository $BabyRepository)
+    {
+        return $this->render('baby/index.html.twig', [
+            'babies' => $BabyRepository->findAllAscending(),
+        ]);
+    }
+    
+    
+    #[Route('/triedesc', name: 'app_triedescc', methods: ['GET'])]
+    public function descendingAction(BabyRepository $BabyRepository)
+    {
+    
+        return $this->render('baby/index.html.twig', [
+            'babies' => $BabyRepository->findAllDescending(),
+        ]);
+    
+    }
+
     #[Route('/download-pdf', name: 'app_baby_download_pdf', methods: ['GET'])]
     public function downloadPdf(PdfGenerator $pdfGenerator): Response
     {
@@ -136,7 +155,7 @@ public function new(Request $request, EntityManagerInterface $entityManager): Re
         return $this->redirectToRoute('app_baby_index', [], Response::HTTP_SEE_OTHER);
     }
 
-
+   
 
 
 }
