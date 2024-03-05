@@ -1,0 +1,46 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}InfoMedicaux{% endblock %}
+
+{% block body %}
+    <h1>Information Medicale</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ info_medicaux.id }}</td>
+            </tr>
+            <tr>
+                <th>Maladie</th>
+                <td>{{ info_medicaux.BloodType }}</td>
+            </tr>
+             <tr>
+                <th>Maladie</th>
+                <td>{{ info_medicaux.sicknessEstimation }}</td>
+            </tr>
+             <tr>
+                <th>Maladie</th>
+                <td>{{ info_medicaux.maladie }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ info_medicaux.description }}</td>
+            </tr>
+            <tr>
+                <th>NbrVaccin</th>
+                <td>{{ info_medicaux.nbrVaccin }}</td>
+            </tr>
+            <tr>
+                <th>DateVaccin</th>
+                <td>{{ info_medicaux.dateVaccin ? info_medicaux.dateVaccin|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_info_medicaux_index') }}" class="btn btn-dark">back to list</a>
+
+    <a href="{{ path('app_info_medicaux_edit', {'id': info_medicaux.id}) }}" class="btn btn-success">edit</a>
+
+    {{ include('info_medicaux/_delete_form.html.twig') }}
+{% endblock %}

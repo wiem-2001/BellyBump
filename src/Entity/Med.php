@@ -30,6 +30,9 @@ class Med
     #[ORM\OneToMany(mappedBy: 'nomMed', targetEntity: RendezVous::class)]
     private Collection $RendezVous;
 
+    #[ORM\OneToOne(inversedBy: 'med', targetEntity: InfoMedicaux::class)]
+    private ?InfoMedicaux $infoMedicaux = null;
+
     public function __construct()
     {
         $this->RendezVous = new ArrayCollection();
@@ -114,6 +117,18 @@ class Med
                 $rendezVou->setNomMed(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInfoMedicaux(): ?InfoMedicaux
+    {
+        return $this->infoMedicaux;
+    }
+
+    public function setInfoMedicaux(?InfoMedicaux $infoMedicaux): static
+    {
+        $this->infoMedicaux = $infoMedicaux;
 
         return $this;
     }

@@ -1,0 +1,71 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Add New Baby{% endblock %}
+
+{% block body %}
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.maladie, 'Maladie ') }}
+                        {{ form_widget(form.maladie, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.maladie) }}
+
+                    </div>
+
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.BloodType, 'Blood Type ') }}
+                        {{ form_widget(form.BloodType, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.BloodType) }}
+
+                    </div>
+
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                    <div class="form-group">
+                        {{ form_label(form.sicknessEstimation, 'Sickness Estimation ') }}
+                        {{ form_widget(form.sicknessEstimation, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.sicknessEstimation) }}
+
+                    </div>
+
+
+                    <div class="form-group">
+                        {{ form_label(form.description, 'Write Sickness description') }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                            {{ form_errors(form.description) }}
+
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.nbrVaccin, 'Number of vaccin needed ') }}
+                        {{ form_widget(form.nbrVaccin, {'attr': {'class': 'form-control'}}) }}
+                                           {{ form_errors(form.nbrVaccin) }}
+
+                    </div>
+                     <div class="form-group">
+                        {{ form_label(form.dateVaccin, 'Last Vaccin Date') }}
+                        {{ form_widget(form.dateVaccin, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.dateVaccin) }}
+
+                    </div>
+
+                    <div class="form-group">
+    {{ form_label(form.Med, 'doctor') }}
+    {{ form_widget(form.Med, {'attr': {'class': 'form-control'}}) }}
+       <div class="error-message">
+                {{ form_errors(form.Med) }}
+            </div>
+       </div>
+                    
+                    <button type="submit" class="btn btn-danger" style="margin-top: 20px;margin-left: 20px">{{ button_label|default('Save') }}</button>
+                     <a href="{{ path('app_info_medicaux_index') }}" class="btn btn-warning" style="margin-top: 20px;margin-left: 20px">back to list</a>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
