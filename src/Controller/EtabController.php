@@ -43,27 +43,24 @@ class EtabController extends AbstractController
 
     #[Route('/new', name: 'app_etab_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $etab = new Etab();
-        $form = $this->createForm(EtabType::class, $etab);
-        $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Save the selected localisation and set it as the name
-            $etab->setLocalisation($request->request->get('etab')['Localisation']);
-            $etab->setLocalisation($etab->getLocalisation());
-    
-            $entityManager->persist($etab);
-            $entityManager->flush();
-    
-            return $this->redirectToRoute('app_etab_index', [], Response::HTTP_SEE_OTHER);
-        }
-    
-        return $this->renderForm('etab/new.html.twig', [
-            'etab' => $etab,
-            'form' => $form,
-        ]);
+{
+    $etab = new Etab();
+    $form = $this->createForm(EtabType::class, $etab);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Ne sauvegardez pas la localisation ici, laissez le script JavaScript gérer cela
+        $entityManager->persist($etab);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_etab_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->renderForm('etab/new.html.twig', [
+        'etab' => $etab,
+        'form' => $form,
+    ]);
+}
 
     #[Route('/{id}', name: 'app_etab_show', methods: ['GET'])]
     public function show(Etab $etab): Response

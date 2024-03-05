@@ -18,65 +18,63 @@
     }
 </style>
 
+<div class="center-form">
+    <div class="custom-form">
+        {{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
 
-
-
-    <div class="center-form">
-        <div class="custom-form">
-            {{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
-
-            <!-- ... your other form fields ... -->
-
-           
-
-                 <div class="form-group">
+        <div class="form-group">
             {{ form_label(form.type, 'Type') }}
-            {{ form_widget(form.type, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'please enter the type'}}) }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter the type'}}) }}
             <div class="error-message">
                 {{ form_errors(form.type) }}
             </div>
         </div>
 
-
         <div class="form-group">
             {{ form_label(form.nom, 'Name') }}
-            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'please enter  the name'}}) }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter the name'}}) }}
             <div class="error-message">
                 {{ form_errors(form.nom) }}
             </div>
         </div>
 
-         <div class="form-group">
-                {{ form_label(form.Localisation, 'Localisation') }}
-                {{ form_widget(form.Localisation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter localisation'}}) }}
-                <div class="error-message">
-                    {{ form_errors(form.Localisation) }}
-                </div>
-
-                
-                <!-- Add a map container -->
-                <div id="map" style="height: 300px;"></div>
+        <div class="form-group">
+            {{ form_label(form.Localisation, 'Localisation') }}
+            {{ form_widget(form.Localisation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter localisation'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.Localisation) }}
             </div>
 
-            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
-
-            {{ form_end(form) }}
+            <!-- Ajoutez un conteneur pour la carte -->
+            <div id="map" style="height: 300px;"></div>
         </div>
-    </div>
 
-    <!-- Add a script to initialize the map -->
-    <!-- Add a script to initialize the map -->
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<!-- Ajoutez un script pour initialiser la carte -->
 <script>
     var map = L.map('map').setView([51.505, -0.09], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Add a marker on click
+    // Ajoutez un marqueur au clic
     map.on('click', function(e) {
+        // Supprimez les marqueurs précédents
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        // Ajoutez un nouveau marqueur
         var marker = L.marker(e.latlng).addTo(map);
-        // Do not update the form field directly, let the form submit handle it
+
+        // Mettez à jour le champ de formulaire avec les coordonnées
+        document.getElementById('etab_Localisation').value = e.latlng.lat + ', ' + e.latlng.lng;
     });
 </script>
-
-
