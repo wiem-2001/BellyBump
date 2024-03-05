@@ -16,6 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Form\FormError;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 
 #[Route('/info/medicaux')]
@@ -23,21 +25,23 @@ class InfoMedicauxController extends AbstractController
 {
 
     #[Route('/', name: 'app_info_medicaux_index', methods: ['GET'])]
-public function index(Request $request, PaginatorInterface $paginator, InfoMedicauxRepository $infoMedicauxRepository): Response
-{
-    $queryBuilder = $infoMedicauxRepository->createQueryBuilder('i');
-
-    // Paginate the query
-    $pagination = $paginator->paginate(
-        $queryBuilder, // Query to paginate
-        $request->query->getInt('page', 1), // Current page number
-        4 // Number of items per page
-    );
-
-    return $this->render('info_medicaux/index.html.twig', [
-        'pagination' => $pagination,
-    ]);
-}
+    public function index(Request $request, PaginatorInterface $paginator, InfoMedicauxRepository $infoMedicauxRepository): Response
+    {
+        $queryBuilder = $infoMedicauxRepository->createQueryBuilder('i');
+        $queryBuilder->leftJoin('i.med', 'm'); // Assuming 'med' is the association in InfoMedicaux entity
+    
+        // Paginate the query
+        $pagination = $paginator->paginate(
+            $queryBuilder, // Query to paginate
+            $request->query->getInt('page', 1), // Current page number
+            4 // Number of items per page
+        );
+    
+        return $this->render('info_medicaux/index.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+    
     
 
     #[Route('/frontInfo', name: 'app_frontInfo_index', methods: ['GET'])]

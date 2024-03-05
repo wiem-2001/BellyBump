@@ -62,6 +62,14 @@
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
+    // Chargement des coordonnées depuis localStorage
+    var savedCoordinates = localStorage.getItem('etab_Localisation');
+    if (savedCoordinates) {
+        var coordinates = savedCoordinates.split(', ');
+        map.setView(coordinates, 13);
+        var marker = L.marker(coordinates).addTo(map);
+    }
+
     // Ajoutez un marqueur au clic
     map.on('click', function(e) {
         // Supprimez les marqueurs précédents
@@ -75,6 +83,10 @@
         var marker = L.marker(e.latlng).addTo(map);
 
         // Mettez à jour le champ de formulaire avec les coordonnées
-        document.getElementById('etab_Localisation').value = e.latlng.lat + ', ' + e.latlng.lng;
+        var coordinates = e.latlng.lat + ', ' + e.latlng.lng;
+        document.getElementById('etab_Localisation').value = coordinates;
+
+        // Sauvegardez les coordonnées dans localStorage
+        localStorage.setItem('etab_Localisation', coordinates);
     });
 </script>

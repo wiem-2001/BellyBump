@@ -25,8 +25,9 @@ class Etab
     
     
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $localisation = null;
+
 
     #[ORM\OneToMany(mappedBy: 'etab', targetEntity: Med::class)]
     private Collection $Med;

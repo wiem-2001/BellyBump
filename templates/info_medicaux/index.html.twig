@@ -34,7 +34,7 @@
                                 <th>Description</th>
                                 <th>Number of Vaccin</th>
                                 <th>last Vaccination Date</th>
-                                {# <th>Doctor Name</th> #}
+                                <th>baby Name</th>
 
                                 <th>Actions</th>
                             </tr>
@@ -48,7 +48,8 @@
                                     <td>{{ info_medicaux.description }}</td>
                                     <td>{{ info_medicaux.nbrVaccin }}</td>
                                     <td>{{ info_medicaux.dateVaccin ? info_medicaux.dateVaccin|date('Y-m-d') : '' }}</td>
-{# <td>{{ info_medicaux.med is not null ? info_medicaux.med.nom}}</td> #}
+                                    <td>{{ info_medicaux.babyName.nom }} {{ info_medicaux.babyName.prenom }}</td>
+
 
                                     <td>
                                         <a href="{{ path('app_info_medicaux_show', {'id': info_medicaux.id}) }}" class="btn btn-sm btn-warning">Show</a>

@@ -60,9 +60,9 @@ class InfoMedicauxType extends AbstractType
             ])
             ->add('Med', EntityType::class, [
                 'class' => \App\Entity\Med::class,
-                'choice_label' => 'nom',
-                'placeholder' => 'Choose an establishment',
-                'constraints'=> [new Assert\NotBlank(array("message" => "Please enter an etablishment")),]
+                'choice_label' => 'prenom',
+                'placeholder' => 'Choose doctor',
+                'constraints'=> [new Assert\NotBlank(array("message" => "Please enter doctor name")),]
                 ])
             ;
     }
@@ -79,8 +79,8 @@ class InfoMedicauxType extends AbstractType
     {
         $currentDay = new \DateTime();
         
-        if ($dateVaccin < $currentDay) {
-            $context->buildViolation('Vous ne pouvez pas avoir une date dans le passe.')
+        if ($dateVaccin > $currentDay) {
+            $context->buildViolation('Vous ne pouvez pas avoir une date dans le futur')
                 ->atPath('dateVaccin')
                 ->addViolation();
         }
