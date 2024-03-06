@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}
-    List of Appointments for {{ rendez_vouses[0].nomMed.nom }}
+    {% if rendez_vouses|default([]) is not empty %}
+        List of Appointments for {{ rendez_vouses[0].nomMed.nom }}
+    {% else %}
+        List of Appointments
+    {% endif %}
 {% endblock %}
 
 {% block stylesheets %}
@@ -40,7 +43,7 @@
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            background-color: #fff;
+            background-color: #faebd7; /* Pink background color */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, opacity 0.3s;
         }
@@ -62,13 +65,21 @@
         .view-med-btn {
             display: inline-block;
             padding: 10px 15px;
-            color: #fff;
+            color: #ff69b4;
             background-color: #007bff;
             text-decoration: none;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-
+          .btn-primary {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #ff69b4; /* Pink background color */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
         .view-med-btn:hover {
             background-color: #0056b3;
         }
@@ -105,7 +116,13 @@
 
 
 {% block body %}
-    <h1 style="margin-top: 150px;">Appointments for {{ rendez_vouses[0].nomMed.nom }}</h1>
+    <h1 style="margin-top: 150px;">
+    {% if rendez_vouses|default([]) is not empty %}
+            Appointments for {{ rendez_vouses[0].nomMed.nom }}
+        {% else %}
+            No Appointments
+        {% endif %}
+</h1>
     <div class="content">
         {% if rendez_vouses is not empty %}
             <div class="row">
@@ -113,18 +130,17 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-text">Reservation Date: {{ rendez_vou.DateReservation ? rendez_vou.DateReservation|date('Y-m-d') : 'Not available' }} </p>
-                                <p class="card-text">Reservation Time: {{ rendez_vou.heureReservation }} heure</p>
+                                <p class="card-text">Appointment Date: {{ rendez_vou.DateReservation ? rendez_vou.DateReservation|date('Y-m-d') : 'Not available' }} </p>
+                                <p class="card-text">Appointment Time: {{ rendez_vou.heureReservation }} hour</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-              <div class="text-center">
+             
+        {% endif %}
+        <div class="text-center">
             <a href="{{ path('app_rendez_vous_new') }}" class="btn btn-primary">Take Appointment</a>
         </div>
-        {% else %}
-            <p class="text-center">No records found</p>
-        {% endif %}
     </div>
 {% endblock %}

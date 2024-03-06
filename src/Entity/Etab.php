@@ -29,7 +29,7 @@ class Etab
     private ?string $localisation = null;
 
 
-    #[ORM\OneToMany(mappedBy: 'etab', targetEntity: Med::class)]
+    #[ORM\OneToMany(mappedBy: 'etab', targetEntity: Med::class,)]
     private Collection $Med;
 
     public function __construct()

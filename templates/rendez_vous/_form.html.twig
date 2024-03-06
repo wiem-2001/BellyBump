@@ -3,7 +3,15 @@
         font-family: 'Arial', sans-serif;
         background-color: #f8f9fa; /* Set a light background color */
     }
-
+      .btn-primary {
+            display: inline-block;
+            padding: 10px 15px;
+            color: #fff;
+            background-color: #ff69b4; /* Pink background color */
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
     .center-form {
         display: flex;
         justify-content: center;
@@ -76,7 +84,7 @@
         {% endif %}
 
         <div class="form-group">
-            {{ form_label(form.DateReservation, 'Date de Réservation') }}
+            {{ form_label(form.DateReservation, 'Appointment date') }}
             {{ form_widget(form.DateReservation, {'attr': {'class': 'form-control', 'placeholder': 'Select the date'}}) }}
             <div class="error-message">
                 {{ form_errors(form.DateReservation) }}
@@ -84,7 +92,7 @@
         </div>
 
         <div class="form-group">
-            {{ form_label(form.heureReservation, 'Heure de Réservation (entre 8 a.m et 7 p.m)') }}
+            {{ form_label(form.heureReservation, 'hour appointment  (between 8 a.m and 7 p.m)') }}
             {{ form_widget(form.heureReservation, {'attr': {'class': 'form-control', 'placeholder': 'Entrez hour'}}) }}
             <div class="error-message">
                 {{ form_errors(form.heureReservation) }}
