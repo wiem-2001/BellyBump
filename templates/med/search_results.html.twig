@@ -1,0 +1,12 @@
+{# templates/med/search_results.html.twig #}
+
+{% extends 'back.html.twig' %}
+
+{% block content %}
+    <h1>Résultats de la recherche pour "{{ searchTerm }}"</h1>
+
+    {# Afficher les résultats ici #}
+    {% for result in results %}
+        {{ result.name }}<br>
+    {% endfor %}
+{% endblock %}

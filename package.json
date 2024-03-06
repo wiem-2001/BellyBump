@@ -11,7 +11,5 @@
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets",
     "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
     "chart.js": "^3.4.1 || ^4.0"
-
-
   }
 }

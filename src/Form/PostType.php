@@ -20,11 +20,7 @@ class PostType extends AbstractType
                     new Assert\NotBlank(['message' => 'Please enter a title.'])
                 ]
             ])
-            ->add('auteur', null, [
-                'constraints' => [
-                    new Assert\NotBlank(['message' => 'Please enter an author name.'])
-                ]
-            ])
+
             ->add('content', null, [
                 'constraints' => [
                     new Assert\NotBlank(['message' => 'Please enter content.'])
@@ -37,7 +33,6 @@ class PostType extends AbstractType
                 'constraints'=> [new Assert\NotBlank(array("message" => "Please choose an image")),]
 
             ])
-            ->add('ajouter',SubmitType::class)
         ;
     }
 

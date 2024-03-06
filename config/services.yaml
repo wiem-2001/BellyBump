@@ -13,6 +13,9 @@ parameters:
     images_directory_post:  '%kernel.project_dir%/public/uploads/imagesPost/'
 
 services:
+    App\Service\RecommendationEventsService:
+        arguments:
+            $pythonScriptPath: '%kernel.project_dir%/public/PythonScript/EventRecommendation.py'
     # default configuration for services in *this* file
     app.logout_success_handler:
         class: App\Security\LogoutSuccessHandler
@@ -22,8 +25,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
         exclude:
@@ -34,14 +35,6 @@ services:
     # Add the DbscanService definition here
     App\Services\Dbscan:
         autowire: true
-
-    App\Security\GoogleAuthenticator:
-        arguments:
-            $clientRegistry: '@knpu.oauth2.registry'
-            $em: '@doctrine.orm.entity_manager'
-            $router: '@router'
-        tags:
-            - { name: 'security.authenticator' }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

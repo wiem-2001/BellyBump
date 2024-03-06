@@ -63,6 +63,34 @@
 
 <div class="container-fluid py-4">
 {% block main %}
+  <style>
+          label {
+                color: black;
+                font-weight: bold ;
+            }
+          input[type="text"].form-control ,select.form-control, textarea.form-control,input[type="email"].form-control{
+            border: 1px solid #000; /* Add stroke */
+            }
+            textarea.form-control.is-invalid{
+            border: 1px solid #000; /* Add stroke */
+            }
+         ul {
+            list-style-type: none;
+        }
+         .form-control.is-invalid{
+            border: none ;
+         }
+         .title-hr {
+            border: 1.5px solid #E91E63; /* Set border properties */
+            margin-top: 10px; /* Adjust margin top */
+            margin-bottom: 20px; /* Adjust margin bottom */
+            opacity :1;
+        }
+        .event-title{
+            color: #E91E63;
+        }
+
+         </style>
 {% endblock %}
        </main>
         {% endblock %}

@@ -1,0 +1,132 @@
+{% extends 'baseBackOffice.html.twig' %}
+{% block stylesheets %}
+{{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+    {{ parent() }}
+    {% endblock %}
+{% block title %}InfoMedicaux Index{% endblock %}
+
+{% block body %}
+         
+
+    <div class="container" style="margin-left:300px">
+        <h1 class="text-center mt-5 mb-4">InfoMedicaux Index</h1>
+<a href="{{ path('app_generate_pdf2') }}"class="btn btn-warning">-download PDF</a>
+
+         <a href="{{ path('app_stat') }}"class="btn btn-warning">Blood type chart</a>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+           <input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr class="text-white" style="background-color: #ff69b4;">
+                                <th>Sickness Name</th>
+                                <th>Blood Type</th>
+                                <th>Sickness Estimation</th>
+                                <th>Description</th>
+                                <th>Number of Vaccin</th>
+                                <th>last Vaccination Date</th>
+                                <th>baby Name</th>
+
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for info_medicaux in pagination %}
+                                <tr>
+                                    <td>{{ info_medicaux.maladie }}</td>
+                                    <td>{{ info_medicaux.BloodType }}</td>
+                                    <td>{{ info_medicaux.sicknessEstimation }}</td>
+                                    <td>{{ info_medicaux.description }}</td>
+                                    <td>{{ info_medicaux.nbrVaccin }}</td>
+                                    <td>{{ info_medicaux.dateVaccin ? info_medicaux.dateVaccin|date('Y-m-d') : '' }}</td>
+                                    <td>{{ info_medicaux.babyName.nom }} {{ info_medicaux.babyName.prenom }}</td>
+
+
+                                    <td>
+                                        <a href="{{ path('app_info_medicaux_show', {'id': info_medicaux.id}) }}" class="btn btn-sm btn-warning">Show</a>
+                                        <a href="{{ path('app_info_medicaux_edit', {'id': info_medicaux.id}) }}" class="btn btn-sm btn-danger">Edit</a>
+                                        <a href="{{ path('mailing', {'id': info_medicaux.id}) }}" class="btn btn-sm btn-success">Send Mail</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="7" class="text-center">No records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center">
+                    {{ knp_pagination_render(pagination) }} {# Renders the pagination controls #}
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Function to send AJAX request for search
+    function search() {
+        var query = document.getElementById('searchInput').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '{{ path('app_info_medicaux_search') }}?q=' + query, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                updateTable(response);
+            }
+        };
+        xhr.send();
+    }
+
+    // Function to update the table with search results
+    function updateTable(data) {
+        var tableBody = document.querySelector('tbody');
+        tableBody.innerHTML = ''; // Clear existing table rows
+        if (data.length > 0) {
+            data.forEach(function (InfoMedicaux) {
+                var row = '<tr>';
+                row += '<td>' + info_medicaux.maladie + '</td>';
+                row += '<td>' + info_medicaux.BloodType + '</td>';
+                row += '<td>' + info_medicaux.sicknessEstimation + '</td>';
+                row += '<td>' + info_medicaux.description + '</td>';
+                row += '<td>' + info_medicaux.nbrVaccin + '</td>';
+                row += '<td>' + (info_medicaux.dateVaccin ? info_medicaux.dateVaccin : '') + '</td>';
+                row += '</tr>';
+                tableBody.innerHTML += row;
+            });
+        } else {
+            tableBody.innerHTML = '<tr><td colspan="8" class="text-center">No records found</td></tr>';
+        }
+    }
+
+    // Event listener for the search input
+    document.getElementById('searchInput').addEventListener('input', function () {
+        search();
+    });
+</script>
+{% endblock %}

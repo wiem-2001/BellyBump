@@ -41,7 +41,7 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
+    
     public function findRealizedEvents(){
         return $this->createQueryBuilder('e')
             ->andWhere('e.day < :today')

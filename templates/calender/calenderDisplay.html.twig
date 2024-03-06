@@ -67,8 +67,8 @@
     {% endblock %}
   </head>
   <body>
-  {% block header %}
-       <!-- ======= Header ======= -->
+   {% block header %}
+    <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container-fluid d-flex align-items-center justify-content-between">
 
@@ -86,11 +86,11 @@
             <ul class="dd-box-shadow">
               <li><a href="{{path('list_event_mother')}}">List</a></li>
                <li><a href="{{path('mother_calender')}}"> Calender </a></li>
-              </li>
+               <li><a href="{{path('favories_list')}}"> Favories </a></li>
             </ul>
           </li>
           <li><a  href="{{path('back_product') }}">Products</a></li>
-            <li><a href="index.html#services">Hospitals</a></li>
+            <li><a href="{{path('app_etabFront_index')}}">Hospitals</a></li>
          <!-- <li><a href="index.html#portfolio">Portfolio</a></li>-->
           <li class="dropdown has-dropdown"><a href="#"><span>Maternal & Infant Health</span> <i class="bi bi-chevron-down"></i></a>
             <ul class="dd-box-shadow">
@@ -107,12 +107,10 @@
 
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
 
-      <a href="{{path('back_product') }}" class="btn-getstarted">visit shop</a>
       <a href="{{ path('app_carte') }}" class="btn btn-primary">
         <i class="fas fa-shopping-cart" class="btn btn-primary"></i>
       </a>
 
-      <a href="{{path('add_partner') }}" class="btn-getstarted">become our partner</a>
        <!-- User Dropdown -->
     <div class="dropdown">
       <div class="dropdown">

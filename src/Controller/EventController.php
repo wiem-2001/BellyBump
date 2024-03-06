@@ -8,6 +8,7 @@ use App\Form\UpdateEventType;
 use App\Repository\CoachRepository;
 use App\Repository\EventRepository;
 use App\Repository\UserRepository;
+use App\Service\RecommendationEventsService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\File;
@@ -17,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Security;
+
 
 class EventController extends AbstractController
 {
@@ -40,23 +42,41 @@ public function EventsListMother(Request $request, Security $security, EventRepo
     //$mother = $userRepository->find(1);
     $mother=$security->getUser();
     $Events = $repository->MotherNotParticipatedEvents($mother);
+    $favoriteEvents=$mother->getFavoriteEvents();
     $triOption = $request->query->get('tri');
 
     if ($triOption == 'date') {
         $sortedEvents = $repository->sortEventsByDate($mother);
-        dump($sortedEvents); // Debug statement
     } elseif ($triOption == 'coach') {
         $sortedEvents = $repository->sortEventsByCoach($mother);
-        dump($sortedEvents); // Debug statement
     } else {
         // Default behavior when no sorting option is provided
         $sortedEvents = $Events;
-        dump($sortedEvents); // Debug statement
     }
 
     return $this->render("reservation/MotherEventList.html.twig", [
         'tabEvents' => $sortedEvents,
-        'user'=>$mother
+        'user'=>$mother,
+        'favoriteEvents'=>$favoriteEvents
+    ]);
+}
+
+
+/// favories list
+#[Route('/favoritEvents', name: 'favories_list')]
+public function FavoritEvents(Security $security,EventRepository $repository,  UserRepository $userRepository)
+{
+    $this->denyAccessUnlessGranted('ROLE_MOTHER');
+
+    //$mother = $userRepository->find(1);
+    $mother=$security->getUser();
+    $Events=$mother->getFavoriteEvents();
+    $EventsNotParticipated = $repository->MotherNotParticipatedEvents($mother);
+    return $this->render("event/favoritList.html.twig", [
+        
+        'user'=>$mother,
+        'favoriteEvents'=>$Events,
+        'EventsNotParticipated'=>$EventsNotParticipated
     ]);
 }
 
@@ -176,7 +196,8 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
     #[Route('/deleteEvent/{id}', name:"event_delete")]
     public function deleteEvent($id,EventRepository $repository,ManagerRegistry $managerRegistry , Request $request)
     {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         $event= $repository->find($id);
 
@@ -193,9 +214,100 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
             $em->flush();
             return $this->redirectToRoute("list_event");    
     }
+//*******************************************FAVORIE********************************************* */
+    #[Route('/addEventToFavorie/{id}', name: 'favorate_event')]
+    public function addFavorie(Security $security , $id,EventRepository $eventRepository,UserRepository $userRepository,ManagerRegistry $managerRegistry): Response
+    {
+    $this->denyAccessUnlessGranted('ROLE_MOTHER');
 
+        $user = $security->getUser();
+        //$user=$userRepository->find(1);
+        $event = $eventRepository->find($id);
+        if ($user) {
+            // Check the role of the user
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {
+                // If the user is a mother, add the participation 
+                $user->addFavoriteEvent($event);
+                $entityManager = $managerRegistry->getManager();
+                $entityManager->flush();
+                return $this->redirectToRoute('favories_list');               }
+        }
+           
+        return $this->redirectToRoute('list_event_mother');           
+    }
 
+    #[Route('/removeEventFromFavories/{id}', name: 'cancel_favorate_event')]
+    public function removeFavorie( Security $security , $id,EventRepository $eventRepository,ManagerRegistry $managerRegistry,UserRepository $userRepository): Response
+    {
+    $this->denyAccessUnlessGranted('ROLE_MOTHER');
 
-    
+        $user = $security->getUser();
+        //$user=$userRepository->find(1);
+        $event = $eventRepository->find($id);
+        if ($user) {
+            // Check the role of the user
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {
+                // If the user is a mother, add the participation 
+                $user->removeFavoriteEvent($event);
+                $entityManager = $managerRegistry->getManager();
+                $entityManager->flush();
+                return $this->redirectToRoute('list_event_mother');
+            }
+        }
+        
+        return $this->redirectToRoute('list_event_mother');        
+    }
 
-}
+    private $recommendationEventsService;
+
+    public function __construct(RecommendationEventsService $recommendationEventsService)
+    {
+        $this->recommendationEventsService = $recommendationEventsService;
+    }
+
+    #[Route('/recommendedEvents', name: 'recommended_events')]
+    public function recommendedEvents(EventRepository $eventRepository,UserRepository $userRepository, Security $security): Response
+    {
+        // Get the current user
+        $user = $security->getUser();
+        $Events=$user->getFavoriteEvents();
+        // Retrieve users and their events (favorited or participated)
+        $userProfiles = $this->getUserProfiles($userRepository);
+
+        // Call the recommendation service to get recommended events for the user
+        $recommendedEventsIds = $this->recommendationEventsService->recommendEvents($userProfiles, $user);
+        $recommendedEvents=[];
+        foreach($recommendedEventsIds as $eventR){
+            $recommendedEvents[]= $eventRepository->find($eventR);
+        }
+        // Render the recommended events template with the recommended events
+        return $this->render('event/recommended_events.html.twig', [
+            'recommendedEvents' => $recommendedEvents,
+            'user' => $user,
+            'favoriteEvents'=>$Events
+        ]);
+    }
+
+    private function getUserProfiles(UserRepository $userRepository): array
+    {
+        // Fetch all users from the database
+        $users = $userRepository->findAll();
+
+        // Initialize an empty array to store user profiles
+        $userProfiles = [];
+
+        // Loop through each user
+        foreach ($users as $user) {
+            if (in_array('ROLE_MOTHER', $user->getRoles())) {  // If
+            // Get the user's favorited or participated events
+            $favoritedOrParticipatedEvents = $userRepository->getFavoritedOrParticipatedEventsIds($user);
+            // Add the user's favorited or participated events to the user profile array
+            $userProfiles[$user->getId()] = $favoritedOrParticipatedEvents;
+            
+            //echo  "Added user " . $user->getFirstName() . "'s events (" . $favoritedOrParticipatedEvents[0]->getName() . ")<br>";
+        }
+    }   
+        return $userProfiles;
+    }
+
+} 

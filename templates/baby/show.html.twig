@@ -1,0 +1,76 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Baby{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+    {{ parent() }}
+    {% endblock %}
+
+
+
+
+
+
+
+{% block body %}
+      <main class="main-content border-radius-lg ">
+    <h1>Baby</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ baby.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ baby.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ baby.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ baby.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Date Naissance</th>
+                <td>{{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Poids /kg</th>
+                <td>{{ baby.poids }} kg</td>
+            </tr>
+            <tr>
+                <th>Taille /cm</th>
+                <td>{{ baby.taille }} cm</td>
+            </tr>
+             <tr>
+                <th>Taille /cm</th>
+                <td>{{ baby.taille }} cm</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_baby_index') }}" class="btn btn-dark">back to list</a>
+
+    <a href="{{ path('app_baby_edit', {'id': baby.id}) }}" class="btn btn-success">edit</a>
+
+    {{ include('baby/_delete_form.html.twig') }}
+
+        
+
+<div class="container-fluid py-4">
+{% block main %}
+{% endblock %}
+       </main>
+        {% endblock %}
+

@@ -46,6 +46,8 @@ class Event
     #[ORM\Column]
     private ?bool $launched = False;
 
+   
+
     public function __construct()
     {
         $this->reservation = new ArrayCollection();
@@ -187,4 +189,5 @@ class Event
 
         return $this;
     }
+
 }

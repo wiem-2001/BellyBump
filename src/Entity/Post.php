@@ -19,8 +19,6 @@ class Post
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $auteur = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
@@ -36,12 +34,20 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $auteur = null;
+
+    #[ORM\OneToMany(mappedBy: 'Post', targetEntity: LikeDislike::class, orphanRemoval: true)]
+    private Collection $likeDislikes;
+
 
 
     public function __construct()
     {
         $this->createdat = new \DateTimeImmutable();
         $this->comments = new ArrayCollection();
+        $this->likeDislikes = new ArrayCollection();
 
 
     }
@@ -63,17 +69,9 @@ class Post
         return $this;
     }
 
-    public function getAuteur(): ?string
-    {
-        return $this->auteur;
-    }
 
-    public function setAuteur(string $auteur): static
-    {
-        $this->auteur = $auteur;
 
-        return $this;
-    }
+
 
     public function getContent(): ?string
     {
@@ -140,6 +138,59 @@ class Post
             // set the owning side to null (unless already changed)
             if ($comment->getPost() === $this) {
                 $comment->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAuteur(): ?User
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?User $auteur): static
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LikeDislike>
+     */
+    public function getLikeDislikes(): Collection
+    {
+        return $this->likeDislikes;
+    }
+    public function getLikes(): Collection
+    {
+        return $this->likeDislikes->filter(function($like) { return $like->isValue() === true; });
+
+    }
+    public function getDislikes(): Collection
+    {
+        return $this->likeDislikes->filter(function($like) { return $like->isValue() === false; });
+
+    }
+
+
+    public function addLikeDislike(LikeDislike $likeDislike): static
+    {
+        if (!$this->likeDislikes->contains($likeDislike)) {
+            $this->likeDislikes->add($likeDislike);
+            $likeDislike->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLikeDislike(LikeDislike $likeDislike): static
+    {
+        if ($this->likeDislikes->removeElement($likeDislike)) {
+            // set the owning side to null (unless already changed)
+            if ($likeDislike->getPost() === $this) {
+                $likeDislike->setPost(null);
             }
         }
 
