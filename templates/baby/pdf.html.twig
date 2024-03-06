@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Babies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color:#ed63ad;margin-left:200px" >List of Babies</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr class="text-white" style="background-color: #ff69b4;color:white;">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Gender</th>
+                    <th>Date of Birth</th>
+                    <th>Weight</th>
+                    <th>Height</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for baby in babies %}
+                    <tr>
+                        <td>{{ baby.nom }}</td>
+                        <td>{{ baby.prenom }}</td>
+                        <td>{{ baby.sexe }}</td>
+                        <td>{{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</td>
+                        <td>{{ baby.poids }}</td>
+                        <td>{{ baby.taille }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+            <!-- Image ajoutée en dessous du tableau -->
+<a>
+      <img src="{{asset('backOffice/assets/img/logo.jpg')}}" >
+      <span class="ms-1 font-weight-bold text-white">BellyBump</span>
+    </a>
+    </div>
+    </div>
+</body>
+</html>

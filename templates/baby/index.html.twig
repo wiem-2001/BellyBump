@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+    {{ parent() }}
+    {% endblock %}
+{% block title %}Baby Index{% endblock %}
+
+{% block body %}
+                     
+                     <a href="{{ path('app_trieascc') }}" class="btn btn-success"><i class="fas fa-sort-alpha-up"></i> Sort Ascending</a>
+<a href="{{ path('app_triedescc') }}" class="btn btn-success"><i class="fas fa-sort-alpha-down"></i> Sort Descending</a>
+
+</div>
+    <div class="container">
+
+        <h1 class="text-center mt-5 mb-4">Baby Index</h1>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search...">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" id="babyTable">
+                        <thead>
+                            <tr class="text-white" style="background-color: #ff69b4;">
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Sexe</th>
+                                <th>Date Naissance</th>
+                                <th>Poids</th>
+                                <th>Taille</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for baby in babies %}
+                                <tr>
+                                    <td>{{ baby.nom }}</td>
+                                    <td>{{ baby.prenom }}</td>
+                                    <td>{{ baby.sexe }}</td>
+                                    <td>{{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</td>
+                                    <td>{{ baby.poids }}</td>
+                                    <td>{{ baby.taille }}</td>
+                                    <td>
+                                        <a href="{{ path('app_baby_show', {'id': baby.id}) }}" class="btn btn-sm btn-warning">Show</a>
+                                        <a href="{{ path('app_baby_edit', {'id': baby.id}) }}" class="btn btn-sm btn-danger">Edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8" class="text-center">No records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+                <a href="{{ path('app_baby_new') }}" class="btn btn-lg btn-warning" style="background-color: #ff69b4;">Create New</a>
+            </div>
+        </div>
+                                       <div style="margin-top:50px;margin-left:500px">
+         <a style ="margin-top:200px;href="{{ path('app_generate_pdf') }}"class="btn btn-warning">-download PDF</a>
+
+    </div>
+
+   <script>
+    // Function to send AJAX request for search
+    function search() {
+        var query = document.getElementById('searchInput').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '{{ path('app_baby_search') }}?q=' + query, true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                updateTable(response);
+            }
+        };
+        xhr.send();
+    }
+
+    // Function to update the table with search results
+    function updateTable(data) {
+        var tableBody = document.querySelector('tbody');
+        tableBody.innerHTML = ''; // Clear existing table rows
+        if (data.length > 0) {
+            data.forEach(function (baby) {
+                var row = '<tr>';
+                row += '<td>' + baby.nom + '</td>';
+                row += '<td>' + baby.prenom + '</td>';
+                row += '<td>' + baby.sexe + '</td>';
+                row += '<td>' + (baby.dateNaissance ? baby.dateNaissance : '') + '</td>';
+                row += '<td>' + baby.poids + '</td>';
+                row += '<td>' + baby.taille + '</td>';
+                row += '</tr>';
+                tableBody.innerHTML += row;
+            });
+        } else {
+            tableBody.innerHTML = '<tr><td colspan="8" class="text-center">No records found</td></tr>';
+        }
+    }
+
+    // Event listener for the search input
+    document.getElementById('searchInput').addEventListener('input', function () {
+        search();
+    });
+</script>
+
+{% endblock %}

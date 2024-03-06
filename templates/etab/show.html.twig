@@ -1,0 +1,51 @@
+{% extends 'back.html.twig' %}
+{% block title %}Etab{% endblock %}
+
+{% block body %}
+    <h1>Establishment</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ etab.id }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ etab.type }}</td>
+            </tr>
+          
+        </tbody>
+    </table>
+
+    <h2>Doctors in this Establishment</h2>
+    {% if etab.Med is not empty %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Doctor ID</th>
+                    <th>Name</th>
+                    <th>Full Name</th>
+                    <th>Speciality</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for med in etab.Med %}
+                    <tr>
+                        <td>{{ med.id }}</td>
+                        <td>{{ med.nom }}</td>
+                        <td>{{ med.prenom }}</td>
+                        <td>{{ med.specialite }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No doctors associated with this establishment.</p>
+    {% endif %}
+
+    <a href="{{ path('app_etab_index') }}" class="btn btn-primary">Back to list</a>
+    <a href="{{ path('app_etab_edit', {'id': etab.id}) }}" class="btn btn-primary">Edit</a>
+
+    {{ include('etab/_delete_form.html.twig') }}
+{% endblock %}

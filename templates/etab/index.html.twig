@@ -1,0 +1,54 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Establishment index{% endblock %}
+
+{% block body %}
+    <h1>list of establishment</h1>
+
+
+    <input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Localisation</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etab in etabs %}
+            <tr>
+                <td>{{ etab.id }}</td>
+                <td>{{ etab.nom }}</td>
+                <td>{{ etab.localisation }}</td>
+                <td>{{ etab.type }}</td>
+                <td>
+                   <a href="{{ path('app_etab_show', {'id': etab.id}) }}" class="btn btn-info">Show</a>
+                   <a href="{{ path('app_etab_edit', {'id': etab.id}) }}" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etab_new') }}" class="btn btn-primary">Create new</a>
+{% endblock %}

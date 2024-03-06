@@ -48,4 +48,3 @@ security:
                 always_remember_me: true
     access_control:
     # Define access control rules here
-

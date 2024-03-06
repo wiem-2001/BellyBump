@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
-
 class TestController extends AbstractController
 {
     #[Route('/test', name: 'app_test')]
@@ -15,7 +14,6 @@ class TestController extends AbstractController
     {
 
         return $this->render('test/index.html.twig', [
-
             'controller_name' => 'TestController',
         ]);
     }
@@ -28,5 +26,6 @@ class TestController extends AbstractController
         return $this->render('test/index.html.twig',[
           'user'=>$user
         ]);
+
     }
 }

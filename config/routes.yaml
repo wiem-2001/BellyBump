@@ -1,3 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+rate_etab:
+    path: '/rate/{id}'
+    controller: App\Controller\EtabController::rateEtab

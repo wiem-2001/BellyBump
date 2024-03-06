@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+    {{ parent() }}
+    {% endblock %}
+{% block title %}Baby index{% endblock %}
+
+{% block body %}
+ <h1 >Baby index</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>maladie </th>
+                <th>description</th>
+                <th>nbrVaccin</th>
+                <th>dateVaccin</th>
+                <th>BloodType</th>
+                <th>sicknessEstimation</th>
+                
+
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for baby in babies %}
+            <tr>
+               
+                <td>{{ baby.jointure1.maladie }}</td>
+                <td>{{ baby.jointure1.description }}</td>
+                <td>{{ baby.jointure1.nbrVaccin }}</td>
+                <td>{{ baby.jointure1.dateVaccin ? baby.jointure1.dateVaccin|date('Y-m-d') : '' }}</td>
+                <td>{{ baby.jointure1.BloodType }}</td>
+                <td>{{ baby.jointure1.sicknessEstimation }}</td>
+               
+
+              
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
