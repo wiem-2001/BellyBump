@@ -184,7 +184,7 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
             $oldFileName = $event->getImage();
             // Delete the old file if it exists
                         
-            $oldFilePath = $this->getParameter('images_directory') . '/' . $oldFileName;
+            $oldFilePath = $this->getParameter('images_directory_event') . '/' . $oldFileName;
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
             }

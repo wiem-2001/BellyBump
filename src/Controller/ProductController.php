@@ -72,7 +72,7 @@ class ProductController extends AbstractController
         $em->flush();
 
 
-       return $this->redirectToRoute("back_product");
+       return $this->redirectToRoute("show_back_product");
 
 
 
@@ -88,7 +88,7 @@ class ProductController extends AbstractController
             $em = $managerRegistry->getManager();
             //$em->persist($partner);
             $em->flush();
-            return $this->redirectToRoute("back_product");
+            return $this->redirectToRoute("show_back_product");
         }
 
         return $this->renderForm("product/updateProduct.html.twig"
@@ -97,8 +97,10 @@ class ProductController extends AbstractController
     }
 
     #[Route('/shop/search', name: 'shop_search')]
-    public function search(Request $request)
-    { $query = $request->query->get('query');
+    public function search(Request $request,Security $security)
+    { 
+        $user=$security->getUser();
+        $query = $request->query->get('query');
         dump($query); // Temporaire, pour débogage
 
         // Effectuez la recherche dans votre base de données
@@ -107,10 +109,11 @@ class ProductController extends AbstractController
 
         // Renvoyez le même template que la boutique mais avec les produits filtrés
         return $this->render('product/showProduct.html.twig', [
-            'pr' => $products
+            'pr' => $products,
+            'user'=>$user
         ]);
     }
-    #[Route('/shop/search', name: 'shop_search')]
+    #[Route('/shop/searchBack', name: 'shop_searchBack')]
     public function searchBack(Request $request)
     { $query = $request->query->get('query');
         dump($query); // Temporaire, pour débogage

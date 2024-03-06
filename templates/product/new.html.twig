@@ -6,8 +6,10 @@
         <!-- Bouton pour la redirection vers la liste des produits -->
         <a href="{{ path('show_back_product') }}" class="btn btn-secondary">Show list of products</a>
         <h1>Add a product</h1>
+        <div class="row">
         {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
         {{ form_widget(form) }}
+        </div>
         <button class="btn">Add</button>
         {{ form_end(form) }}
         <style>
