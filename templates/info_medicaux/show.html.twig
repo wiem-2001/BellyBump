@@ -1,18 +1,15 @@
-{% extends 'base.html.twig' %}
-{% block stylesheets %}
-{{ parent() }} {# Include parent stylesheets from the base template #}
-    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
-    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
-    {{ parent() }}
-    {% endblock %}
+{% extends 'baseBackOffice.html.twig' %}
 {% block title %}InfoMedicaux{% endblock %}
 
+
+
+
 {% block body %}
-    <h1>Information Medicale</h1>
+      <main class="main-content border-radius-lg ">
+        
+        
+<div class="container-fluid py-4">
+       <h1>Information Medicale</h1>
 
     <table class="table">
         <tbody>
@@ -52,4 +49,8 @@
     <a href="{{ path('app_info_medicaux_edit', {'id': info_medicaux.id}) }}" class="btn btn-success">edit</a>
 
     {{ include('info_medicaux/_delete_form.html.twig') }}
+<div class="container-fluid py-4">
+{% block main %}
 {% endblock %}
+       </main>
+        {% endblock %}

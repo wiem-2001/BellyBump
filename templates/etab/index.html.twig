@@ -1,9 +1,12 @@
-{% extends 'back.html.twig' %}
+{% extends 'baseBackOffice.html.twig' %}
 
 {% block title %}Establishment index{% endblock %}
-
 {% block body %}
-    <h1>list of establishment</h1>
+      <main class="main-content border-radius-lg ">
+        
+        
+<div class="container-fluid py-4">
+     <h1>list of establishment</h1>
 
 
     <input id="search-input" type="form-control" placeholder="Search...">
@@ -51,4 +54,8 @@
     </table>
 
     <a href="{{ path('app_etab_new') }}" class="btn btn-primary">Create new</a>
+ 
+<div class="container-fluid py-4">
+{% block main %}
+{% endblock %}
 {% endblock %}

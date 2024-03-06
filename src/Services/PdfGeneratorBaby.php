@@ -4,6 +4,8 @@
 namespace App\Service;
 
 use Dompdf\Dompdf;
+use App\Entity\Baby;
+
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;

@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseBackOffice.html.twig' %}
 {% block stylesheets %}
 {{ parent() }} {# Include parent stylesheets from the base template #}
     <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -12,12 +12,13 @@
 {% block title %}InfoMedicaux Index{% endblock %}
 
 {% block body %}
-         <a href="{{ path('app_generate_pdf2') }}"class="btn btn-warning">-download PDF</a>
+         
 
-
-    <div class="container">
+    <div class="container" style="margin-left:300px">
         <h1 class="text-center mt-5 mb-4">InfoMedicaux Index</h1>
+<a href="{{ path('app_generate_pdf2') }}"class="btn btn-warning">-download PDF</a>
 
+         <a href="{{ path('app_stat') }}"class="btn btn-warning">Blood type chart</a>
         <div class="row justify-content-center">
             <div class="col-md-10">
            <input id="search-input" type="form-control" placeholder="Search...">

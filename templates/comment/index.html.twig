@@ -131,6 +131,12 @@
             border-top-left-radius: 8px; /* Arrondi pour le coin supérieur gauche */
             border-bottom-right-radius: 8px; /* Arrondi pour le coin inférieur droit */
         }
+        .muted-text {
+            color: #999; /* Use a subdued color, such as a light gray */
+            opacity: 0.7; /* Reduce the opacity to make the text appear muted */
+            /* Additional styling can be added as needed */
+        }
+
     </style>
 
     <h1 class="page-title">Voir les commentaires</h1>
@@ -150,6 +156,10 @@
                         <p>{{ comment.contenu }}</p>
 
                     </div>
+                    <div class="muted-text">
+                        <p>{{ comment.getOwner.getFirstName }}</p>
+                    </div>
+                    {% if comment.getOwner.id == app.user.id %}
                     <div class="post-actions">
                         <a href="{{ path('updatecomment', {'id': comment.id}) }}" class="edit-post-button">Éditer</a>
                     </div>
@@ -157,6 +167,7 @@
                         <a href="{{ path('deletecomment', {'id': comment.id}) }}" class="edit-post-button">Supprimer
                         </a>
                     </div>
+                        {% endif %}
                 </div>
                 {% endif %}
             {% endfor %}

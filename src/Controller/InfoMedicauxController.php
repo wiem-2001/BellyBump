@@ -22,12 +22,82 @@ use Symfony\Component\Security\Core\Security;
 #[Route('/info/medicaux')]
 class InfoMedicauxController extends AbstractController
 {
+
+    #[Route('/stats',name: 'app_stat', methods: ['GET'])]
+   
+public
+function
+statistics(InfoMedicauxRepository $infoMedicauxRepository):Response
+    {
+       
+$repository =
+$this->getDoctrine()->getRepository(InfoMedicaux::class);
+
+
+       
+$data =
+$repository->createQueryBuilder('v')
+    ->select('v.BloodType')
+    ->addSelect('COUNT(v.id)
+ as totalBloodType')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :BMinus THEN 1 ELSE 0 END) as bCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :BPlus THEN 1 ELSE 0 END) as bbCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :OMinus THEN 1 ELSE 0 END) as oCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :OPlus THEN 1 ELSE 0 END) as ooCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :AMinus THEN 1 ELSE 0 END) as aCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :APlus THEN 1 ELSE 0 END) as aaCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :ABMinus THEN 1 ELSE 0 END) as abCount')
+    ->addSelect('SUM(CASE
+ WHEN v.BloodType = :ABPlus THEN 1 ELSE 0 END) as abbCount')
+    ->setParameter('BMinus',
+'B-')
+    ->setParameter('BPlus',
+'B+')
+    ->setParameter('OMinus',
+'O-')
+    ->setParameter('OPlus',
+'O+')
+    ->setParameter('AMinus',
+'A-')
+    ->setParameter('APlus',
+'A+')
+    ->setParameter('ABMinus',
+'AB-')
+    ->setParameter('ABPlus',
+'AB+')
+    ->groupBy('v.BloodType')
+    ->getQuery()
+    ->getResult();
+
+
+   
+ 
+
+
+       
+return
+$this->render('info_medicaux/chart.html.twig',
+ [
+           
+'data' =>
+$data,
+        ]);
+    }
+
+
     #[Route('/', name: 'app_info_medicaux_index', methods: ['GET'])]
     public function index(Request $request, PaginatorInterface $paginator, InfoMedicauxRepository $infoMedicauxRepository,Security $security): Response
     {
         $user=$security->getUser();
 
-    $this->denyAccessUnlessGranted('ROLE_MOTHER');
+    $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $queryBuilder = $infoMedicauxRepository->createQueryBuilder('i');
         $queryBuilder->leftJoin('i.med', 'm'); // Assuming 'med' is the association in InfoMedicaux entity
     
@@ -50,9 +120,10 @@ class InfoMedicauxController extends AbstractController
     #[Route('/frontInfo', name: 'app_frontInfo_index', methods: ['GET'])]
     public function indexxx(InfoMedicauxRepository $infoMedicauxRepository,Security $security): Response
     {
+        
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('info_medicaux\frontInfo.html.twig', [
             'info_medicauxes' => $infoMedicauxRepository->findAll(),
             'user'=>$user
@@ -64,7 +135,7 @@ class InfoMedicauxController extends AbstractController
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $query = $request->query->get('q');
         $results = $infoMedicauxRepository->findBySearchQuery($query); // Implement findBySearchQuery method in your repository
     
@@ -95,7 +166,7 @@ class InfoMedicauxController extends AbstractController
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $babyId = $request->query->get('babyId');
         $baby = $entityManager->getRepository(Baby::class)->find($babyId);
     
@@ -135,7 +206,7 @@ class InfoMedicauxController extends AbstractController
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('info_medicaux/show.html.twig', [
             'info_medicaux' => $infoMedicaux,
             'user'=>$user
@@ -148,7 +219,7 @@ class InfoMedicauxController extends AbstractController
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(InfoMedicauxType::class, $infoMedicaux);
         $form->handleRequest($request);
 
@@ -171,7 +242,7 @@ class InfoMedicauxController extends AbstractController
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$infoMedicaux->getId(), $request->request->get('_token'))) {
             $entityManager->remove($infoMedicaux);
             $entityManager->flush();

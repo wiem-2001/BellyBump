@@ -233,7 +233,7 @@
             {% for post in pagination %}
                 <div class="post">
                     <h2 class="post-title">{{ post.title }}</h2>
-                    <h6 >{{ post.auteur }}</h6>
+                    <h6 >{{ user.firstName }}</h6>
                     <p class="post-date">Date de création : {{ post.createdAt|date('Y-m-d H:i:s') }}</p>
                     <div class="post-content">
                         <p>{{ post.content }}</p>
@@ -242,15 +242,57 @@
                     <div class="image-container">
                         <img src="{{ asset('uploads/imagesPost/' ~ post.image) }}" alt="post">
                     </div>
+                    {% if app.user.getId==post.auteur.getId %}
                     <div class="post-actions">
                         <a href="{{ path('updatepost', {'id': post.id}) }}" class="edit-post-button">Éditer</a>
                     </div>
+
                     <div class="post-actions">
                         <a href="{{ path('deletepost', {'id': post.id}) }}" class="edit-post-button">Supprimer
                         </a>
                     </div>
+                    {% endif %}
                     <div class="post-actions">
                         <a href="{{ path('display_comment', {'id': post.id}) }}" class="btn">Voir les commentaires</a>
+                        <div class={{ "likeDiv"~post.id }}>
+                            {% set userLiked = false %}
+                            {% set value=false %}
+                            {% for likeDislike in post.getLikeDislikes %}
+                                {% if likeDislike.user == app.user %}
+                                    {% set userLiked = true %}
+                                    {% set value=likeDislike.value %}
+                                    {# Exit loop early if user is found #}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if userLiked %}
+                                {% if value %}
+                                    <i class="fa-solid fa-thumbs-up" onclick="fetchLike({{ post.id }}, true)"></i>
+                                    <i id="likeValue">{{ post.getLikes|length }}</i>
+                                    <i class="fa-regular fa-thumbs-down"  onclick="fetchLike({{ post.id }}, false)"></i>
+                                    <i id="dislikeValue">{{ post.getDislikes|length }}</i>
+
+                                {% else %}
+                                    <i class="fa-regular fa-thumbs-up" onclick="fetchLike({{ post.id }}, true)"></i>
+                                    <i id="likeValue">{{ post.getLikes|length }}</i>
+
+                                    <i class="fa-solid fa-thumbs-down" onclick="fetchLike({{ post.id }}, false)"></i>
+                                    <i id="dislikeValue">{{ post.getDislikes|length }}</i>
+
+                                {% endif %}
+                            {% else %}
+                                <i class="fa-regular fa-thumbs-up" onclick="fetchLike({{ post.id }}, true)"></i>
+                                <i id="likeValue">{{ post.getLikes|length }}</i>
+
+                                <i class="fa-regular fa-thumbs-down" onclick="fetchLike({{ post.id }}, false)"></i>
+                                <i id="dislikeValue">{{ post.getDislikes|length }}</i>
+
+                            {% endif %}
+
+                        </div>
+
+
+
                     </div>
                 </div>
             {% endfor %}
@@ -260,5 +302,20 @@
         </div>
 
     </div>
+    <script>
+        function  fetchLike(postId,value){
+            fetch(`/like/${postId}/${value}`)
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    // Do something with the response data
+                  window.location.reload()
+                })
+                .catch(error => {
+                    // Handle any errors that occur during the fetch
+                    console.error('Error fetching like:', error);
+                });
+        }
+
+    </script>
 {% endblock %}
 

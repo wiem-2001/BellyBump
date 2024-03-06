@@ -8,6 +8,7 @@ use App\Repository\PostRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +57,7 @@ class PostController extends AbstractController
         $user=$security->getUser();
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
+        $form->add('ajouter',SubmitType::class);
         $form->handleRequest($request);
         $badWords = ['idiot', 'bete', 'naif','debile'];
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,7 +89,7 @@ class PostController extends AbstractController
                 $fileName = md5(uniqid()) . '.' . $fileExtension;
                 $file->move($this->getParameter('images_directory_post'), $fileName);
                 $post->setImage($fileName);
-
+                $post->setAuteur($user);
 
                 $em = $doctrine->getManager();
                 $em->persist($post);

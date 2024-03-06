@@ -42,7 +42,7 @@
                 {% for post in posts %}
                     <tr>
                         <td>{{ post.title }}</td>
-                        <td>{{ post.auteur }}</td>
+                        <td>{{ post.auteur.getFirstName }}</td>
                         <td>{{ post.content }}</td>
                         <td>{{ post.createdAt|date('Y-m-d H:i:s') }}</td>
                         <td>
