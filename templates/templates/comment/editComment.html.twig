@@ -1,0 +1,72 @@
+
+
+
+{% block stylesheets %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 204, 203, 0.5); /* Rose semi-transparent */
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #e91e63; /* Rose */
+            border-radius: 4px;
+        }
+
+        .btn-primary {
+            background-color: #e91e63; /* Rose */
+            color: #fff; /* Blanc pour le texte */
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #c2185b; /* Rose plus foncé au survol */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Editer le Commentaire</h1>
+
+        <div class="form-container">
+            {{ form_start(form) }}
+
+
+
+            <div class="form-group">
+                {{ form_row(form.contenu, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

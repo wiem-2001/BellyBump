@@ -1,0 +1,92 @@
+<style>
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+    }
+
+    .custom-form {
+        width: 400px; 
+        padding: 20px;
+        border: 2px solid black;
+        border-radius: 8px;
+    }
+
+    .error-message {
+        color: red;
+    }
+</style>
+
+<div class="center-form">
+    <div class="custom-form">
+        {{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
+
+        <div class="form-group">
+            {{ form_label(form.type, 'Type') }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter the type'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.type) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.nom, 'Name') }}
+            {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter the name'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.nom) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.Localisation, 'Localisation') }}
+            {{ form_widget(form.Localisation, {'attr': {'class': 'form-control', 'style': 'border: 1px solid black;', 'placeholder': 'Please enter localisation'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.Localisation) }}
+            </div>
+
+            <!-- Ajoutez un conteneur pour la carte -->
+            <div id="map" style="height: 300px;"></div>
+        </div>
+
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<!-- Ajoutez un script pour initialiser la carte -->
+<script>
+    var map = L.map('map').setView([51.505, -0.09], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Chargement des coordonnées depuis localStorage
+    var savedCoordinates = localStorage.getItem('etab_Localisation');
+    if (savedCoordinates) {
+        var coordinates = savedCoordinates.split(', ');
+        map.setView(coordinates, 13);
+        var marker = L.marker(coordinates).addTo(map);
+    }
+
+    // Ajoutez un marqueur au clic
+    map.on('click', function(e) {
+        // Supprimez les marqueurs précédents
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.Marker) {
+                map.removeLayer(layer);
+            }
+        });
+
+        // Ajoutez un nouveau marqueur
+        var marker = L.marker(e.latlng).addTo(map);
+
+        // Mettez à jour le champ de formulaire avec les coordonnées
+        var coordinates = e.latlng.lat + ', ' + e.latlng.lng;
+        document.getElementById('etab_Localisation').value = coordinates;
+
+        // Sauvegardez les coordonnées dans localStorage
+        localStorage.setItem('etab_Localisation', coordinates);
+    });
+</script>

@@ -1,0 +1,96 @@
+{% extends 'baseBackOffice.html.twig'%}
+
+{% block body %}
+      <main class="main-content border-radius-lg ">
+            <section id="hero" class="hero">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2 data-aos="fade-up" data-aos-delay="100">want to become our partner</h2>
+                    <p data-aos="fade-up" data-aos-delay="200">fill this form and welcome to our shop </p>
+                </div>
+                <div class="col-lg-5">
+                    {{ form_start(fpartner,{attr:{novalidate:'novalidate'}}) }}
+                        <!-- ... champs du formulaire ... -->
+                        <div class="row gy-4">
+                            <label for="inputText" class="col-sm-4 col-form-label">name</label>
+                            <div class="col-md-6">
+                                {{ form_widget(fpartner.nom,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(fpartner.nom,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                            <label for="inputText" class="col-sm-4 col-form-label">email</label>
+                            <div class="col-md-6">
+                                {{ form_widget(fpartner.email,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(fpartner.email,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                            <label for="inputText" class="col-sm-4 col-form-label">marque</label>
+                            <div class="col-md-6">
+                                {{ form_widget(fpartner.marque,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(fpartner.marque,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+                            <label for="inputText" class="col-sm-4 col-form-label">description</label>
+                            <div class="col-md-6">
+                                {{ form_widget(fpartner.description,{'attr':{'class':'form-control'}}) }}
+                                {{ form_errors(fpartner.description,{'attr':{'class':'text-danger'}}) }}
+                            </div>
+
+
+
+
+
+                            <div class="col-md-12 text-center">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message" style="color: #bb2d3b"> Thank you!</div>
+
+                                {{ form_widget(fpartner.add,{'attr':{'class':'btn btn-primary'}}) }}
+                            </div>
+
+                        </div>
+                    {{ form_end(fpartner)}}
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+<div class="container-fluid py-4">
+{% block main %}
+  <style>
+          label {
+                color: black;
+                font-weight: bold ;
+            }
+          input[type="text"].form-control ,select.form-control, textarea.form-control,input[type="email"].form-control{
+            border: 1px solid #000; /* Add stroke */
+            }
+            textarea.form-control.is-invalid{
+            border: 1px solid #000; /* Add stroke */
+            }
+         ul {
+            list-style-type: none;
+        }
+         .form-control.is-invalid{
+            border: none ;
+         }
+         .title-hr {
+            border: 1.5px solid #E91E63; /* Set border properties */
+            margin-top: 10px; /* Adjust margin top */
+            margin-bottom: 20px; /* Adjust margin bottom */
+            opacity :1;
+        }
+        .event-title{
+            color: #E91E63;
+        }
+
+         </style>
+{% endblock %}
+       </main>
+        {% endblock %}

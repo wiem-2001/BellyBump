@@ -4,11 +4,13 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
     images_directory_user: '%kernel.project_dir%/public/uploads/UserImages/'
-    images_directory_event:  '%kernel.project_dir%/public/uploads/EventImages/'
-
+    images_directory_event: '%kernel.project_dir%/public/uploads/EventImages/'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
+    python_script_path: 'C:\xampp\htdocs\BellyBump\scripts\python_scripts\dbscan_script.py'
+    openai.api_key: '%env(OPENAI_KEY)%'
+    app.path.product_images: '%kernel.project_dir%/public/uploads/images/products/'
+    images_directory_post:  '%kernel.project_dir%/public/uploads/imagesPost/'
 
 services:
     App\Service\RecommendationEventsService:
@@ -23,14 +25,16 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+
+    # Add the DbscanService definition here
+    App\Services\Dbscan:
+        autowire: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

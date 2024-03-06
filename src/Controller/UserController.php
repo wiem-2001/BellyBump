@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\PasswordUpdateFormType;
 use App\Form\UpdateProfilFormType;
 use App\Repository\UserRepository;
+use App\Service\Dbscan;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -16,6 +17,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 
 class UserController extends AbstractController
@@ -154,8 +157,6 @@ class UserController extends AbstractController
             return $this->redirectToRoute('detail_user', ['id' => $user->getId()]);
         }
 
-        $this->addFlash('success', 'Profile updated successfully');
-
         // Render the profile update form
         return $this->render('user/show_profil.html.twig', [
             'profilUpdateForm' => $form->createView(),
@@ -200,7 +201,98 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('get_users');
     }
+    #[Route('/stats', name: 'user_stats')]
+    public function stats(UserRepository $userRepository, ChartBuilderInterface $chartBuilder): Response
+    {
+        // Get all users registered this year
+        $currentYear = (new \DateTime())->format('Y');
+        $users = $userRepository->findUsersWithMotherRole();
+        $blockedUsersCount = $userRepository->countBlockedUsers();
+        $unblockedUsersCount = $userRepository->countunBlockedUsers();
 
+        $labels = [];
+        $datasets = [];
 
+        // Initialize an array to hold user counts for each month
+        $userCountsByMonth = [
+            '01' => 0, '02' => 0, '03' => 0, '04' => 0,
+            '05' => 0, '06' => 0, '07' => 0, '08' => 0,
+            '09' => 0, '10' => 0, '11' => 0, '12' => 0
+        ];
+
+        // Count users for each month
+        foreach ($users as $user) {
+            $createdAt = $user->getCreatedAt();
+            if ($createdAt !== null ) { // Check if createdAt is not null
+                $year = $createdAt->format('Y');
+                if ($year == $currentYear) { // Check if the user was created in the current year
+                    $monthNumber = $createdAt->format('m'); // Extract month number
+                    $monthNumber = sprintf('%02d', $monthNumber); // Format month number to ensure two digits
+                    if (array_key_exists($monthNumber, $userCountsByMonth)) {
+                        $userCountsByMonth[$monthNumber]++;
+                    } else {
+                        // Handle unexpected month numbers if necessary
+                    }
+                }
+            }
+        }
+
+        // Generate labels for each month
+        $monthNames = [
+            '01' => 'January', '02' => 'February', '03' => 'March', '04' => 'April',
+            '05' => 'May', '06' => 'June', '07' => 'July', '08' => 'August',
+            '09' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'
+        ];
+
+        // Modify $userCountsByMonth array to use month names as labels
+        $userCountsByMonthWithNames = [];
+        foreach ($userCountsByMonth as $monthNumber => $userCount) {
+            $monthName = $monthNames[$monthNumber];
+            $userCountsByMonthWithNames[$monthName] = $userCount;
+        }
+
+        // Generate dataset
+        $datasets[] = [
+            'label' => 'New Users',
+            'data' => array_values($userCountsByMonth), // Values of user counts for each month
+            'backgroundColor' => 'rgb(255, 99, 132)',
+            'borderColor' => 'rgb(255, 99, 132)',
+            'borderWidth' => 1
+        ];
+
+        // Create the bar chart
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart->setData([
+            'labels' => array_keys($userCountsByMonthWithNames),
+            'datasets' => $datasets,
+        ]);
+
+        return $this->render('user/userStats.html.twig', [
+            'chart' => $chart,
+            'userCountsByMonth' => $userCountsByMonthWithNames,
+            'blockedUsersCount' => $blockedUsersCount,
+            'unblockedUsersCount'=>$unblockedUsersCount
+        ]);
+    }
+    #[Route('/test-dbscan-connection', name: 'test_dbscan_connection')]
+    public function testDbscanConnection(Dbscan $dbscanService): Response
+    {
+        // Sample data to test DBSCAN connection
+        $testData = [20, 25, 27, 30, 33, 35, 40, 42, 45, 50];
+
+        try {
+            // Call the performClustering method to test the connection
+            $result = $dbscanService->performClustering($testData);
+
+            // Output the result (for testing purposes)
+          //  dd($result); // Use dd() to dump and die (halt execution) for debugging
+
+            // Optionally, return a response confirming successful connection
+            return new Response('Connection to Python script successful!');
+        } catch (\Exception $e) {
+            // Handle any exceptions that may occur (e.g., connection error)
+            return new Response('Connection to Python script failed: ' . $e->getMessage());
+        }
+    }
 
 }

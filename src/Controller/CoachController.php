@@ -22,7 +22,9 @@ class CoachController extends AbstractController
     #[Route('/addCoach', name :"coach_add")]
     public function addCoach(Request $request,ManagerRegistry $managerRegistry)
     {
+
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $coach = new Coach();
         //create form for adding coach
         $form=$this->createForm(CoachType::class,$coach);
@@ -48,7 +50,9 @@ class CoachController extends AbstractController
     #[Route('/updateCoachDetails/{id}', name: 'coach_update')]
     public function updateCoachDetails(int $id,CoachRepository $coachRepository, Request $request , ManagerRegistry $managerRegistry)
     {
+
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         //find the coach by id
         $coach = $coachRepository->find($id);
         //create formular

@@ -46,6 +46,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return $qb->getQuery()->getResult();
     }
+    public function countBlockedUsers(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.Status = :status')
+            ->setParameter('status', 0) // 0 represents blocked users
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+    public function countunBlockedUsers(): int
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->where('u.Status = :status')
+            ->setParameter('status', 1) // 0 represents blocked users
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
     public function getFavoritedOrParticipatedEvents(User $user): array
     {

@@ -86,7 +86,6 @@ public function FavoritEvents(Security $security,EventRepository $repository,  U
     public function addEvent(Request $request, ManagerRegistry $managerRegistry): Response
     {
     $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);

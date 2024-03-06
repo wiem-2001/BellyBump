@@ -100,7 +100,14 @@ class RegistrationFormType extends AbstractType
                 'constraints'=> [new Assert\NotBlank(array("message" => "Please choose an image")),]
 
             ])
-            ->add('birthday', BirthdayType::class)
+            ->add('birthday', BirthdayType::class, [
+                'label' => 'Date de naissance',
+                'constraints' => [
+                    new Assert\LessThanOrEqual([
+                        'value' => new \DateTime('2010-01-01'),
+                        'message' => 'A birthday after 2010 is not acceptable',
+                    ]),
+            ]])
             ->add('captcha', ReCaptchaType::class)
             ->add('save', SubmitType::class, [
                 'attr' => ['class' => 'save'],
