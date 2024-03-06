@@ -59,6 +59,7 @@ class RegistrationController extends AbstractController
                 $file->move($this->getParameter('images_directory_user'), $fileName);
                 $user->setImage($fileName);
             }
+            $user->setCreatedAt(new \DateTime());
             $entityManager->persist($user);
             $entityManager->flush();
 

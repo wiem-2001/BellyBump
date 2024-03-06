@@ -51,7 +51,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->events = new ArrayCollection();
-        $this->favoriteEvents = new ArrayCollection();
     }
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -69,8 +68,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $Status = null;
 
-    #[ORM\ManyToMany(targetEntity: Event::class)]
-    private Collection $favoriteEvents;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int
     {
@@ -297,26 +296,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Event>
-     */
-    public function getFavoriteEvents(): Collection
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->favoriteEvents;
+        return $this->createdAt;
     }
 
-    public function addFavoriteEvent(Event $favoriteEvent): static
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
     {
-        if (!$this->favoriteEvents->contains($favoriteEvent)) {
-            $this->favoriteEvents->add($favoriteEvent);
-        }
-
-        return $this;
-    }
-
-    public function removeFavoriteEvent(Event $favoriteEvent): static
-    {
-        $this->favoriteEvents->removeElement($favoriteEvent);
+        $this->createdAt = $createdAt;
 
         return $this;
     }
