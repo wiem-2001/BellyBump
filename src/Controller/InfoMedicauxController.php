@@ -20,6 +20,41 @@ use Knp\Component\Pager\PaginatorInterface;
 class InfoMedicauxController extends AbstractController
 {
 
+    #[Route('/stats', name: 'app_stat', methods: ['GET'])]
+    public function statistics(InfoMedicauxRepository $infoMedicauxRepository): Response
+    {
+        $repository = $this->getDoctrine()->getRepository(InfoMedicaux::class);
+
+        $data = $repository->createQueryBuilder('v')
+    ->select('v.BloodType')
+    ->addSelect('COUNT(v.id) as totalBloodType')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :BMinus THEN 1 ELSE 0 END) as bCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :BPlus THEN 1 ELSE 0 END) as bbCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :OMinus THEN 1 ELSE 0 END) as oCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :OPlus THEN 1 ELSE 0 END) as ooCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :AMinus THEN 1 ELSE 0 END) as aCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :APlus THEN 1 ELSE 0 END) as aaCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :ABMinus THEN 1 ELSE 0 END) as abCount')
+    ->addSelect('SUM(CASE WHEN v.BloodType = :ABPlus THEN 1 ELSE 0 END) as abbCount')
+    ->setParameter('BMinus', 'B-')
+    ->setParameter('BPlus', 'B+')
+    ->setParameter('OMinus', 'O-')
+    ->setParameter('OPlus', 'O+')
+    ->setParameter('AMinus', 'A-')
+    ->setParameter('APlus', 'A+')
+    ->setParameter('ABMinus', 'AB-')
+    ->setParameter('ABPlus', 'AB+')
+    ->groupBy('v.BloodType')
+    ->getQuery()
+    ->getResult();
+
+    
+
+        return $this->render('info_medicaux/chart.html.twig', [
+            'data' => $data,
+        ]);
+    }
+
     #[Route('/', name: 'app_info_medicaux_index', methods: ['GET'])]
 public function index(Request $request, PaginatorInterface $paginator, InfoMedicauxRepository $infoMedicauxRepository): Response
 {
