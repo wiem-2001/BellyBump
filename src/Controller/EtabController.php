@@ -20,7 +20,7 @@ class EtabController extends AbstractController
     #[Route('/', name: 'app_etab_index', methods: ['GET'])]
     public function index(EtabRepository $etabRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         return $this->render('etab/index.html.twig', [
             'etabs' => $etabRepository->findAll(),
         ]);
@@ -49,7 +49,6 @@ class EtabController extends AbstractController
     #[Route('/new', name: 'app_etab_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
     $etab = new Etab();
     $form = $this->createForm(EtabType::class, $etab);
     $form->handleRequest($request);
@@ -71,7 +70,6 @@ class EtabController extends AbstractController
     #[Route('/{id}', name: 'app_etab_show', methods: ['GET'])]
     public function show(Etab $etab): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('etab/show.html.twig', [
             'etab' => $etab,
         ]);
@@ -80,7 +78,6 @@ class EtabController extends AbstractController
     #[Route('/{id}/edit', name: 'app_etab_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Etab $etab, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(EtabType::class, $etab);
         $form->handleRequest($request);
 
@@ -99,7 +96,6 @@ class EtabController extends AbstractController
     #[Route('/{id}', name: 'app_etab_delete', methods: ['POST'])]
     public function delete(Request $request, Etab $etab, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$etab->getId(), $request->request->get('_token'))) {
             $entityManager->remove($etab);
             $entityManager->flush();
@@ -109,7 +105,7 @@ class EtabController extends AbstractController
     }
     public function addMed(Request $request, EntityManagerInterface $entityManager)
 {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    
     $med = new Med();
     $form = $this->createForm(medType::class, $med);
     $form->handleRequest($request);

@@ -23,7 +23,6 @@ class PdfGeneratiionController extends AbstractController
     #[Route('/pdf', name: 'app_generate_pdf', methods: ['GET'])]
     public function generatePdfAction(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_MOTHER');
         $babies = $entityManager
         ->getRepository(Baby::class)
         ->findAll();

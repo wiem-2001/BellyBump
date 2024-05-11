@@ -1,0 +1,10 @@
+vich_uploader:
+  db_driver: orm
+
+  mappings:
+    produit_image: # Assurez-vous que cette clé correspond exactement au mapping défini dans votre entité avec @Vich\UploadableField
+      uri_prefix: /uploads/images/products
+      upload_destination: '%kernel.project_dir%/public/uploads/images/products'
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+      delete_on_remove: true
+      delete_on_update: true

@@ -18,7 +18,7 @@ class RendezVousController extends AbstractController
     #[Route('/', name: 'app_rendez_vous_index', methods: ['GET'])]
     public function index(RendezVousRepository $rendezVousRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
         return $this->render('rendez_vous/index.html.twig', [
             'rendez_vouses' => $rendezVousRepository->findAll(),
         ]);
@@ -39,7 +39,7 @@ class RendezVousController extends AbstractController
     #[Route('/new', name: 'app_rendez_vous_new', methods: ['GET', 'POST'])]
 public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
+    
     $rendezVou = new RendezVous();
     $form = $this->createForm(RendezVousType::class, $rendezVou);
     $form->handleRequest($request);

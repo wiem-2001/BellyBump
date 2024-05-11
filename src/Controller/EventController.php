@@ -22,16 +22,18 @@ use Symfony\Component\Security\Core\Security;
 
 class EventController extends AbstractController
 {
+
     #[Route('/manageEvents', name: 'list_event')]
     public function EventsList(EventRepository $repository,CoachRepository $coachRepository)
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        
 
         $realizedEvents=$repository->findRealizedEvents();
         $notrealizedEvents=$repository->findNotRealizedEvents();
         $Events = $repository->findAll();
         $Coachs= $coachRepository->findAll();
-        return $this->render("Event/AdminEventList.html.twig",array('notrealizedEvents'=>$notrealizedEvents,'realizedEvents'=>$realizedEvents,'tabEvents'=>$Events,'tabCoach'=>$Coachs));
+        return $this->render("Event/AdminEventList.html.twig",array('notrealizedEvents'=>$notrealizedEvents,'realizedEvents'=>$realizedEvents,
+        'tabEvents'=>$Events,'tabCoach'=>$Coachs,'images_directory_event'=>$this->getParameter('images_directory_event')));
     }
 
     #[Route('/eventsList', name: 'list_event_mother')]
@@ -167,7 +169,7 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
             );
 
             // Delete the old file if it exists
-            $oldFilePath = $this->getParameter('images_directory_event') . '/' . $oldFileName;
+            $oldFilePath = $this->getParameter('images_directory_event') . $oldFileName;
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
             }
@@ -205,7 +207,7 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
             $oldFileName = $event->getImage();
             // Delete the old file if it exists
                         
-            $oldFilePath = $this->getParameter('images_directory_event') . '/' . $oldFileName;
+            $oldFilePath = $this->getParameter('images_directory_event') . $oldFileName;
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
             }
@@ -284,7 +286,8 @@ public function updateEvent(Request $request, $id, ManagerRegistry $managerRegis
         return $this->render('event/recommended_events.html.twig', [
             'recommendedEvents' => $recommendedEvents,
             'user' => $user,
-            'favoriteEvents'=>$Events
+            'favoriteEvents'=>$Events,
+            'images_directory_event'=>$this->getParameter('images_directory_event')
         ]);
     }
 

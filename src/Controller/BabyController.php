@@ -23,7 +23,6 @@ class BabyController extends AbstractController
     public function ascendingAction(BabyRepository $BabyRepository,Security $security)
     {
         $user=$security->getUser();
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('baby/index.html.twig', [
             'babies' => $BabyRepository->findAllAscending(),
             'user'=>$user
@@ -35,7 +34,6 @@ class BabyController extends AbstractController
     public function descendingAction(BabyRepository $BabyRepository,Security $security)
     {
         $user=$security->getUser();
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         return $this->render('baby/index.html.twig', [
             'babies' => $BabyRepository->findAllDescending(),
@@ -49,7 +47,6 @@ class BabyController extends AbstractController
     public function downloadPdf(PdfGeneratorBaby $pdfGenerator): Response
     {
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $pdfGenerator->generateBabyListPdf();
     }
 
@@ -58,7 +55,6 @@ class BabyController extends AbstractController
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('baby/index.html.twig', [
             'babies' => $babyRepository->findAll(),
             'user'=>$user
@@ -68,7 +64,6 @@ class BabyController extends AbstractController
     #[Route('/search', name: 'app_baby_search', methods: ['GET'])]
 public function search(Request $request, BabyRepository $babyRepository): JsonResponse
 {
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
     $query = $request->query->get('q');
     $results = $babyRepository->findBySearchQuery($query); // Implement findBySearchQuery method in your repository
 
@@ -95,7 +90,6 @@ public function search(Request $request, BabyRepository $babyRepository): JsonRe
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('baby\frontBaby.html.twig', [
             'babies' => $babyRepository->findAll(),
             'user'=>$user
@@ -111,7 +105,6 @@ public function new(Request $request, EntityManagerInterface $entityManager,Secu
 {
     $user=$security->getUser();
 
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
     $baby = new Baby();
     $form = $this->createForm(BabyType::class, $baby);
     $form->handleRequest($request);
@@ -143,14 +136,14 @@ public function new(Request $request, EntityManagerInterface $entityManager,Secu
 
 
     #[Route('/{id}', name: 'app_baby_show', methods: ['GET'])]
-    public function show(Baby $baby,Security $security): Response
+    public function show($id,Security $security,BabyRepository $BabyRepository): Response
     {
         $user=$security->getUser();
-
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $baby=$BabyRepository->find($id);
+       
         return $this->render('baby/show.html.twig', [
             'baby' => $baby,
-        'user'=>$user
+            'user'=>$user
 
         ]);
     }
@@ -160,7 +153,6 @@ public function new(Request $request, EntityManagerInterface $entityManager,Secu
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(BabyType::class, $baby);
         $form->handleRequest($request);
 
@@ -183,7 +175,7 @@ public function new(Request $request, EntityManagerInterface $entityManager,Secu
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+ 
         if ($this->isCsrfTokenValid('delete'.$baby->getId(), $request->request->get('_token'))) {
             $entityManager->remove($baby);
             $entityManager->flush();

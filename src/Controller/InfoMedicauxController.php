@@ -97,7 +97,6 @@ $data,
     {
         $user=$security->getUser();
 
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $queryBuilder = $infoMedicauxRepository->createQueryBuilder('i');
         $queryBuilder->leftJoin('i.med', 'm'); // Assuming 'med' is the association in InfoMedicaux entity
     
@@ -123,7 +122,6 @@ $data,
         
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('info_medicaux\frontInfo.html.twig', [
             'info_medicauxes' => $infoMedicauxRepository->findAll(),
             'user'=>$user
@@ -135,7 +133,6 @@ $data,
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $query = $request->query->get('q');
         $results = $infoMedicauxRepository->findBySearchQuery($query); // Implement findBySearchQuery method in your repository
     
@@ -166,7 +163,6 @@ $data,
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $babyId = $request->query->get('babyId');
         $baby = $entityManager->getRepository(Baby::class)->find($babyId);
     
@@ -206,7 +202,6 @@ $data,
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         return $this->render('info_medicaux/show.html.twig', [
             'info_medicaux' => $infoMedicaux,
             'user'=>$user
@@ -219,7 +214,6 @@ $data,
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $form = $this->createForm(InfoMedicauxType::class, $infoMedicaux);
         $form->handleRequest($request);
 
@@ -242,7 +236,6 @@ $data,
     {
         $user=$security->getUser();
 
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$infoMedicaux->getId(), $request->request->get('_token'))) {
             $entityManager->remove($infoMedicaux);
             $entityManager->flush();

@@ -26,7 +26,7 @@ class MedController extends AbstractController
         ]);
     }
     #[Route('/medFront/{id}', name: 'app_medFront_index', methods: ['GET'])]
-public function showMedFront(MedRepository $medRepository, Etab $etab,Security $security): Response
+public function showMedFront(MedRepository $medRepository, Etab $etab , Security $security): Response
 {
     $user=$security->getUser();
     // Assuming you have a relationship between Med and Etab entities
