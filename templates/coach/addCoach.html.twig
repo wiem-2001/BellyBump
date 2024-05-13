@@ -1,0 +1,130 @@
+{% extends 'baseBackOffice.html.twig' %}
+{% block title %}Add Coach {% endblock %}
+
+{% block body %}
+   <main class="main-content border-radius-lg ">
+    <div class="container-fluid py-4 ">
+
+{% block main %}
+    <h3 class="event-title">Add New Coach</h3> <hr class="title-hr">
+    <div class="addCoachMain">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_errors(form) }} {# Render all form-level errors #}
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-label">{{ form_label(form.firstname) }}</div>
+                {{ form_widget(form.firstname, {'attr': {'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter coach\'s first name'}} )}}
+                <div class="text-danger">{{ form_errors(form.firstname) }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-label">{{ form_label(form.lastname) }}</div>
+                {{ form_widget(form.lastname, {'attr': {'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter coach\'s last name'}} )}}
+                <div class="text-danger">{{ form_errors(form.lastname) }}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-label">{{ form_label(form.email) }}</div>
+                {{ form_widget(form.email, {'attr': {'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter coach\'s email'}} )}}
+                <div class="text-danger">{{ form_errors(form.email) }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-label">{{ form_label(form.job) }}</div>
+                {{ form_widget(form.job, {'attr': {'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter coach\'s job'}} )}}
+                <div class="text-danger">{{ form_errors(form.job) }}</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-label">{{ form_label(form.phone) }}</div>
+                {{ form_widget(form.phone, {'attr': {'class': 'form-control' ~ (not form.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter coach\'s phone number'}} )}}
+                <div class="text-danger">{{ form_errors(form.phone) }}</div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary addbtn">Add</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+<!-- Footer block-->
+{% block footer %}
+        <main class="main-content border-radius-lg ">
+        <footer class="footer py-4  ">
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-lg-between">
+      <div class="col-lg-6 mb-lg-0 mb-4">
+        <div class="copyright text-center text-sm text-muted text-lg-start">
+          © <script>
+            document.write(new Date().getFullYear())
+          </script>,
+          made with <i class="fa fa-heart"></i> by
+          <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank">BellyBump Team</a>
+          for a better web.
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+          <li class="nav-item">
+            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank"> </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank"></a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+</main>
+        {% endblock %}
+         <style>
+          label {
+                color: black;
+                font-weight: bold ;
+            }
+          input[type="text"].form-control , textarea.form-control,input[type="file"].form-control,input[type="email"].form-control{
+            border: 1px solid #000; /* Add stroke */
+            }
+            textarea.form-control.is-invalid{
+            border: 1px solid #000; /* Add stroke */
+            }
+         ul {
+            list-style-type: none;
+        }
+         .form-control.is-invalid{
+            border: none ;
+         }
+         .title-hr {
+            border: 1.5px solid #E91E63; /* Set border properties */
+            margin-top: 10px; /* Adjust margin top */
+            margin-bottom: 20px; /* Adjust margin bottom */
+            opacity :1;
+        }
+        .event-title{
+            color: #E91E63;
+        }
+        .addCoachMain{
+            width:70%;
+        }
+        .addbtn{
+            margin-top:5%;
+            
+        }
+
+         </style>
+       </main>
+    
+        {% endblock %}

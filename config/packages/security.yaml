@@ -1,0 +1,50 @@
+
+security:
+    enable_authenticator_manager: true
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin:
+            lazy: true
+            pattern: ^/admin
+            provider: app_user_provider
+            form_login:
+                login_path: admin_login
+                check_path: admin_login
+                enable_csrf: true
+            logout:
+                path: admin_logout
+                target: admin_login
+                success_handler: app.logout_success_handler
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime:  604800
+                path: /
+                always_remember_me: true
+        mother: # Add a new firewall for makers
+            lazy: true
+            pattern: ^/
+            provider: app_user_provider
+            form_login:
+                login_path: app_login # Different login path for makers
+                check_path: app_login # Different check path for makers
+                enable_csrf: true
+            logout:
+                path: app_logout
+                target: app_login # Different logout target for makers
+                success_handler: app.logout_success_handler
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime:  604800
+                path: /
+                always_remember_me: true
+    access_control:
+    # Define access control rules here

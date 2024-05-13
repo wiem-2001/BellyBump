@@ -1,0 +1,54 @@
+{% extends 'baseBackOffice.html.twig' %}
+
+{% block title %}Add a product{% endblock %}
+{% block main %}
+    <div class="form-add-product">
+        <!-- Bouton pour la redirection vers la liste des produits -->
+        <a href="{{ path('show_back_product') }}" class="btn btn-secondary">Show list of products</a>
+        <h1>Add a product</h1>
+        <div class="row">
+        {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+        {{ form_widget(form) }}
+        </div>
+        <button class="btn">Add</button>
+        {{ form_end(form) }}
+        <style>
+            label {
+                color: black;
+                font-weight: bold ;
+            }
+            input[type="text"].form-control , textarea.form-control,input[type="file"].form-control,input[type="email"].form-control{
+                border: 1px solid #000; /* Add stroke */
+            }
+            textarea.form-control.is-invalid{
+                border: 1px solid #000; /* Add stroke */
+            }
+            ul {
+                list-style-type: none;
+            }
+            .form-control.is-invalid{
+                border: none ;
+            }
+            .title-hr {
+                border: 1.5px solid #E91E63; /* Set border properties */
+                margin-top: 10px; /* Adjust margin top */
+                margin-bottom: 20px; /* Adjust margin bottom */
+                opacity :1;
+            }
+            .event-title{
+                color: #E91E63;
+            }
+            .addCoachMain{
+                width:70%;
+            }
+            .addbtn{
+                margin-top:5%;
+
+            }
+    </div>
+
+
+
+
+{% endblock %}
+

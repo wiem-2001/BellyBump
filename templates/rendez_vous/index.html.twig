@@ -1,0 +1,58 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}List des RendezVous {% endblock %}
+
+{% block body %}
+
+    <h1>List des RendezVous</h1>
+<input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DateReservation</th>
+                <th>HeureReservation</th>
+                <th>Médecin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rendez_vou in rendez_vouses %}
+            <tr>
+                <td>{{ rendez_vou.id }}</td>
+                <td>{{ rendez_vou.DateReservation ? rendez_vou.DateReservation|date('Y-m-d') : '' }}</td>
+                <td>{{ rendez_vou.heureReservation }}</td>
+                <td>
+    {% if rendez_vou.nomMed is defined and rendez_vou.nomMed is not null %}
+        {{ rendez_vou.nomMed.nom }}
+    {% endif %}
+</td>
+
+                
+                <td>
+                    <a href="{{ path('app_rendez_vous_show', {'id': rendez_vou.id}) }}" class="btn btn-info">Show</a>
+                    <a href="{{ path('app_rendez_vous_edit', {'id': rendez_vou.id}) }}" class="btn btn-primary">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

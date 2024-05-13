@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+{% block header %}
+   <header id="header" class="header  d-flex ">
+    <div class="container-fluid d-flex  justify-content-between">
+      <!-- Nav Menu -->
+      <nav id="navmenu">
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav><!-- End Nav Menu -->
+      <a class="btn-getstarted" href="{{ path('app_login') }}" >SIGN IN</a>
+    </div>
+  </header><!-- End Header -->
+{% endblock %}
+{% block body %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+    <!-- Hero Section - Home Page -->
+    <section id="hero" class="hero">
+        <img src="frontOffice/assets/img/hero-bg.webp" alt="" style="opacity: 0.5;" >
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <strong style="font-size: 30px;">Sign Up Now <br>and <br>Embrace Motherhood with Us</strong>
+                    </div>
+                    {{ form_start(registrationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
+                    {{ form_errors(registrationForm) }}
+
+                    <div style="padding-top: 80px;">
+                        {{ form_label(registrationForm.firstName) }}
+                        {{ form_widget(registrationForm.firstName, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your first name'} } )}}
+                        <div class="error-message">{{ form_errors(registrationForm.firstName) }}</div>
+                    </div>
+
+                    <div>
+                        {{ form_label(registrationForm.lastName) }}
+                        {{ form_widget(registrationForm.lastName, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your last name'} } )}}
+                     <div class="error-message"  style="color: red;">   {{ form_errors(registrationForm.lastName) }}
+                    </div>
+
+                    <div>
+                        {{ form_label(registrationForm.email) }}
+                        {{ form_widget(registrationForm.email, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter email address' } }) }}
+                        <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.email) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.phoneNumber) }}
+                       {{ form_widget(registrationForm.phoneNumber, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter 8-digit phone number' } }) }}
+                       <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.phoneNumber) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.adress) }}
+                         {{ form_widget(registrationForm.adress, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your address' } }) }}
+                       <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.adress, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your address' } }) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.plainPassword.first) }}
+                        {{ form_widget(registrationForm.plainPassword.first, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your password' } }) }}
+                        <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.plainPassword.first) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.plainPassword.second) }}
+                        {{ form_widget(registrationForm.plainPassword.second, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Confirm password' } }) }}
+                        <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.plainPassword.second) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.image) }}
+                        {{ form_widget(registrationForm.image, { 'attr': { 'class': 'form-control' ~ (not registrationForm.vars.valid ? ' is-invalid' : ''),
+                            'accept': 'image/png, image/jpeg, image/jpg'} } )}}
+                       <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.image) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.birthday) }}
+                        {{ form_widget(registrationForm.birthday) }}
+                       <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.birthday) }}</div>
+                    </div>
+                    <div>
+                        {{ form_label(registrationForm.captcha) }}
+                        {{ form_widget(registrationForm.captcha) }}
+                        <div class="error-message"  style="color: red;">{{ form_errors(registrationForm.captcha) }}</div>
+                    </div>
+                   <div style="margin-top: 10px;">
+                      {{ form_widget(registrationForm.save, {'label': 'Sign up', 'attr': {'class': 'btn btn-danger float-end'}}) }}
+                    </div>
+                    {{ form_end(registrationForm) }}
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+    
+{% endblock %}
+   {% block footer %}
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span>BellyBump</span>
+          </a>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+       
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>Petite Ariana </p>
+          <p>Ariana,Esprit</p>
+          <p>Tunisia</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+216 90 680 241</span></p>
+          <p><strong>Email:</strong> <span>bellybump@gmail.com</span></p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </footer><!-- End Footer -->{% endblock %}

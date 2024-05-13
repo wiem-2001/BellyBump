@@ -1,0 +1,10 @@
+{% extends 'back.html.twig' %}
+{% block title %}New establishment{% endblock %}
+
+{% block body %}
+    <h1 style ="margin-top:200px;margin-left:200px"> Create new establishment</h1>
+    
+
+    {{ include('etab/_form.html.twig') }}
+ <a href="{{ path('app_etab_index') }}" class="btn btn-primary">Back to list</a>
+{% endblock %}

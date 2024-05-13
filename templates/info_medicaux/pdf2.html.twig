@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>List of Medical informations</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>maladie</th>
+                    <th>description</th>
+                    <th>nbrVaccin</th>
+                    <th>dateVaccin</th>
+                    <th>BloodType</th>
+                    <th>sicknessEstimation</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for info_medicaux in informations %}
+                    <tr>
+                        <td>{{ info_medicaux.maladie}}</td>
+                        <td>{{ info_medicaux.description}}</td>
+                        <td>{{ info_medicaux.nbrVaccin}}</td>
+                        <td>{{ info_medicaux.dateVaccin ? info_medicaux.dateVaccin|date('Y-m-d') : '' }}</td>
+                        <td>{{ info_medicaux.BloodType }}</td>
+                        <td>{{ info_medicaux.sicknessEstimation }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No records found</td>
+                    </tr>
+                {% endfor %}
+
+                 <h1 class="logo me-auto me-lg-0"><a href="#">WorkVision</a></h1>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

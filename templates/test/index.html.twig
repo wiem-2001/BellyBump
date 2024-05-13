@@ -1,0 +1,23 @@
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+   <div class="container rounded bg-white mt-5 mb-5">
+   <div class="col-md-10 border-right">
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                  <Strong>Welcome to forum</Strong>
+                </div>
+            </div>
+   </div>
+{% endblock %}
+

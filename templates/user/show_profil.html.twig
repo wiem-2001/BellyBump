@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+            <div class="container rounded bg-white">
+            <div></div>
+                <div class="row">
+                    <div class="col">
+                    <div >
+                            <h4 class="text-right">Update Profil</h4>
+                            </div>
+                            {{ form_start(profilUpdateForm,{'attr': {'novalidate': 'novalidate','action': path('update_profil'),'method': 'POST'}} ) }}
+                            {{ form_errors(profilUpdateForm) }}
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                 <img id="profileImage" class="rounded-circle mt-2"  width="150px" src="{{ 'http:/localhost/Projects/PIDEV/bellybumpImages/user/' ~ user.image }}">
+                                    {{ form_widget(profilUpdateForm.image, { 'attr': { 'class': 'btn btn-primary mt-2', 'style': 'display: none;', 'onchange': 'displaySelectedImage(event)' , 'accept': 'image/png, image/jpeg, image/jpg' } }) }}
+                                    <label for="{{ profilUpdateForm.image.vars.id }}" class="btn btn-primary mt-2">Choose profile picture</label>
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+<div class="col-md-4"></div>
+                    <div class="col-md-8">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-right">Update Profil</h4>
+                            </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            {{ form_label(profilUpdateForm.firstName, 'First Name', {'label_attr': {'class': 'labels'}}) }}
+                            {{ form_widget(profilUpdateForm.firstName, { 'attr': { 'class': 'form-control', 'placeholder': 'enter your new first name', 'value':user.firstName} } )}}
+                        </div>
+                        <div class="col-md-4">
+                            {{ form_label(profilUpdateForm.lastName, 'Last Name', {'label_attr': {'class': 'labels'}}) }}
+                            {{ form_widget(profilUpdateForm.lastName, { 'attr': { 'class': 'form-control', 'placeholder': 'enter your new last name','value':user.lastName} } )}}
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-8">
+                             {{ form_label(profilUpdateForm.phoneNumber) }}
+                             {{ form_widget(profilUpdateForm.phoneNumber,{ 'attr': { 'class': 'form-control', 'placeholder': 'enter your phone number','value':user.phoneNumber} }) }}
+                        </div>
+                        <div class="col-md-8">
+                             {{ form_label(profilUpdateForm.adress) }}
+                             {{ form_widget(profilUpdateForm.adress,{ 'attr': { 'class': 'form-control', 'placeholder': 'enter your adress','value':user.adress} }) }}
+                        </div>
+                        <div class="col-md-8">
+                            {{ form_label(profilUpdateForm.birthday) }}
+                            {{ form_widget(profilUpdateForm.birthday, {'attr': {  'placeholder': 'user.birthday' }}) }}
+                        </div>
+                        <div class="col-md-8" style="margin-bottom:10px">
+                            {{ form_widget(profilUpdateForm.save, {'label': 'Save profile', 'attr': {'class': 'btn btn-danger float-end', 'onclick':"return confirm('Are you sure you want to update your profil ? ')"
+                            }}) }}
+                        </div>
+
+                    </div>
+                {{ form_end(profilUpdateForm) }}
+        </div>
+<div class="col-md-2"></div>
+
+    </div>
+  </div>
+</div>
+    <script>
+        function displaySelectedImage(event) {
+            var profileImage = document.getElementById('profileImage');
+            profileImage.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+{% endblock %}

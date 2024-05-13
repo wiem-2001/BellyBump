@@ -1,0 +1,97 @@
+{% if posts is not empty %}
+    <div class="search-results-container">
+        <h1 class="search-results-header">Voici la résultat  de la recherche pour "{{ keyword }}" :</h1>
+        <ul class="search-results-list">
+            {% for post in posts %}
+                <div class="post">
+                    <h2 class="post-title">{{ post.title }}</h2>
+                    <h6 class="post-author">{{ post.auteur.getFirstName }}</h6>
+                    <p class="post-date">Date de création : {{ post.createdAt|date('Y-m-d H:i:s') }}</p>
+                    <div class="image-container">
+                        <img src="{{ asset('uploads/imagesPost/' ~ post.image) }}" alt="post">
+                    </div>
+                    <div class="post-content">
+                        <p>{{ post.content }}</p>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+{% else %}
+    <p class="no-results-message">Aucun résultat trouvé pour "{{ keyword }}".</p>
+{% endif %}
+
+<style>
+    /* Styles CSS pour les résultats de recherche */
+    .search-results-container {
+        text-align: center;
+        margin-bottom: 20px; /* Ajoute de l'espace en bas des résultats de recherche */
+    }
+
+    .search-results-header {
+        font-size: 24px;
+        color: #ff6666; /* Couleur rose */
+        margin-bottom: 10px; /* Marge inférieure pour l'espace */
+    }
+
+    .search-results-list {
+        list-style-type: none; /* Supprime les puces de la liste */
+        padding: 0; /* Supprime le rembourrage de la liste */
+        margin: 0; /* Supprime la marge de la liste */
+    }
+
+    .post {
+        width: 700px; /* Largeur fixe du post */
+        margin: 0 auto; /* Centrage horizontal */
+        background-color: #fde8e8; /* Couleur de fond rose */
+        padding: 20px; /* Espace intérieur du post */
+        border-radius: 10px; /* Bordures arrondies */
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); /* Effet d'ombre */
+        margin-bottom: 20px; /* Espacement entre les posts */
+    }
+
+    .post-title {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .post-author {
+        font-size: 16px;
+        color: #888; /* Couleur du texte gris */
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .post-date {
+        font-size: 14px;
+        color: #888; /* Couleur du texte gris */
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .post-content {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    /* Styles pour le message "Aucun résultat trouvé" */
+    .no-results-message {
+        font-size: 18px;
+        color: #ff6666; /* Couleur rose */
+        text-align: center;
+        margin-top: 20px; /* Ajoute de l'espace en haut du message */
+    }
+    .image-container {
+        text-align: center; /* Pour centrer l'image horizontalement */
+    }
+
+    .image-container img {
+        border-radius: 10px; /* Pour ajouter des bordures arrondies */
+        width: 200px; /* Pour définir la largeur de l'image */
+        height: auto; /* Pour conserver les proportions de l'image */
+        display: block; /* Pour centrer l'image verticalement */
+        margin: 0 auto; /* Pour centrer l'image horizontalement */
+    }
+</style>

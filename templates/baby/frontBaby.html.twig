@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+    {{ parent() }}
+    {% endblock %}
+{% block title %}Baby index{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center mt-5 mb-4"style="margin-top: 1000px;">All babies</h1>
+
+    <div class="row justify-content-center">
+        {% for baby in babies %}
+        <div class="col-md-4 mb-4" >
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">{{ baby.nom }} {{ baby.prenom }}</h5>
+                    <p class="card-text"><strong>Sexe: </strong>{{ baby.sexe }}</p>
+                    <p class="card-text"><strong>Date de naissance:</strong> {{ baby.dateNaissance ? baby.dateNaissance|date('Y-m-d') : '' }}</p>
+                    <p class="card-text"><strong>Poids:</strong> {{ baby.poids }}</p>
+                    <p class="card-text"><strong>Taille: </strong>{{ baby.taille }}</p>
+                    <div class="text-center">
+                        <a href="{{ path('app_baby_show', {'id': baby.id}) }}" class="btn btn-warning" style="background-color: pink;">More Info</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col">
+            <div class="alert alert-info" role="alert">
+                No records found
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

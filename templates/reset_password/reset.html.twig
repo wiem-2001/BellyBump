@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}{% endblock %}
+
+{% block body %}
+    <section id="hero" class="hero">
+        <img src="{{ asset('frontOffice/assets/img/hero-bg.webp') }}" alt="">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    {{ form_start(resetForm,{'attr': {'novalidate': 'novalidate'}}) }}
+                    {{ form_errors(resetForm) }}
+                    <div>
+                        {{ form_label(resetForm.plainPassword.first) }}
+                        {{ form_widget(resetForm.plainPassword.first, { 'attr': { 'class': 'form-control' ~ (not resetForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Enter your password' } }) }}
+                        <div class="error-message"><Strong>{{ form_errors(resetForm.plainPassword.first) }}</Strong></div>
+                    </div>
+                    <div>
+                        {{ form_label(resetForm.plainPassword.second) }}
+                        {{ form_widget(resetForm.plainPassword.second, { 'attr': { 'class': 'form-control' ~ (not resetForm.vars.valid ? ' is-invalid' : ''), 'placeholder': 'Confirm password' } }) }}
+                        <div class="error-message"><Strong>{{ form_errors(resetForm.plainPassword.second) }}</Strong></div>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        {{ form_widget(resetForm.save, {'label': 'Reset Password', 'attr': {'class': 'btn btn-danger float-end'}}) }}
+                    </div>
+                    {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </section><!-- End Hero Section -->
+{% endblock %}
+   {% block footer %}
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-5 col-md-12 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span>BellyBump</span>
+          </a>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+       
+        <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+          <h4>Contact Us</h4>
+          <p>Petite Ariana </p>
+          <p>Ariana,Esprit</p>
+          <p>Tunisia</p>
+          <p class="mt-4"><strong>Phone:</strong> <span>+216 90 680 241</span></p>
+          <p><strong>Email:</strong> <span>bellybump@gmail.com</span></p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </footer><!-- End Footer -->{% endblock %}

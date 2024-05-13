@@ -1,0 +1,22 @@
+{% extends 'baseBackOffice.html.twig' %}
+{% block stylesheets %}
+{{ parent() }} {# Include parent stylesheets from the base template #}
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontOffice/assets/css/main.css') }}" rel="stylesheet">
+    {{ parent() }}
+    {% endblock %}
+{% block title %}Edit InfoMedicaux{% endblock %}
+
+{% block body %}
+    <h1>Edit InfoMedicaux</h1>
+
+    {{ include('info_medicaux/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_info_medicaux_index') }}">back to list</a>
+
+    {{ include('info_medicaux/_delete_form.html.twig') }}
+{% endblock %}

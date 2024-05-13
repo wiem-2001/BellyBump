@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+{% block styleSheet  %}
+{{ parent() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-0VUNsTfVDw2Av+OAFCpP6rCx45FVyJXBNzB4YtpqInQ2fjU8Vh59XCPkdpkLw7TqccTn9v/3MPu7F2G81zW7zw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+{% endblock %}
+
+{% block title %}Events List{% endblock %}
+{% block body %}
+    <main>
+    <div class="events-list">
+    <div class="row">
+        <h3 class="event-title">Events </h3>
+
+    </div>
+
+     <hr class="title-hr">
+    <div class="select-sort">
+    <form id="triForm" action="{{ path('list_event_mother') }}" method="get">
+        <select name="tri" id="tri" >
+            <option value="" disabled selected style="display:none;">Sort by</option>
+            <option value="date" > Date</option>
+            <option value="coach" >Coach</option>
+        </select>
+    </form>
+<script>
+        document.getElementById('tri').addEventListener('change', function() {
+            document.getElementById('triForm').submit();
+            console.log(this.value);
+
+        });
+    </script>
+    </div>
+        {% if tabEvents is empty  %}
+        <p>No events to display.</p>
+        {% else %}
+        {% for event in tabEvents %}
+        <div class="row event-item" id="event">
+            <div class="col-lg-4 event-image">
+                <div class="overlay">
+                    <img src="{{ 'http:/localhost/Projects/PIDEV/bellybumpImages/event/' ~ event.image }}" class="event-img" alt="event">
+                    <h2>{{ event.name }}</h2>
+                </div>
+            </div>
+
+            <div class="col-lg-8 event-details">
+            {% if event not in favoriteEvents %}
+            <a href="{{path('favorate_event',{id:event.id})}}" > <i class="far fa-heart heart-style"></i></a>
+            {% else %}
+            <a href="{{path('cancel_favorate_event',{id:event.id})}}" >  <i class="fas fa-heart heart-style"></i></a>
+            {% endif %}
+            
+            {% if event.coach != null %}
+             <p><strong class="properties-title">Coached By </strong><b> {{ event.coach }}</b> ~ {{event.coach.job}} </p>
+             {% endif %}
+             <p><strong class="properties-title">Description </strong> {{ event.description }}</p>
+             <p><strong class="properties-title">Date </strong> {{ event.day|date("d F, Y")  }}. From {{ event.heureDebut|date("H:i") }} To {{ event.heureFin|date("H:i")  }}</p>
+             <p><strong class="properties-title">Number of participants: </strong> {{ event.reservation|length }}</p>
+             
+             
+             <a href="{{path('reserve_event',{id:event.id})}}"   class="btn participate-btn">Join Now</a>
+             
+             </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <style>
+       body {
+            margin: 8%;
+        }
+        .event-img{
+            width: 100%;
+            height: auto;
+            box-shadow: 0 4px 13px rgba(0, 0, 0, 0.585);
+            border-radius:5px;
+            display:block;
+        }
+        .events-list {
+            width: 100%;
+        }
+
+        .event-item {
+            position: relative;
+            margin-bottom: 20px;
+            height:auto;
+            width: 100%;
+        }
+
+        .event-image {
+            position: relative;
+            overflow:hidden;
+            border-radius:5px;
+            box-shadow: 0 4px 13px rgba(0, 0, 0, 0.585);
+        }
+
+        .event-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Take full width of the parent */
+            height: 100%; /* Take full height of the parent */
+            border-radius:5px;
+        }
+
+        .overlay h2 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: 0;
+            padding: 10px; /* Add padding to give some space between the text and the bottom */
+            background-color: rgba(0, 0, 0, 0.5); /* Add background color with transparency */
+            color: white; /* Set text color */
+            width: 100%; /* Ensure the text spans the full width */
+            box-sizing: border-box; /* Include padding in the width */
+        }
+
+        .event-details {
+            position: relative;
+            padding: 20px;
+        }
+
+        .properties-title {
+            color: #E84545;
+        }
+
+        .participate-btn {
+            background-color: #E84545;
+            color: white;
+            border-radius: 20px;
+            float: right;
+        }
+
+        .participate-btn:hover {
+            background-color: #21861f;
+            color: white;
+            scale: 1.08;
+        }
+        .title-hr {
+            border: 1.5px solid #E84545; /* Set border properties */
+            margin-top: 10px; /* Adjust margin top */
+            margin-bottom: 20px; /* Adjust margin bottom */
+            opacity :1;
+        }
+        .event-title{
+            color: #E84545;
+        }
+
+        .select-sort{
+            float:right;
+            margin-bottom:3%;
+            padding:5px;
+        }
+        .heart-style{
+            color:#E84545;
+            font-size:24px;
+            float:right;
+            cursor:pointer;
+        }
+    </style>
+    </main>
+{% endblock %}
+{% block footer %} {% endblock %}

@@ -1,0 +1,35 @@
+/* Reset some default browser styles */
+body, h1, ul {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Style for the header */
+h1 {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Style for the content */
+ul {
+    list-style: none;
+    padding: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Style for the footer */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}

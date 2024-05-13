@@ -1,0 +1,106 @@
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa; /* Set a light background color */
+    }
+
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .custom-form {
+        width: 400px;
+        padding: 20px;
+        border: 2px solid #343a40; /* Dark border color */
+        border-radius: 8px;
+        background-color: #ffffff; /* White background color */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff; /* Bootstrap primary color */
+        color: #fff; /* White text color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3; /* Darker color on hover */
+    }
+
+    .alert {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #f8d7da; /* Bootstrap danger alert background color */
+        color: #721c24; /* Bootstrap danger alert text color */
+        border: 1px solid #f5c6cb; /* Bootstrap danger alert border color */
+        border-radius: 5px;
+    }
+</style>
+
+<div class="center-form">
+    <div class="custom-form">
+        {{ form_start(form, { 'attr': {'novalidate': 'novalidate'} }) }}
+
+        {% if app.flashes('error') is not empty %}
+            <div class="alert">
+                {{ app.flashes('error')|first }}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            {{ form_label(form.DateReservation, 'Date de Réservation') }}
+            {{ form_widget(form.DateReservation, {'attr': {'class': 'form-control', 'placeholder': 'Select the date'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.DateReservation) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.heureReservation, 'Heure de Réservation (entre 8 a.m et 7 p.m)') }}
+            {{ form_widget(form.heureReservation, {'attr': {'class': 'form-control', 'placeholder': 'Entrez hour'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.heureReservation) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.nomMed, 'Médecin') }}
+            {{ form_widget(form.nomMed, {'attr': {'class': 'form-control', 'placeholder': 'Select doctor'}}) }}
+            <div class="error-message">
+                {{ form_errors(form.nomMed) }}
+            </div>
+        </div>
+
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+        {{ form_end(form) }}
+    </div>
+</div>

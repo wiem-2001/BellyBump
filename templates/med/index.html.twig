@@ -1,0 +1,41 @@
+{% extends 'back.html.twig' %}
+
+{% block title %}Liste des médecins{% endblock %}
+
+{% block body %}
+    <h1>Liste des médecins</h1>
+    <input id="search-input" type="form-control" placeholder="Rechercher...">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Spécialité</th>
+                <th>Établissement</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for med in meds %}
+            <tr>
+                <td>{{ med.id }}</td>
+                <td>{{ med.nom }}</td>
+                <td>{{ med.prenom }}</td>
+                <td>{{ med.specialite }}</td>
+                <td>{% if med.etab is not null %}{{ med.etab.nom }}{% endif %}</td>
+                <td>
+                    <a href="{{ path('app_med_show', {'id': med.id}) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('app_med_edit', {'id': med.id}) }}" class="btn btn-primary">Éditer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_med_new') }}" class="btn btn-primary">Créer un nouveau</a>
+{% endblock %}
