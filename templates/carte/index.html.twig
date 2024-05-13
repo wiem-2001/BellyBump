@@ -41,7 +41,7 @@
             <tbody>
             {% for item in items %}
                 <tr>
-                    <td><img src="{{ vich_uploader_asset(item.product, 'imageFile') }}" class="img-fluid" alt="{{ item.product.nom }}" style="width: 100px; height: auto;"></td>
+                    <td><img src="{{ 'http:/localhost/Projects/PIDEV/bellybumpImages/product/' ~ item.product.image }}" class="img-fluid" alt="{{ item.product.nom }}" style="width: 100px; height: auto;"></td>
                     <td>{{ item.product.nom }}</td>
                     <td>{{ item.product.description }}</td>
                     <td>{{ item.product.prix }} €</td>

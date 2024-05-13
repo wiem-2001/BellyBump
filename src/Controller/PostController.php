@@ -126,7 +126,7 @@ class PostController extends AbstractController
 
                 // Delete the old file if it exists
 
-                $oldFilePath = $this->getParameter('images_directory_post') . '/' . $oldFileName;
+                $oldFilePath = $this->getParameter('images_directory_post') . $oldFileName;
                 if (file_exists($oldFilePath)) {
                     unlink($oldFilePath);
                 }

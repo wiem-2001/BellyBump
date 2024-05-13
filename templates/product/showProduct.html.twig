@@ -40,7 +40,7 @@
                {% for product in pr %}
                    <div class="col-lg-4 col-md-6 portfolio-item isotope-item">
                        {% if product.image %}
-                           <img src="{{ vich_uploader_asset(product, 'imageFile') }}" class="img-fluid" alt="{{ product.nom }}">
+                           <img src="{{ 'http:/localhost/Projects/PIDEV/bellybumpImages/product/' ~ product.image }}" class="img-fluid" alt="{{ product.nom }}">
                        {% endif %}
                        <div class="portfolio-info">
                            <h4>{{ product.nom }}</h4>

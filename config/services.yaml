@@ -10,8 +10,8 @@ parameters:
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     python_script_path: 'C:\xampp\htdocs\BellyBump\scripts\python_scripts\dbscan_script.py'
     openai.api_key: '%env(OPENAI_KEY)%'
-    app.path.product_images: '%kernel.project_dir%/public/uploads/images/products/'
-    images_directory_post:  '%kernel.project_dir%/public/uploads/imagesPost/'
+    app.path.product_images: 'C:/xampp/htdocs/Projects/PIDEV/bellybumpImages/product/'
+    images_directory_post:  'C:/xampp/htdocs/Projects/PIDEV/bellybumpImages/post/'
 
 services:
     App\Service\RecommendationEventsService:

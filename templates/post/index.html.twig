@@ -218,31 +218,31 @@
 
     </style>
 
-    <h1 class="page-title">Découvrez nos derniers posts</h1>
+    <h1 class="page-title">Discover the lastest posts</h1>
 
     <div class="add-post-container">
-        <a href="{{ path('addpost') }}" class="add-post-button">Ajouter un Post</a>
+        <a href="{{ path('addpost') }}" class="add-post-button">Add Post</a>
     </div>
     <div class="search-bar-container">
         <form action="{{ path('search') }}" method="GET">
             <input type="text" name="keyword" class="search-bar" placeholder="Recherche...">
-            <button type="submit" class="search-button">Rechercher</button>
+            <button type="submit" class="search-button">search</button>
         </form>
         <div class="post-container">
 
             {% for post in pagination %}
                 <div class="post">
                     <h2 class="post-title">{{ post.title }}</h2>
-                    <h6 >{{ user.firstName }}</h6>
-                    <p class="post-date">Date de création : {{ post.createdAt|date('Y-m-d H:i:s') }}</p>
+                    <h6 >{{ post.auteur.firstName}} {{ post.auteur.lastName}}</h6>
+                    <p class="post-date">Creation Date : {{ post.createdAt|date('Y-m-d H:i:s') }}</p>
                     <div class="post-content">
                         <p>{{ post.content }}</p>
 
                     </div>
                     <div class="image-container">
-                        <img src="{{ asset('uploads/imagesPost/' ~ post.image) }}" alt="post">
+                        <img src="{{ 'http:/localhost/Projects/PIDEV/bellybumpImages/post/' ~ post.image }}" alt="post">
                     </div>
-                    {% if app.user.getId==post.auteur.getId %}
+                    {% if user.id ==post.auteur.id %}
                     <div class="post-actions">
                         <a href="{{ path('updatepost', {'id': post.id}) }}" class="edit-post-button">Éditer</a>
                     </div>
